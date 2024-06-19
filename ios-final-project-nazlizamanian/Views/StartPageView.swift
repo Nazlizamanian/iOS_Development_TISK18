@@ -7,9 +7,9 @@
 
 import SwiftUI
 
+
 struct StartPageView: View {
     var body: some View {
-        NavigationView {
             VStack {
                 VStack(spacing: 20) {
                     Text("Welcome ")
@@ -27,10 +27,12 @@ struct StartPageView: View {
                             .cornerRadius(30)
                             .padding()
                     }
+                    
                 }
             }
+            
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+        
     }
 }
 

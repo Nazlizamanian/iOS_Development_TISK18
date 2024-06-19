@@ -9,10 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = MealsModel()
+    
     var body: some View {
-        VStack {
-            Text("Foodie!")
-        }
+            VStack{
+                Text("Foodie!")
+                   
+            }
+            .toolbar{
+                ToolbarItemGroup(placement: .navigationBarLeading){
+                    NavigationLink(destination: StartPageView()){
+                        Text("StartPage")
+                    }
+                    
+                   
+                }
+                ToolbarItemGroup(placement: .navigationBarTrailing){
+                    NavigationLink(destination: FavourtiesView()){
+                        Text("Fav")
+                    }
+                }
+                    
+                
+            }
+            .navigationBarBackButtonHidden(true)
         .padding()
     }
 }
