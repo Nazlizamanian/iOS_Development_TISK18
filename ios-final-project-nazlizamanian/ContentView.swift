@@ -16,14 +16,15 @@ struct ContentView: View {
                    
             }
             .toolbar{
-                ToolbarItemGroup(placement: .navigationBarLeading){
+                ToolbarItem(placement: .navigationBarLeading){
                     NavigationLink(destination: StartPageView()){
                         Text("StartPage")
                     }
                     
+                    
                    
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing){
+                ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink(destination: FavourtiesView()){
                         Text("Fav")
                     }
@@ -31,7 +32,7 @@ struct ContentView: View {
                     
                 
             }
-            .navigationBarBackButtonHidden(true)
+           .navigationBarBackButtonHidden(true) //döljer från content tbx t startPage
         .padding()
     }
 }
