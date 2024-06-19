@@ -14,6 +14,10 @@
 		6C1C51732C22D66100890A50 /* ios_final_project_nazlizamanianTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51722C22D66100890A50 /* ios_final_project_nazlizamanianTests.swift */; };
 		6C1C517D2C22D66100890A50 /* ios_final_project_nazlizamanianUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C517C2C22D66100890A50 /* ios_final_project_nazlizamanianUITests.swift */; };
 		6C1C517F2C22D66100890A50 /* ios_final_project_nazlizamanianUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C517E2C22D66100890A50 /* ios_final_project_nazlizamanianUITestsLaunchTests.swift */; };
+		6C1C51D42C22E98000890A50 /* MealsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51D32C22E98000890A50 /* MealsModel.swift */; };
+		6C1C51D72C22E9A100890A50 /* StartPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51D62C22E9A100890A50 /* StartPageView.swift */; };
+		6C1C51D92C22E9B200890A50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51D82C22E9B200890A50 /* CardView.swift */; };
+		6C1C51DB2C22E9CF00890A50 /* FavourtiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51DA2C22E9CF00890A50 /* FavourtiesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		6C1C51782C22D66100890A50 /* ios-final-project-nazlizamanianUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-final-project-nazlizamanianUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1C517C2C22D66100890A50 /* ios_final_project_nazlizamanianUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_final_project_nazlizamanianUITests.swift; sourceTree = "<group>"; };
 		6C1C517E2C22D66100890A50 /* ios_final_project_nazlizamanianUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_final_project_nazlizamanianUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6C1C51D32C22E98000890A50 /* MealsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsModel.swift; sourceTree = "<group>"; };
+		6C1C51D62C22E9A100890A50 /* StartPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPageView.swift; sourceTree = "<group>"; };
+		6C1C51D82C22E9B200890A50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		6C1C51DA2C22E9CF00890A50 /* FavourtiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavourtiesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +102,9 @@
 		6C1C51602C22D65800890A50 /* ios-final-project-nazlizamanian */ = {
 			isa = PBXGroup;
 			children = (
+				6C1C51D52C22E98700890A50 /* Data */,
+				6C1C51D22C22E97000890A50 /* Models */,
+				6C1C51D12C22E92900890A50 /* Views */,
 				6C1C51612C22D65800890A50 /* ios_final_project_nazlizamanianApp.swift */,
 				6C1C51632C22D65800890A50 /* ContentView.swift */,
 				6C1C51652C22D66000890A50 /* Assets.xcassets */,
@@ -125,6 +136,31 @@
 				6C1C517E2C22D66100890A50 /* ios_final_project_nazlizamanianUITestsLaunchTests.swift */,
 			);
 			path = "ios-final-project-nazlizamanianUITests";
+			sourceTree = "<group>";
+		};
+		6C1C51D12C22E92900890A50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6C1C51D62C22E9A100890A50 /* StartPageView.swift */,
+				6C1C51D82C22E9B200890A50 /* CardView.swift */,
+				6C1C51DA2C22E9CF00890A50 /* FavourtiesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6C1C51D22C22E97000890A50 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6C1C51D32C22E98000890A50 /* MealsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6C1C51D52C22E98700890A50 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +293,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C1C51DB2C22E9CF00890A50 /* FavourtiesView.swift in Sources */,
+				6C1C51D72C22E9A100890A50 /* StartPageView.swift in Sources */,
+				6C1C51D42C22E98000890A50 /* MealsModel.swift in Sources */,
 				6C1C51642C22D65800890A50 /* ContentView.swift in Sources */,
 				6C1C51622C22D65800890A50 /* ios_final_project_nazlizamanianApp.swift in Sources */,
+				6C1C51D92C22E9B200890A50 /* CardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
