@@ -13,6 +13,7 @@ struct Recipe: Codable, Hashable, Identifiable{
     let name: String
     let instructions: [String]
     let image: String
+    let difficulty: String 
 }
 
 struct RecipesResponse: Codable {
@@ -57,4 +58,8 @@ class MealsModel: ObservableObject {
         
         task.resume() // Resume the task to initiate the request
     }
+    
+    func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] { //Filter recipes on difficulties may change to some other attribute
+            return courses.filter { difficulties.contains($0.difficulty.lowercased()) }
+        }
 }
