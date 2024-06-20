@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Recipe: Codable, Hashable {
+struct Recipe: Codable, Hashable, Identifiable{
     let id: Int
     let name: String
     let instructions: [String]
