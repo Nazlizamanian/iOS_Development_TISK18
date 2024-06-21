@@ -13,7 +13,11 @@ struct Recipe: Codable, Hashable, Identifiable{
     let name: String
     let instructions: [String]
     let image: String
-    let difficulty: String 
+    let difficulty: String
+    let rating: Double
+    let cuisine: String
+    let prepTimeMinutes: Int
+    let cookTimeMinutes: Int
 }
 
 struct RecipesResponse: Codable {
@@ -22,6 +26,7 @@ struct RecipesResponse: Codable {
 
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = []
+    @Published var favorites: [Recipe] = [] //we gonna add the favs to this array
     
     func fetch() {
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=49") else { return }
@@ -57,6 +62,10 @@ class MealsModel: ObservableObject {
         }
         
         task.resume() // Resume the task to initiate the request
+    }
+    
+    func addToFavorites(recipe: Recipe){
+        favorites.append(recipe)
     }
     
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] { //Filter recipes on difficulties may change to some other attribute
