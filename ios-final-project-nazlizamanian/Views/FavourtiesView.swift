@@ -67,22 +67,23 @@ struct InstructionsView: View { //instructions for each recipe
 
 struct FavourtiesView: View {
     @State private var searchString = ""
+    @State private var mealPages = []
     
    // @StateObject var viewModel = MealsModel()
     @EnvironmentObject var viewModel: MealsModel
     
     private var filteredRecipes: [Recipe] {
             guard !searchString.isEmpty else {
-                return viewModel.courses
+                return viewModel.favoriteRecipes
             }
-            return viewModel.courses.filter { $0.name.lowercased().contains(searchString.lowercased()) }
+            return viewModel.favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
         }
     
     var body: some View {
-        NavigationView { //navigationStack?
+        NavigationStack { //navigationStack?
             List {
-                if searchString.isEmpty{
-                    ForEach(viewModel.courses, id: \.self){ meals in
+                
+                    ForEach(filteredRecipes, id: \.self){ meals in
                         HStack{
                             URLImage(urlString: meals.image)
                             Text(meals.name)
@@ -91,18 +92,7 @@ struct FavourtiesView: View {
                         }
                         .padding(3)
                     }
-                } else{
-                    ForEach(filteredRecipes
-                            , id:\.self){ meals in
-                        HStack{
-                            URLImage(urlString: meals.image)
-                            Text(meals.name)
-                           /* InstructionsView(instructions: meals.instructions)
-                                                    .padding(5)*/
-                        }
-                    }
-                    
-                }
+             
                     
             }
             .searchable(text: $searchString)
@@ -116,4 +106,5 @@ struct FavourtiesView: View {
 
 #Preview {
     FavourtiesView()
+        .environmentObject(MealsModel())
 }

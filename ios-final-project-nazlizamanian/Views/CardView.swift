@@ -54,53 +54,63 @@ struct URLImageView: View { //To get the images for each card
 
 struct CardView: View {
     @EnvironmentObject var model: MealsModel
-   // @StateObject var model = MealsModel()
+    // @StateObject var model = MealsModel()
     
     @State private var offset = CGSize.zero
     @State private var color: Color = .black
     @State private var currentIndex: Int = 0
-    
     @State private var selectedDifficulty = "All"
     
     var filteredRecipes: [Recipe] {
-            switch selectedDifficulty {
-            case "Easy":
-                return model.filterRecipes(byDifficulties: ["easy"])
-            case "Medium":
-                return model.filterRecipes(byDifficulties: ["medium"])
-            default:
-                return model.courses
-            }
+        switch selectedDifficulty {
+        case "Easy":
+            return model.filterRecipes(byDifficulties: ["easy"])
+        case "Medium":
+            return model.filterRecipes(byDifficulties: ["medium"])
+        default:
+            return model.courses
         }
+    }
     
     var body: some View {
-        
         VStack {
-           
-            Picker("Difficulty", selection: $selectedDifficulty){
+            HStack {
+                NavigationLink(destination: FavourtiesView()) {
+                    Text("Go to Favorites")
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.top)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            Picker("Difficulty", selection: $selectedDifficulty) {
                 Text("All").tag("All")
                 Text("Easy").tag("Easy")
                 Text("Medium").tag("Medium")
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding()
+            
             List(filteredRecipes) { recipe in
-                                VStack(alignment: .leading) {
-                                    Text(recipe.name)
-                                        .font(.headline)
-                                    Text(recipe.difficulty.capitalized)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-           
+                VStack(alignment: .leading) {
+                    Text(recipe.name)
+                        .font(.headline)
+                    Text(recipe.difficulty.capitalized)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+            }
+            
             ZStack {
                 if currentIndex < filteredRecipes.count {
                     ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
                         if index >= currentIndex {
                             ZStack(alignment: .bottomLeading) {
                                 URLImageView(urlString: recipe.image)
-                                    .frame(width: 375, height: 640)
+                                    .frame(width: 375, height: 600)
                                     .cornerRadius(20)
                                     .clipped()
                                     .aspectRatio(contentMode: .fill)
@@ -110,44 +120,37 @@ struct CardView: View {
                                             HStack {
                                                 Text(recipe.name)
                                                     .font(.title2)
-                                                    .fontWeight(.black) //bold
+                                                    .fontWeight(.black)
                                                     .foregroundColor(.white)
-                                                .padding(.bottom,50)
-                                                
-                                                HStack(spacing: 3) {
-                                                 Text(String(format: "%.1f", recipe.rating))
-                                                    .foregroundColor(.white)
-                                                 Image(systemName: "star.fill")
-                                                    .foregroundColor(.yellow)
-                                                    }
-                                                    .padding(.horizontal, 8)
-                                                    .padding(.vertical, 5)
-                                                    .background(Color.black.opacity(0.7))
-                                                    .cornerRadius(10)
                                                     .padding(.bottom, 50)
                                                 
-                                                    
+                                                HStack(spacing: 3) {
+                                                    Text(String(format: "%.1f", recipe.rating))
+                                                        .foregroundColor(.white)
+                                                    Image(systemName: "star.fill")
+                                                        .foregroundColor(.yellow)
+                                                }
+                                                .padding(.horizontal, 8)
+                                                .padding(.vertical, 5)
+                                                .background(Color.black.opacity(0.7))
+                                                .cornerRadius(10)
+                                                .padding(.bottom, 50)
                                             }
                                             HStack {
                                                 Image(systemName: "timer")
                                                     .renderingMode(.template)
-                                                .foregroundColor(.yellow)
+                                                    .foregroundColor(.yellow)
                                                 Text("\(recipe.prepTimeMinutes + recipe.cookTimeMinutes) min")
                                             }
-                                    
-                                             .foregroundColor(.white)
-                                             .padding(.horizontal, 8)
-                                             .padding(.vertical, 5)
-                                             .background(Color.black.opacity(0.7))
-                                             .cornerRadius(10)
-                                             .padding(.bottom, 50)
-                                            
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 5)
+                                            .background(Color.black.opacity(0.7))
+                                            .cornerRadius(10)
+                                            .padding(.bottom, 50)
                                         },
                                         alignment: .center
                                     )
-
-                              
-                                    
                             }
                             .offset(x: offset.width, y: offset.height * 0.4)
                             .rotationEffect(.degrees(Double(offset.width / 40)))
@@ -170,64 +173,48 @@ struct CardView: View {
             .padding()
             .onAppear {
                 model.fetch()
-        }
-        }
-        
-        HStack{
-            Button(action: { //Go back button
-                withAnimation{
-                   
-                }
-            }) {
-                Image(systemName: "arrow.uturn.left")
-                    .resizable()
-                    .bold()
-                    .frame(width: 35, height: 35)
-                    .foregroundColor(Color(red: 0.95, green: 0.73, blue: 0.15))
-                    .padding(14)
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.yellow, lineWidth: 2)
-            )
-            Spacer()
-            Button(action:{ //X button swipe left
-                withAnimation{
-                    swipeCard(width: -200)
+            
+            HStack {
+                Spacer()
+                Button(action: { //X button swipe left
+                    withAnimation {
+                        swipeCard(width: -200)
+                    }
+                }) {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                        .foregroundColor(.red)
+                        .padding(14)
+                        .bold()
                 }
-            }){
-                Image(systemName:"xmark")
-                    .resizable()
-                    .frame(width:35, height:35)
-                    .foregroundColor(.red)
-                    .padding(14)
-                    .bold()
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.red, lineWidth: 2)
-            )
-            Spacer()
-
-            Button(action: { //swipe right
-                withAnimation{
-                    swipeCard(width: 150)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.red, lineWidth: 2)
+                )
+                Spacer()
+                Button(action: { //swipe right
+                    withAnimation {
+                        swipeCard(width: 150)
+                    }
+                }) {
+                    Image(systemName: "heart.fill")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                        .foregroundColor(Color(red: 0.15, green: 0.87, blue: 0.57))
+                        .padding(14)
                 }
-            }){
-                Image(systemName:"heart.fill")
-                    .resizable()
-                    .frame(width:35, height:35)
-                    .foregroundColor(Color(red: 0.15, green: 0.87, blue: 0.57))
-                    .padding(14)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.green, lineWidth: 2)
+                )
+                Spacer()
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.green, lineWidth: 2)
-            )
+            .padding(.horizontal, 40)
         }
-        .padding(.horizontal, 40)
     }
-
+    
     private func swipeCard(width: CGFloat) {
         switch width {
         case -500...(-150): // Swipe to left
@@ -236,35 +223,34 @@ struct CardView: View {
                 changeColor(width: offset.width)
             }
             moveToNextCard()
-
+            
         case 150...500: // Swipe right
             offset = CGSize(width: 500, height: 0)
             changeColor(width: offset.width)
-            addToFav(recipe: model.courses[currentIndex])
+            addToFav(recipe: filteredRecipes[currentIndex])
             moveToNextCard()
-
+            
         default:
             offset = .zero
         }
     }
     
-
     private func changeColor(width: CGFloat) {
         switch width {
         case -500...(-130):
             color = .red
-
+            
         case 130...500:
             color = .green
-
+            
         default:
             color = .black
         }
     }
-
+    
     private func moveToNextCard() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if currentIndex < model.courses.count {
+            if currentIndex < filteredRecipes.count {
                 currentIndex += 1
                 offset = .zero
                 color = .black
@@ -272,11 +258,13 @@ struct CardView: View {
         }
     }
     
-    private func addToFav(recipe: Recipe){
+    private func addToFav(recipe: Recipe) {
         model.addToFavorites(recipe: recipe)
     }
 }
 
+
 #Preview {
     CardView()
+        .environmentObject(MealsModel())
 }

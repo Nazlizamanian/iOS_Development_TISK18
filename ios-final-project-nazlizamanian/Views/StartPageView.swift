@@ -18,7 +18,7 @@ struct StartPageView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                     
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: CardView()) {
                         Text("Get Started")
                             .font(.headline)
                             .foregroundColor(.white)

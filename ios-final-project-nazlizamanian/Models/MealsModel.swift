@@ -26,7 +26,7 @@ struct RecipesResponse: Codable {
 
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = []
-    @Published var favorites: [Recipe] = [] //we gonna add the favs to this array
+    @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
     
     func fetch() {
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=49") else { return }
@@ -64,11 +64,13 @@ class MealsModel: ObservableObject {
         task.resume() // Resume the task to initiate the request
     }
     
-    func addToFavorites(recipe: Recipe){
-        if !favorites.contains(recipe){
-            favorites.append(recipe)
+    func addToFavorites(recipe: Recipe) {
+        if !favoriteRecipes.contains(where: { $0.id == recipe.id }) {
+            favoriteRecipes.append(recipe)
         }
-            
+    }
+    func removeFromFavorites(recipe: Recipe){
+        favoriteRecipes.removeAll{ $0.id == recipe.id}
     }
     
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] { //Filter recipes on difficulties may change to some other attribute
