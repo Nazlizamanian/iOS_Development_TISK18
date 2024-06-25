@@ -53,8 +53,9 @@ struct URLImageView: View { //To get the images for each card
 }
 
 struct CardView: View {
-    @ObservedObject var model = MealsModel()
-
+    @EnvironmentObject var model: MealsModel
+   // @StateObject var model = MealsModel()
+    
     @State private var offset = CGSize.zero
     @State private var color: Color = .black
     @State private var currentIndex: Int = 0

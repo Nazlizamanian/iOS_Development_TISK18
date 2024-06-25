@@ -68,7 +68,8 @@ struct InstructionsView: View { //instructions for each recipe
 struct FavourtiesView: View {
     @State private var searchString = ""
     
-    @StateObject var viewModel = MealsModel()
+   // @StateObject var viewModel = MealsModel()
+    @EnvironmentObject var viewModel: MealsModel
     
     private var filteredRecipes: [Recipe] {
             guard !searchString.isEmpty else {

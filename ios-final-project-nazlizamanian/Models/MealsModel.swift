@@ -65,7 +65,10 @@ class MealsModel: ObservableObject {
     }
     
     func addToFavorites(recipe: Recipe){
-        favorites.append(recipe)
+        if !favorites.contains(recipe){
+            favorites.append(recipe)
+        }
+            
     }
     
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] { //Filter recipes on difficulties may change to some other attribute
