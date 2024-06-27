@@ -75,7 +75,8 @@ struct CardView: View {
     var body: some View {
         VStack {
             HStack {
-                NavigationLink(destination: FavourtiesView()) {
+                Spacer()
+                NavigationLink(destination:  FavouritesView()) {
                     Text("Go to Favorites")
                         .padding()
                         .background(Color.green)

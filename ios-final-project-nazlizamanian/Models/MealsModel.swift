@@ -69,7 +69,7 @@ class MealsModel: ObservableObject {
             favoriteRecipes.append(recipe)
         }
     }
-    func removeFromFavorites(recipe: Recipe){
+    func removeFromFavorites(recipe: Recipe){ //Lägg till swipa b ort func.
         favoriteRecipes.removeAll{ $0.id == recipe.id}
     }
     
