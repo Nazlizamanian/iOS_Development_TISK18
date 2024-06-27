@@ -11,6 +11,7 @@ import SwiftUI
 struct Recipe: Codable, Hashable, Identifiable{
     let id: Int
     let name: String
+    let ingredients: [String]
     let instructions: [String]
     let image: String
     let difficulty: String
@@ -18,6 +19,7 @@ struct Recipe: Codable, Hashable, Identifiable{
     let cuisine: String
     let prepTimeMinutes: Int
     let cookTimeMinutes: Int
+    let reviewCount: Int
 }
 
 struct RecipesResponse: Codable {
