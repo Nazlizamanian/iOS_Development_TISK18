@@ -11,39 +11,9 @@ import SwiftUI
 import SwiftData
 import Combine
 
-struct Recipe: Codable, Hashable, Identifiable{
-    let id: Int
-    let name: String
-    let ingredients: [String]
-    let instructions: [String]
-    let image: String
-    let difficulty: String
-    let rating: Double
-    let cuisine: String
-    let prepTimeMinutes: Int
-    let cookTimeMinutes: Int
-    let reviewCount: Int
-}
 
 
-
-struct RecipesResponse: Codable {
-    let recipes: [Recipe]
-}
-
-@Model
-final class RecipeFavList{
-    @Attribute(.unique) let id: Int
-    let name: String
-    let image: String
-    
-    init(id: Int, name: String, image: String) {
-        self.id = id
-        self.name = name
-        self.image = image
-    }
-}
-
+/*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = []
     @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array

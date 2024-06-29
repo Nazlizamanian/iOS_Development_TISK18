@@ -138,18 +138,20 @@ struct DetailView: View { //DetailScreen
     }
 }
 
-
+/*
+ UI view, interacts with viewmodel MealsModel
+ */
 struct FavouritesView: View {
     @State private var searchString = ""
     @State private var mealPages = []
     
-    @EnvironmentObject var viewModel: MealsModel
+    @EnvironmentObject var model: MealsModel
     
     private var filteredRecipes: [Recipe] {
         guard !searchString.isEmpty else {
-            return viewModel.favoriteRecipes
+            return model.favoriteRecipes
         }
-        return viewModel.favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
+        return model.favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
     }
     
     var body: some View {
@@ -168,7 +170,7 @@ struct FavouritesView: View {
                 .searchable(text: $searchString)
                 .navigationTitle("Liked meals")
                 .onAppear {
-                    viewModel.fetch()
+                    model.fetch()
                 }
             
         }

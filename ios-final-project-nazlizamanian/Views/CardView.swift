@@ -52,8 +52,13 @@ struct URLImageView: View { //To get the images for each card
     }
 }
 
+/*
+ UI binds to our viewModel MealsModel to display and interact with data
+ */
 struct CardView: View {
     @EnvironmentObject var model: MealsModel
+  //  @Environment(\.modelContext) var modelContext: ModelContext
+    
     // @StateObject var model = MealsModel()
     
     @State private var offset = CGSize.zero
