@@ -108,7 +108,8 @@ struct CardView: View {
             ZStack {
                 if currentIndex < filteredRecipes.count {
                     ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
-                        if index >= currentIndex {
+                        
+                        if index >= currentIndex  % filteredRecipes.count{ //so it doesnt stop showing recipes.
                             ZStack(alignment: .bottomLeading) {
                                 URLImageView(urlString: recipe.image)
                                     .frame(width: 375, height: 600)
@@ -251,11 +252,9 @@ struct CardView: View {
     
     private func moveToNextCard() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if currentIndex < filteredRecipes.count {
-                currentIndex += 1
-                offset = .zero
-                color = .black
-            }
+            currentIndex += 1
+            offset = .zero
+            color = .black
         }
     }
     

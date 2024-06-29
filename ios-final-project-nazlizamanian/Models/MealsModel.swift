@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+import SwiftData
+import Combine
+
 struct Recipe: Codable, Hashable, Identifiable{
     let id: Int
     let name: String
@@ -22,16 +25,32 @@ struct Recipe: Codable, Hashable, Identifiable{
     let reviewCount: Int
 }
 
+
+
 struct RecipesResponse: Codable {
     let recipes: [Recipe]
+}
+
+@Model
+final class RecipeFavList{
+    @Attribute(.unique) let id: Int
+    let name: String
+    let image: String
+    
+    init(id: Int, name: String, image: String) {
+        self.id = id
+        self.name = name
+        self.image = image
+    }
 }
 
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = []
     @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
     
+    var modelContext: ModelContext?
     func fetch() {
-        guard let url = URL(string: "https://dummyjson.com/recipes?limit=49") else { return }
+        guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let data = data, error == nil else {
@@ -75,7 +94,7 @@ class MealsModel: ObservableObject {
         favoriteRecipes.removeAll{ $0.id == recipe.id}
     }
     
-    func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] { //Filter recipes on difficulties may change to some other attribute
-            return courses.filter { difficulties.contains($0.difficulty.lowercased()) }
-        }
+    func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
+        return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }
+
 }

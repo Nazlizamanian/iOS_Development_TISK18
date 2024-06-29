@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-
+/*
+ Source used in this file:
+ NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
+ */
 struct URLImage: View { //Images for each recipie
     let urlString: String
     
@@ -18,12 +21,12 @@ struct URLImage: View { //Images for each recipie
             Image(uiImage: uiimage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 130, height: 70)
+                .frame(width: 140, height: 70)
                 .background(Color.gray)
         }
         else{
             Image(systemName:"video")
-                .frame(width: 130, height: 70)
+                .frame(width: 140, height: 70)
                 .background(Color.gray)
                 .onAppear{
                     fetchData()
@@ -151,7 +154,6 @@ struct FavouritesView: View {
     
     var body: some View {
         NavigationStack {
-        
                 List {
                     ForEach(filteredRecipes, id: \.self) { meal in
                         NavigationLink(destination: DetailView(meal: meal)) {

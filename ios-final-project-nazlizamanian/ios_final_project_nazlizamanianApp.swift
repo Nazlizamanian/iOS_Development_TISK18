@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ios_final_project_nazlizamanianApp: App {
@@ -16,5 +17,6 @@ struct ios_final_project_nazlizamanianApp: App {
             ContentView()
                 .environmentObject(MealsModel())
         }
+        //.modelContainer(for: RecipeSummary.self)
     }
 }
