@@ -11,10 +11,10 @@ import SwiftUI
  Sources used in this file:
  1.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
  */
-struct URLImageView: View { //To get the images for each card
+struct URLImage: View {
     let urlString: String
     @State private var imageData: Data?
-    
+
     var body: some View {
         GeometryReader { geometry in
             if let imageData = imageData, let uiImage = UIImage(data: imageData) {
@@ -22,32 +22,20 @@ struct URLImageView: View { //To get the images for each card
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .clipped()
-                    .cornerRadius(20)
-                   
+                    
             } else {
                 Rectangle()
-                    .cornerRadius(20)
-                    .frame(width: geometry.size.width, height: geometry.size.height) // Placeholder size
-                    .onAppear {
-                        downloadImage()
-                    }
+                    .foregroundColor(.gray.opacity(0.3))
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .onAppear { fetchData() }
             }
         }
     }
-    
-    private func downloadImage() {
+
+    private func fetchData() {
         guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.imageData = data
-            }
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            DispatchQueue.main.async { self.imageData = data }
         }.resume()
     }
 }
@@ -116,7 +104,7 @@ struct CardView: View {
                         
                         if index >= currentIndex  % filteredRecipes.count{ //so it doesnt stop showing recipes.
                             ZStack(alignment: .bottomLeading) {
-                                URLImageView(urlString: recipe.image)
+                                URLImage(urlString: recipe.image)
                                     .frame(width: 375, height: 600)
                                     .cornerRadius(20)
                                     .clipped()
