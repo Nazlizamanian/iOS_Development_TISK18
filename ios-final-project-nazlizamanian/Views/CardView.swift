@@ -40,20 +40,16 @@ struct URLImage: View {
     }
 }
 
-/*
- UI binds to our viewModel MealsModel to display and interact with data
- */
+
+
 struct CardView: View {
     @EnvironmentObject var model: MealsModel
-  //  @Environment(\.modelContext) var modelContext: ModelContext
-    
-    // @StateObject var model = MealsModel()
-    
-    @State private var offset = CGSize.zero
-    @State private var color: Color = .black
+    @State private var offset = CGSize.zero // Tracks horizontal swipes (left/right)
+    @State private var cardOffset = CGSize.zero // Tracks vertical movement (up/down)
+    @State private var showDetails = false // Controls whether details are shown
     @State private var currentIndex: Int = 0
     @State private var selectedDifficulty = "All"
-    
+
     var filteredRecipes: [Recipe] {
         switch selectedDifficulty {
         case "Easy":
@@ -64,12 +60,12 @@ struct CardView: View {
             return model.courses
         }
     }
-    
+
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                NavigationLink(destination:  FavouritesView()) {
+                NavigationLink(destination: FavouritesView()) {
                     Text("Go to Favorites")
                         .padding()
                         .background(Color.green)
@@ -80,184 +76,207 @@ struct CardView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            
+
             Picker("Difficulty", selection: $selectedDifficulty) {
                 Text("All").tag("All")
                 Text("Easy").tag("Easy")
                 Text("Medium").tag("Medium")
             }
             .pickerStyle(SegmentedPickerStyle())
-            
-            List(filteredRecipes) { recipe in
-                VStack(alignment: .leading) {
-                    Text(recipe.name)
-                        .font(.headline)
-                    Text(recipe.difficulty.capitalized)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-            }
-            
+
             ZStack {
                 if currentIndex < filteredRecipes.count {
                     ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
-                        
-                        if index >= currentIndex  % filteredRecipes.count{ //so it doesnt stop showing recipes.
+                        if index == currentIndex { // 🛠 Show only the current recipe
                             ZStack(alignment: .bottomLeading) {
                                 URLImage(urlString: recipe.image)
                                     .frame(width: 375, height: 600)
                                     .cornerRadius(20)
                                     .clipped()
                                     .aspectRatio(contentMode: .fill)
-                                    .overlay(
-                                        VStack {
-                                            Spacer()
-                                            HStack {
-                                                Text(recipe.name)
-                                                    .font(.title2)
-                                                    .fontWeight(.black)
-                                                    .foregroundColor(.white)
-                                                    .padding(.bottom, 50)
-                                                
-                                                HStack(spacing: 3) {
-                                                    Text(String(format: "%.1f", recipe.rating))
-                                                        .foregroundColor(.white)
-                                                    Image(systemName: "star.fill")
-                                                        .foregroundColor(.yellow)
+                                    .offset(x: offset.width, y: cardOffset.height) // Moves horizontally and vertically
+                                    .rotationEffect(.degrees(Double(offset.width / 20))) // Slight rotation effect
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { gesture in
+                                                if abs(gesture.translation.width) > abs(gesture.translation.height) {
+                                                    // Horizontal swipe (left/right)
+                                                    offset = gesture.translation
+                                                } else {
+                                                    // Vertical swipe (up/down)
+                                                    cardOffset.height = gesture.translation.height
                                                 }
-                                                .padding(.horizontal, 8)
-                                                .padding(.vertical, 5)
-                                                .background(Color.black.opacity(0.7))
-                                                .cornerRadius(10)
-                                                .padding(.bottom, 50)
                                             }
-                                            HStack {
-                                                Image(systemName: "timer")
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(.yellow)
-                                                Text("\(recipe.prepTimeMinutes + recipe.cookTimeMinutes) min")
+                                            .onEnded { _ in
+                                                withAnimation {
+                                                    // Handle horizontal swipe (left/right)
+                                                    if offset.width < -100 {
+                                                        // Swiped left
+                                                        moveToNextCard()
+                                                    } else if offset.width > 100 {
+                                                        // Swiped right (liked)
+                                                        model.addToFavorites(recipe: filteredRecipes[currentIndex])
+                                                        moveToNextCard()
+                                                    } else {
+                                                        offset = .zero
+                                                    }
+
+                                                    // Handle vertical swipe (up/down)
+                                                    if cardOffset.height < -100 {
+                                                        // Swipe up to show details
+                                                        showDetails = true
+                                                        cardOffset.height = -350 // Move image up
+                                                    } else {
+                                                        // Reset details view
+                                                        showDetails = false
+                                                        cardOffset.height = .zero
+                                                    }
+                                                }
                                             }
-                                            .foregroundColor(.white)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 5)
-                                            .background(Color.black.opacity(0.7))
-                                            .cornerRadius(10)
-                                            .padding(.bottom, 50)
-                                        },
-                                        alignment: .center
                                     )
+
+                                // 🛠 Only the top card should display details
+                                if showDetails {
+                                    DetailsOverlay(recipe: recipe)
+                                        .transition(.move(edge: .bottom))
+                                }
                             }
-                            .offset(x: offset.width, y: offset.height * 0.4)
-                            .rotationEffect(.degrees(Double(offset.width / 40)))
-                            .gesture(
-                                DragGesture()
-                                    .onChanged { gesture in
-                                        offset = gesture.translation
-                                    }
-                                    .onEnded { _ in
-                                        withAnimation {
-                                            swipeCard(width: offset.width)
-                                        }
-                                    }
-                            )
                             .zIndex(Double(model.courses.count - index))
                         }
                     }
                 }
             }
             .padding()
-            .onAppear {
-                model.fetch()
-            }
-            
+            .onAppear { model.fetch() }
+
             HStack {
                 Spacer()
-                Button(action: { //X button swipe left
-                    withAnimation {
-                        swipeCard(width: -200)
-                    }
-                }) {
+                Button(action: { withAnimation { swipeCard(width: -200) } }) {
                     Image(systemName: "xmark")
                         .resizable()
-                        .frame(width: 35, height: 35)
+                        .frame(width: 30, height: 30)
                         .foregroundColor(.red)
                         .padding(14)
-                        .bold()
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 40)
-                        .stroke(Color.red, lineWidth: 2)
-                )
+                .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.red, lineWidth: 2))
                 Spacer()
-                Button(action: { //swipe right
-                    withAnimation {
-                        swipeCard(width: 150)
-                    }
-                }) {
+                Button(action: { withAnimation { swipeCard(width: 200) } }) {
                     Image(systemName: "heart.fill")
                         .resizable()
-                        .frame(width: 35, height: 35)
-                        .foregroundColor(Color(red: 0.15, green: 0.87, blue: 0.57))
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.green)
                         .padding(14)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 40)
-                        .stroke(Color.green, lineWidth: 2)
-                )
+                .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.green, lineWidth: 2))
                 Spacer()
             }
             .padding(.horizontal, 40)
         }
     }
-    
+
+    // Function for button-based swiping
     private func swipeCard(width: CGFloat) {
-        switch width {
-        case -500...(-150): // Swipe to left
-            offset = CGSize(width: -500, height: 0)
-            withAnimation {
-                changeColor(width: offset.width)
+        withAnimation {
+            if width < -150 {
+                moveToNextCard()
+            } else if width > 150 {
+                if currentIndex < filteredRecipes.count {
+                    let likedRecipe = filteredRecipes[currentIndex] // Ensure we reference the correct recipe
+                    model.addToFavorites(recipe: likedRecipe) // Add before moving to the next card
+                }
+                moveToNextCard()
             }
-            moveToNextCard()
-            
-        case 150...500: // Swipe right
-            offset = CGSize(width: 500, height: 0)
-            changeColor(width: offset.width)
-            addToFav(recipe: filteredRecipes[currentIndex])
-            moveToNextCard()
-            
-        default:
-            offset = .zero
         }
     }
-    
-    private func changeColor(width: CGFloat) {
-        switch width {
-        case -500...(-130):
-            color = .red
-            
-        case 130...500:
-            color = .green
-            
-        default:
-            color = .black
-        }
-    }
-    
+
+    // Move to the next card after a swipe
     private func moveToNextCard() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        withAnimation {
             currentIndex += 1
             offset = .zero
-            color = .black
+            cardOffset = .zero
+            showDetails = false
         }
     }
-    
-    private func addToFav(recipe: Recipe) {
-        model.addToFavorites(recipe: recipe)
-    }
 }
+struct DetailsOverlay: View {
+    var recipe: Recipe
 
+    var body: some View {
+        ScrollView { // 🛠 Make details scrollable
+            VStack(alignment: .leading, spacing: 15) {
+                Text(recipe.name)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .lineLimit(nil)
 
-#Preview {
-    CardView()
-        .environmentObject(MealsModel())
+                HStack {
+                    ForEach(1...5, id: \.self) { index in
+                        Image(systemName: index <= Int(recipe.rating) ? "star.fill" : "star")
+                            .foregroundColor(index <= Int(recipe.rating) ? .yellow : .gray)
+                    }
+                    Text("(\(Int(recipe.reviewCount)) Reviews)")
+                        .foregroundColor(.gray)
+                }
+                .padding(.leading, 10)
+
+                HStack {
+                    Spacer()
+                    VStack {
+                        Text("Prep Time")
+                            .foregroundColor(Color.gray)
+                        Text("\(recipe.prepTimeMinutes)m")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                    Spacer()
+
+                    VStack {
+                        Text("Cook Time")
+                            .foregroundColor(Color.gray)
+                        Text("\(recipe.cookTimeMinutes)m")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal)
+
+                if !recipe.ingredients.isEmpty {
+                    Text("Ingredients")
+                        .font(.headline)
+                        .foregroundColor(Color.gray)
+                        .padding(.horizontal)
+                        .padding(.bottom, 4)
+
+                    Text(recipe.ingredients.joined(separator: ", "))
+                        .padding(.horizontal)
+                        .padding(.bottom, 8)
+                        .lineLimit(nil)
+                }
+
+                if !recipe.instructions.isEmpty {
+                    Text("Instructions")
+                        .font(.headline)
+                        .foregroundColor(Color.gray)
+                        .padding(.horizontal)
+                        .padding(.bottom, 4)
+
+                    ForEach(recipe.instructions, id: \.self) { instruction in
+                        Text(instruction)
+                            .padding(.horizontal)
+                            .padding(.bottom, 3)
+                            .lineLimit(nil) // Allow full display
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.black.opacity(0.4))
+            .cornerRadius(20)
+            .padding(.top, 30)
+            .shadow(radius: 10)
+        }
+        .frame(height: 400)
+    }
 }
