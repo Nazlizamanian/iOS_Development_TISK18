@@ -135,7 +135,6 @@ struct CardView: View {
                                             }
                                     )
 
-                                // 🛠 Only the top card should display details
                                 if showDetails {
                                     DetailsOverlay(recipe: recipe)
                                         .transition(.move(edge: .bottom))
@@ -203,7 +202,7 @@ struct DetailsOverlay: View {
     var recipe: Recipe
 
     var body: some View {
-        ScrollView { // 🛠 Make details scrollable
+        ScrollView {
             VStack(alignment: .leading, spacing: 15) {
                 Text(recipe.name)
                     .font(.largeTitle)
