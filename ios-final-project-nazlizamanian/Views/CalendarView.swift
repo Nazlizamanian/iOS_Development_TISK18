@@ -70,6 +70,7 @@ struct CalendarView: View {
                                 Text("\(day)")
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .padding(4)
+                                    .foregroundColor(.white)
                                     .aspectRatio(1,contentMode: .fit)
                                     .background(day == calendarVM.calendar.component(.day, from: calendarVM.currentDate) ? Color.mint : Color.clear)
 

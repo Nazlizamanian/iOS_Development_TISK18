@@ -7,72 +7,53 @@
 
 import SwiftUI
 
+/*
+ Soruces in this file:
+ TabView: https://medium.com/mobile-app-experts/tabview-in-swiftui-082058488426
+ */
+
 struct ContentView: View {
     @StateObject var viewModel = MealsModel()
+    
+    @State private var selectedIndex: Int = 0
 
         var body: some View {
-            NavigationStack{
-                CardView()
-                
-            }
-            .navigationTitle("StartPageview")
-            /*
-            NavigationStack{
-                NavigationStack {
-                    VStack {
-                        NavigationLink("Go to Card", value: Destination.card)
-                        NavigationLink("Go to Fav", value: Destination.fav)
-
-                    }
-                    .navigationDestination(for: Destination.self) { destination in
-                        switch destination {
-                        case .card:
-                            CardView()
-                        case .fav:
-                            FavourtiesView()
-
-                        }
-                    }
+            TabView(selection: $selectedIndex){
+                NavigationStack(){
+                    CardView()
                 }
-                .environmentObject(viewModel)
-
-
-            }*/
+                .tabItem{
+                    Label("Swipe", systemImage: "flame.fill")
+                    
+                }
+                .tag(0)
+                
+                NavigationStack(){ //liked list
+                        FavouritesView()
+                }
+                .tabItem{
+                    Label("Liked", systemImage: "heart.fill")
+                }
+                .tag(1)
+                
+                NavigationStack(){ //Visar claendar sidan
+                    CalendarView()
+                }
+                .tabItem{
+                    Label("Calendar", systemImage: "calendar")
+                }
+                .tag(2)
+                
+            }//Tabview
+            .tint(.mint)
         }
     }
 
 
-    enum Destination: Hashable{
-            case card
-            case fav
-    }
 
 
-    #Preview {
+#Preview {
         ContentView()
             .environmentObject(MealsModel())
     }
 
-
-    /*
-        .toolbar{
-            ToolbarItem(placement: .navigationBarLeading){
-                NavigationLink(destination: StartPageView()){
-                    Text("StartPage")
-                }
-               
-            }
-            ToolbarItem(placement: .navigationBarLeading){
-                NavigationLink(destination: CardView()){
-                    Text("CardView")
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing){
-                NavigationLink(destination: FavourtiesView()){
-                    Text("Fav")
-                }
-            }
-                
-            
-        }
-       .navigationBarBackButtonHidden(true) //döljer från content tbx t startPage*/

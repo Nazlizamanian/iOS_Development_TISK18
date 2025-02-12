@@ -63,20 +63,6 @@ struct CardView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                NavigationLink(destination: FavouritesView()) {
-                    Text("Go to Favorites")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .padding(.top)
-                Spacer()
-            }
-            .padding(.horizontal)
-
             Picker("Difficulty", selection: $selectedDifficulty) {
                 Text("All").tag("All")
                 Text("Easy").tag("Easy")
@@ -87,7 +73,7 @@ struct CardView: View {
             ZStack {
                 if currentIndex < filteredRecipes.count {
                     ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
-                        if index == currentIndex { // 🛠 Show only the current recipe
+                        if index == currentIndex { //Visa bara  ett recipet i taget
                             ZStack(alignment: .bottomLeading) {
                                 URLImage(urlString: recipe.image)
                                     .frame(width: 375, height: 600)

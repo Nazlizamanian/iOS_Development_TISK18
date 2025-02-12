@@ -35,20 +35,7 @@ struct FavouritesView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // Add a navigation button at the top
-                HStack {
-                    Spacer() // Push button to the right
-                    NavigationLink(destination: CalendarView()) {
-                        Text("Shopping")
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    .padding()
-                }
-                
+               
                 List {
                     ForEach(filteredRecipes) { meal in
                         NavigationLink(destination: DetailsView(meal: meal)) {
