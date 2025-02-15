@@ -16,6 +16,7 @@ import Combine
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = []
     @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
+    @Published var assignedMelas: [Date: [String: Recipe]] = [:]
     
     var modelContext: ModelContext?
     func fetch() {
@@ -66,4 +67,5 @@ class MealsModel: ObservableObject {
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
         return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }
 
+    
 }

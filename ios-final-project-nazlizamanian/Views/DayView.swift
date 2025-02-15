@@ -10,6 +10,8 @@ import SwiftUI
 struct DayView: View {
     var selectedDate: Date
     
+    @EnvironmentObject var model: MealsModel //global shared data container
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             // Day Header
@@ -19,6 +21,7 @@ struct DayView: View {
                 .padding(.horizontal)
                 .padding(.top)
             
+          
             // Breakfast Section
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 15) {
