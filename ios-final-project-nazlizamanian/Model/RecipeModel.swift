@@ -16,12 +16,10 @@ enum MealType: String, CaseIterable {
 
     var title: String { rawValue }
     var iconName: String {
-        switch self {
-        case .breakfast: return "cup.and.saucer"
-        case .lunch: return "fork.knife.circle"
-        case .dinner: return "fork.knife.circle"
-        case .snacks: return "takeoutbag.and.cup.and.straw"
-        }
+        if self == .breakfast { return "cup.and.saucer"}
+        else if self == .lunch || self == .dinner { return "fork.and.knife.circle"}
+        else { return "takeoutbag.and.cup.and.straw"}
+       
     }
 }
 

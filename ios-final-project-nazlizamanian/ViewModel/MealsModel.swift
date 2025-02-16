@@ -16,6 +16,7 @@ import Combine
  
  6. working with dictiornary: https://medium.com/@kishorepremkumar/dictionaries-in-swift-e03c14660b7
 
+ 7. Sum array using reduce: https://www.hackingwithswift.com/example-code/language/how-to-sum-an-array-of-numbers-using-reduce
  */
 
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
@@ -86,6 +87,14 @@ class MealsModel: ObservableObject {
         return assignedMeals[date]?[mealType] //Hämta recept annars nil
     }
     
+    func calculateCalories(for date: Date) -> Int {
+        if let mealsPerDate = assignedMeals[date]{ //7 if meals exisist for the date add
+            return mealsPerDate.values.reduce(0){ $0 + $1.caloriesPerServing} //current running totalt + current recipe obj
+        }
+        else {
+            return 0
+        }
+    }
     
     
 }

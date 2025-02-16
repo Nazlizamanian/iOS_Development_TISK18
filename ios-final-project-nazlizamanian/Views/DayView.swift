@@ -7,8 +7,8 @@
 import SwiftUI
 /*
  Soruces used in this file:
- 7. iterating over list: https://stackoverflow.com/questions/61187277/swiftui-build-a-list-using-enums
- 8. Sheet: https://rryam.com/swiftui-sheet-modifiers?utm_m
+ 8. iterating over list: https://stackoverflow.com/questions/61187277/swiftui-build-a-list-using-enums
+ 9. Sheet: https://rryam.com/swiftui-sheet-modifiers?utm_m
  */
 
 struct DayView: View {
@@ -34,15 +34,19 @@ struct DayView: View {
 
                 Spacer()
 
+                // Total calories display
+                Text("Total calories for the day: \(model.calculateCalories(for: selectedDate))")
+                    .font(.title)
+                    .fontWeight(.bold)
             }
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))
             .sheet(isPresented: $showRecipePicker) {
                 if let selectedMealType {
                     RecipePickerView(
-                        recipes: model.favoriteRecipes,
+                        recipes: model.favoriteRecipes, //visar endast vår likedlist recipes
                         mealType: selectedMealType,
-                        onSelect: { recipe in
+                        onSelect: { recipe in //triggar vår assingmeal
                             model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
                             showRecipePicker = false
                         }
@@ -59,6 +63,7 @@ struct DayView: View {
                 Image(systemName: mealType.iconName)
                     .font(.system(size: 30))
                     .foregroundColor(.white)
+                
                 Text(mealType.title)
                     .font(.title2)
                     .fontWeight(.bold)
@@ -116,6 +121,7 @@ struct RecipePickerView: View {
                         URLImage(urlString: recipe.image)
                             .frame(width: 50, height: 50)
                             .cornerRadius(10)
+                        
                         Text(recipe.name)
                             .font(.headline)
                             .foregroundColor(.primary)
