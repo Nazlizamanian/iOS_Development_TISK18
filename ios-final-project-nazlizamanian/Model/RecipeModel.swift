@@ -8,6 +8,23 @@
 import Foundation
 import SwiftData
 
+enum MealType: String, CaseIterable {
+    case breakfast = "Breakfast"
+    case lunch = "Lunch"
+    case dinner = "Dinner"
+    case snacks = "Snacks"
+
+    var title: String { rawValue }
+    var iconName: String {
+        switch self {
+        case .breakfast: return "cup.and.saucer"
+        case .lunch: return "fork.knife.circle"
+        case .dinner: return "fork.knife.circle"
+        case .snacks: return "takeoutbag.and.cup.and.straw"
+        }
+    }
+}
+
 /**Model**/
 struct Recipe: Codable, Hashable, Identifiable{
     let id: Int
@@ -20,6 +37,7 @@ struct Recipe: Codable, Hashable, Identifiable{
     let cuisine: String
     let prepTimeMinutes: Int
     let cookTimeMinutes: Int
+    let caloriesPerServing: Int
     let reviewCount: Int
 }
 

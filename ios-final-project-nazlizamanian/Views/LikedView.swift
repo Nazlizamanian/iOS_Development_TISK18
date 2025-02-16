@@ -10,15 +10,15 @@ import SwiftData
 
 /*
  Source used in this file:
- NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
+ 3. NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
  */
 
 
-struct FavouritesView: View {
+struct LikedView: View {
     @State private var searchString = ""
     
     @Environment(\.modelContext) var modelContext
-    @Query private var recipeFavList: [RecipeFavList] //Swift persistance
+  //  @Query private var recipeFavList: [RecipeFavList] //Swift persistance
     @State private var mealPages = []
     
     
@@ -48,6 +48,7 @@ struct FavouritesView: View {
                             }
                             .padding(3)
                         }
+                      
                     }
                 }
                 .searchable(text: $searchString)
@@ -63,6 +64,6 @@ struct FavouritesView: View {
 
 
 #Preview {
-    FavouritesView()
+    LikedView()
         .environmentObject(MealsModel())
 }

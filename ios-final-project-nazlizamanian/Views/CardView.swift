@@ -9,14 +9,17 @@ import SwiftUI
 
 /*
  Sources used in this file:
- 1.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
+ 2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
  */
 
+
+//Todo: fix bug logic what happens if you swipped on all cards?
 struct CardView: View {
     @EnvironmentObject var model: MealsModel
-    @StateObject private var card = Card() //Card instance handles all logci
+    @StateObject private var card = Card() //Card instance of our model handles logci
     @State private var selectedDifficulty = "All"
 
+    
     var filteredRecipes: [Recipe] {
         switch selectedDifficulty {
         case "Easy":
@@ -92,7 +95,7 @@ struct CardView: View {
                                     DetailsOverlay(recipe: recipe)
                                         .transition(.move(edge: .bottom))
                                 }
-                                HStack {
+                                HStack { //Buttons
                                     Spacer()
                                     Button(action: { withAnimation { card.swipeCard(width: -200, filteredRecipes: filteredRecipes, model: model) } }) {
                                         Image(systemName: "xmark")

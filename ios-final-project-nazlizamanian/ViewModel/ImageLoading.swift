@@ -9,7 +9,9 @@ import Foundation
 
 //responsible for actucally fetching the image
 class URLImageLoadingViewModel: ObservableObject {
+    
     @Published var imageData: Data?
+    
     func fetchImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, _ in

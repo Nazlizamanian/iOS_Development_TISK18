@@ -5,120 +5,124 @@
 //  Created by Nazli  on 11/02/25.
 
 import SwiftUI
+/*
+ Soruces used in this file:
+ 7. iterating over list: https://stackoverflow.com/questions/61187277/swiftui-build-a-list-using-enums
+ 8. Sheet: https://rryam.com/swiftui-sheet-modifiers?utm_m
+ */
 
-//Todoo: Each day be able to choose meals l
 struct DayView: View {
     var selectedDate: Date
-    
-    @EnvironmentObject var model: MealsModel //global shared data container
-    
+
+    @EnvironmentObject var model: MealsModel
+    @State private var showRecipePicker = false
+    @State private var selectedMealType: String?
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            // Day Header
-            Text(selectedDate, format: .dateTime.weekday(.wide).day().month(.abbreviated))
-                .font(.largeTitle)
-                .bold()
-                .padding(.horizontal)
-                .padding(.top)
-            
-          
-            // Breakfast Section
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 15) {
-                    Image(systemName: "cup.and.saucer")
-                        .font(.system(size: 30))
-                        .foregroundColor(.white)
-                    
-                    Text("Breakfast")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 30) {
+                // Display selected date
+                Text(selectedDate, format: .dateTime.weekday(.wide).day().month(.abbreviated))
+                    .font(.largeTitle)
+                    .bold()
+                    .padding([.horizontal, .top])
+
+                // Dynamic meal sections enum
+                ForEach(MealType.allCases, id: \.self) { mealType in
+                    mealSection(mealType: mealType)
                 }
-                Text("Add breakfast here")
+
+                Spacer()
+
+            }
+            .padding()
+            .background(Color.black.edgesIgnoringSafeArea(.all))
+            .sheet(isPresented: $showRecipePicker) {
+                if let selectedMealType {
+                    RecipePickerView(
+                        recipes: model.favoriteRecipes,
+                        mealType: selectedMealType,
+                        onSelect: { recipe in
+                            model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
+                            showRecipePicker = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    // Helper function to create a meal section
+    private func mealSection(mealType: MealType) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 15) {
+                Image(systemName: mealType.iconName)
+                    .font(.system(size: 30))
+                    .foregroundColor(.white)
+                Text(mealType.title)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                Spacer()
+            }
+
+            if let meal = model.getMeal(for: selectedDate, mealType: mealType.rawValue) {
+
+                HStack { //selected meal
+                    URLImage(urlString: meal.image)
+                        .frame(width: 50, height: 50)
+                        .cornerRadius(10)
+                    
+                    Text(meal.name)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
+            } else {
+                // Placeholder text when no meal is selected
+                Text("Add \(mealType.title.lowercased()) here")
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
             }
-            .padding()
-            .background(Color.mint)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-            
-            // Lunch Section
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 15) {
-                    Image(systemName: "fork.knife.circle")
-                        .font(.system(size: 30))
-                        .foregroundColor(.white)
-                    
-                    Text("Lunch")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                }
-                Text("Add lunch here")
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            .padding()
-            .background(Color.mint)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-            
-            // Dinner Section
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 15) {
-                    Image(systemName: "fork.knife.circle")
-                        .font(.system(size: 30))
-                        .foregroundColor(.white)
-                    
-                    Text("Dinner")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                }
-                Text("Add dinner here") //Lägg till från listan ??
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            .padding()
-            .background(Color.mint)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-            
-            Spacer()
-            
-            //Snacks
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 15) {
-                    Image(systemName: "takeoutbag.and.cup.and.straw")
-                        .font(.system(size: 30))
-                        .foregroundColor(.white)
-                    
-                    Text("Snacks")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                }
-                Text("Add snacks here") //Lägg till från listan ??
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            .padding()
-            .background(Color.mint)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-            
-            Spacer()
         }
         .padding()
-        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .background(Color.mint)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+        .onTapGesture {
+            selectedMealType = mealType.rawValue
+            showRecipePicker = true
+        }
+        .onChange(of: showRecipePicker) { newValue in //Måste ha för att se till att den visar listan första gången
+            if !newValue {
+                selectedMealType = nil
+            }
+            
+        }
+    }
+}
+
+struct RecipePickerView: View {
+    var recipes: [Recipe]
+    var mealType: String
+    var onSelect: (Recipe) -> Void
+
+    var body: some View {
+        NavigationStack {
+            List(recipes) { recipe in
+                Button {
+                    onSelect(recipe)
+                } label: {
+                    HStack {
+                        URLImage(urlString: recipe.image)
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(10)
+                        Text(recipe.name)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                    }
+                }
+            }
+            .navigationTitle("Choose \(mealType)")
+        }
     }
 }

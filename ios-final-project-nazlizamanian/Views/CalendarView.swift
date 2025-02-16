@@ -8,15 +8,15 @@
 import SwiftUI
 
 /*
- Sources used:
- 1. https://www.youtube.com/watch?v=jBvkFKhnYLI&t=45s
+ Sources used in this file:
+ 4. Impleneting a calendar: https://www.youtube.com/watch?v=jBvkFKhnYLI&t=45s
  
  */
 
 
 struct CalendarView: View {
    
-    @StateObject private var calendarVM = CalendarHelperView()
+    @StateObject private var calendarVM = CalendarHelper()
     
     var body: some View {
         NavigationStack{
@@ -48,7 +48,7 @@ struct CalendarView: View {
                 }
                 .padding()
                 
-                HStack{ //Wekkdays
+                HStack{ //Weekdays
                     ForEach(calendarVM.calendar.veryShortWeekdaySymbols.indices, id: \.self){ index in
                         let newIndex = (index + (calendarVM.calendar.firstWeekday - 1 )) % 7
                         Text(calendarVM.calendar.veryShortWeekdaySymbols[newIndex])
@@ -57,7 +57,7 @@ struct CalendarView: View {
                     }
                 }
                 
-                // Calendar grid
+                // 4, Calendar grid
                 let days = calendarVM.generateDaysForMonth()
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
                     ForEach(days, id: \.self) { day in
@@ -73,7 +73,6 @@ struct CalendarView: View {
                                     .foregroundColor(.white)
                                     .aspectRatio(1,contentMode: .fit)
                                     .background(day == calendarVM.calendar.component(.day, from: calendarVM.currentDate) ? Color.mint : Color.clear)
-
                                     .cornerRadius(30)
                             }
                         }

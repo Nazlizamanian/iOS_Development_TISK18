@@ -9,27 +9,27 @@ import SwiftUI
 
 /*
  Soruces in this file:
- TabView: https://medium.com/mobile-app-experts/tabview-in-swiftui-082058488426
+ 1. TabView: https://medium.com/mobile-app-experts/tabview-in-swiftui-082058488426
  */
 
 struct ContentView: View {
-    @StateObject var viewModel = MealsModel()
+    @StateObject var viewModel = MealsModel() //stateobj init once and shared across or views
     
     @State private var selectedIndex: Int = 0
 
         var body: some View {
-            TabView(selection: $selectedIndex){
+            TabView(selection: $selectedIndex){ //1
                 NavigationStack(){
                     CardView()
                 }
                 .tabItem{
                     Label("Swipe", systemImage: "flame.fill")
-                    
+                
                 }
                 .tag(0)
                 
                 NavigationStack(){ //liked list
-                        FavouritesView()
+                        LikedView()
                 }
                 .tabItem{
                     Label("Liked", systemImage: "heart.fill")
