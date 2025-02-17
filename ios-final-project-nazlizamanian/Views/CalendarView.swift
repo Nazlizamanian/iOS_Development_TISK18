@@ -21,7 +21,7 @@ struct CalendarView: View {
     var body: some View {
         NavigationStack{
             VStack {
-                Spacer()
+                
                 HStack {//Head for < Month >
                     Button(action: {
                         calendarVM.changeMonth(by: -1)

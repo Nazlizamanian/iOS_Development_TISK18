@@ -4,22 +4,26 @@
 //
 //  Created by Nazli  on 15/02/25.
 //
-
 import Foundation
+import SwiftUI
+import Observation
 
-//responsible for actucally fetching the image
-class URLImageLoadingViewModel: ObservableObject {
-    
-    @Published var imageData: Data?
+
+//Resonpsible for showing image fetching
+@Observable
+class URLImageLoadingViewModel {
+    var imageData: Data?
     
     func fetchImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             DispatchQueue.main.async {
-                self.imageData = data
+                self?.imageData = data
             }
         }.resume()
     }
 }
+
 
 
