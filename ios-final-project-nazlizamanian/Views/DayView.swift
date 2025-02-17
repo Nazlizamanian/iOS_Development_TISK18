@@ -15,7 +15,7 @@ import SwiftUI
 struct DayView: View {
     var selectedDate: Date
 
-    @EnvironmentObject var model: MealsModel
+    @Environment(MealsModel.self) var model
     @State private var showRecipePicker = false
     @State private var selectedMealType: String?
 
@@ -42,7 +42,7 @@ struct DayView: View {
             }
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))
-            .sheet(isPresented: $showRecipePicker) { //9 and 10 
+            .sheet(isPresented: $showRecipePicker) { //9 and 10
                 if let selectedMealType {
                     RecipePickerView(
                         recipes: model.favoriteRecipes, //visar endast vår likedlist recipes

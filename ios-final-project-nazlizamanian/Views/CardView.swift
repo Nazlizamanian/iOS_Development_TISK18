@@ -15,7 +15,7 @@ import SwiftUI
 
 //Todo: fix bug logic what happens if you swipped on all cards?
 struct CardView: View {
-    @EnvironmentObject var model: MealsModel
+    @Environment(MealsModel.self) var model
     @State private var card = Card() //Card instance of our model handles logci
     @State private var selectedDifficulty = "All"
 

@@ -13,7 +13,7 @@ import SwiftUI
  */
 
 struct ContentView: View {
-    @StateObject var viewModel = MealsModel() //stateobj init once and shared across or views
+    @State var viewModel = MealsModel() //stateobj init once and shared across or views
     
     @State private var selectedIndex: Int = 0
 
@@ -50,10 +50,4 @@ struct ContentView: View {
     }
 
 
-
-
-#Preview {
-        ContentView()
-            .environmentObject(MealsModel())
-    }
 

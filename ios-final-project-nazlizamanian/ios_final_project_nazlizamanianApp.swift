@@ -10,12 +10,12 @@ import SwiftData
 
 @main
 struct ios_final_project_nazlizamanianApp: App {
-    @StateObject private var model = MealsModel()
+    @State private var model = MealsModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(MealsModel())
+                .environment(MealsModel())
         }
         //.modelContainer(for: RecipeSummary.self)
     }

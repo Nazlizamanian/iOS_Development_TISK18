@@ -20,11 +20,16 @@ import Observation
 
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
+//ToDO: 1.change to observation instead of published
+// 2. ingredients calculations
+// 3. unit testing
+//4. Swiftdata save liked list and assignedMeals
 
-class MealsModel: ObservableObject {
-    @Published var courses: [Recipe] = [] //stores the list of recipes from our api
-    @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
-    @Published var assignedMeals: [Date: [String: Recipe]] = [:] //dictionary Date: mealtype O(1)
+@Observable
+class MealsModel {
+    var courses: [Recipe] = [] //stores the list of recipes from our api
+    var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
+    var assignedMeals: [Date: [String: Recipe]] = [:] //dictionary Date: mealtype O(1)
     
    // var modelContext: Mod elContext? swiftdata
     

@@ -16,13 +16,14 @@ import SwiftData
 
 struct LikedView: View {
     @State private var searchString = ""
+    @Environment(MealsModel.self) var model
     
     @Environment(\.modelContext) var modelContext
   //  @Query private var recipeFavList: [RecipeFavList] //Swift persistance
     @State private var mealPages = []
     
     
-    @EnvironmentObject var model: MealsModel
+    //@EnvironmentObject var model: MealsModel
     
     private var filteredRecipes: [Recipe] {
         guard !searchString.isEmpty else {
@@ -62,8 +63,3 @@ struct LikedView: View {
 
 }
 
-
-#Preview {
-    LikedView()
-        .environmentObject(MealsModel())
-}
