@@ -7,9 +7,12 @@
 
 import Foundation
 import SwiftUI
+import Observation
 
-class CalendarHelper: ObservableObject {
-    @Published var currentDate: Date = Date()
+@Observable
+class CalendarHelper {
+    
+    var currentDate: Date = Date()
     
     let calendar: Calendar = {
         var calendar = Calendar.current

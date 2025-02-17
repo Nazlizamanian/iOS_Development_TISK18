@@ -9,6 +9,7 @@ import SwiftUI
  Soruces used in this file:
  8. iterating over list: https://stackoverflow.com/questions/61187277/swiftui-build-a-list-using-enums
  9. Sheet: https://rryam.com/swiftui-sheet-modifiers?utm_m
+ 10. Sheet: https://www.hackingwithswift.com/quick-start/swiftui/how-to-present-a-new-view-using-sheets
  */
 
 struct DayView: View {
@@ -41,7 +42,7 @@ struct DayView: View {
             }
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))
-            .sheet(isPresented: $showRecipePicker) {
+            .sheet(isPresented: $showRecipePicker) { //9 and 10 
                 if let selectedMealType {
                     RecipePickerView(
                         recipes: model.favoriteRecipes, //visar endast vår likedlist recipes

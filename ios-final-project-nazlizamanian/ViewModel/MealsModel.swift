@@ -10,16 +10,15 @@ import SwiftUI
 import SwiftData
 import Combine
 
-/*
- Sources used:
+/*Sources used:
  5. Fetching data from api: https://anjalijoshi2426.medium.com/fetch-and-display-api-data-on-list-using-swiftui-13fff61e8826
  
  6. working with dictiornary: https://medium.com/@kishorepremkumar/dictionaries-in-swift-e03c14660b7
 
- 7. Sum array using reduce: https://www.hackingwithswift.com/example-code/language/how-to-sum-an-array-of-numbers-using-reduce
- */
+ 7. Sum array using reduce: https://www.hackingwithswift.com/example-code/language/how-to-sum-an-array-of-numbers-using-reduce*/
 
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
+
 class MealsModel: ObservableObject {
     @Published var courses: [Recipe] = [] //stores the list of recipes from our api
     @Published var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
@@ -72,6 +71,7 @@ class MealsModel: ObservableObject {
         favoriteRecipes.removeAll{ $0.id == recipe.id}
     }*/
     
+    //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
         return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }
 

@@ -16,12 +16,12 @@ import SwiftUI
 
 struct CalendarView: View {
    
-    @StateObject private var calendarVM = CalendarHelper()
+    @State private var calendarVM = CalendarHelper()
     
     var body: some View {
         NavigationStack{
             VStack {
-                
+                Spacer()
                 HStack {//Head for < Month >
                     Button(action: {
                         calendarVM.changeMonth(by: -1)
@@ -86,11 +86,6 @@ struct CalendarView: View {
             .padding()
         }
     }
-
-    
-
-  
-    
     
 }
 

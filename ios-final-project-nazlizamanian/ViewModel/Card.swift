@@ -6,19 +6,20 @@
 //
 import Foundation
 import SwiftUI
+import Observation
 
 /*
  Sources used in this file:
  2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
  logic connected to the cardview same sorce 
- 
  */
 
-class Card: ObservableObject {
-    @Published var currentIndex: Int = 0
-    @Published var offset: CGSize = .zero
-    @Published var cardOffset = CGSize.zero
-    @Published var showDetails: Bool = false
+@Observable
+class Card  {
+    var currentIndex: Int = 0
+    var offset: CGSize = .zero
+    var cardOffset = CGSize.zero
+    var showDetails: Bool = false
     
     
     func moveToNextCard() {
