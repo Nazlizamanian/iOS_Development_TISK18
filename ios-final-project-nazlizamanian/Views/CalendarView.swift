@@ -10,7 +10,6 @@ import SwiftUI
 /*
  Sources used in this file:
  4. Impleneting a calendar: https://www.youtube.com/watch?v=jBvkFKhnYLI&t=45s
- 
  */
 
 

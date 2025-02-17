@@ -39,6 +39,17 @@ struct DayView: View {
                 Text("Total calories for the day: \(model.calculateCalories(for: selectedDate))")
                     .font(.title)
                     .fontWeight(.bold)
+                
+                Circle()
+                    .fill(Color.mint)
+                    .frame(width: 120, height: 120)
+                    .overlay(
+                        Text("\(String(format: "%.0f", model.calculateCookTime(for: selectedDate))) min")
+                      
+                            
+                    )
+                    .font(.title)
+                    .fontWeight(.bold)
             }
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))

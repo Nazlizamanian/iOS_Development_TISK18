@@ -8,8 +8,8 @@
 import SwiftUI
 import SwiftData
 
-/*
- Source used in this file:
+
+/*Source used in this file:
  3. NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
  */
 
@@ -19,7 +19,7 @@ struct LikedView: View {
     @Environment(MealsModel.self) var model
     
     @Environment(\.modelContext) var modelContext
-  //  @Query private var recipeFavList: [RecipeFavList] //Swift persistance
+  
     @State private var mealPages = []
     
     

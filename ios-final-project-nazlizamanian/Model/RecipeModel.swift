@@ -17,7 +17,7 @@ enum MealType: String, CaseIterable {
     var title: String { rawValue }
     var iconName: String {
         if self == .breakfast { return "cup.and.saucer"}
-        else if self == .lunch || self == .dinner { return "fork.and.knife.circle"}
+        else if self == .lunch || self == .dinner { return "fork.knife.circle" }
         else { return "takeoutbag.and.cup.and.straw"}
        
     }
@@ -33,8 +33,9 @@ struct Recipe: Codable, Hashable, Identifiable{
     let difficulty: String
     let rating: Double
     let cuisine: String
-    let prepTimeMinutes: Int
-    let cookTimeMinutes: Int
+    let prepTimeMinutes: Double
+    let cookTimeMinutes: Double
+    let servings: Int
     let caloriesPerServing: Int
     let reviewCount: Int
 }
@@ -45,10 +46,10 @@ struct RecipesResponse: Codable {
 }
 
 @Model
-final class RecipeFavList{
-    @Attribute(.unique) let id: Int
-    let name: String
-    let image: String
+final class LikedList{
+    @Attribute(.unique) var id: Int
+    var name: String
+    var image: String
     
     init(id: Int, name: String, image: String) {
         self.id = id

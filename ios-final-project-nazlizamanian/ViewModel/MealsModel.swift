@@ -20,18 +20,17 @@ import Observation
 
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
-//ToDO: 1.change to observation instead of published
+//ToDO:
 // 2. ingredients calculations
 // 3. unit testing
 //4. Swiftdata save liked list and assignedMeals
 
 @Observable
-class MealsModel {
+class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
     var assignedMeals: [Date: [String: Recipe]] = [:] //dictionary Date: mealtype O(1)
     
-   // var modelContext: Mod elContext? swiftdata
     
     func fetch() { //5
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }
@@ -98,10 +97,24 @@ class MealsModel {
         if let mealsPerDate = assignedMeals[date]{ //7 if meals exisist for the date add
             return mealsPerDate.values.reduce(0){ $0 + $1.caloriesPerServing} //current running totalt + current recipe obj
         }
-        else {
-            return 0
-        }
+        else { return 0 }
     }
+    
+    func calculateCookTime(for date: Date) -> Double{
+        if let mealsPerDate = assignedMeals[date]{
+            
+            let totalCookTimePerMeal = mealsPerDate.values.reduce(0){totalTime, recipe in //hämta alla recept för dagen
+                let totalTimePerRecipe = (recipe.prepTimeMinutes + recipe.cookTimeMinutes) //ex pizza 15+ 20 = 35 /4 = 8.75, cookies 15+10=25/24= 1
+                let timePerServing = totalTimePerRecipe / Double(recipe.servings)
+                return totalTime + timePerServing
+            }
+            return totalCookTimePerMeal
+            
+        }
+        else { return 0.0 }
+    }
+    
+    
     
     
 }
