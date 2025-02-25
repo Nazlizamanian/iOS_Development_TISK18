@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _SwiftData_SwiftUI
 
 /*
  Soruces in this file:
@@ -14,6 +15,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State var viewModel = MealsModel() //stateobj init once and shared across or views
+    
+    @Environment(\.modelContext) private var modelContext
+    @Query private var favoriteRecipes: [FavoriteRecipe]
     
     @State private var selectedIndex: Int = 0
 
