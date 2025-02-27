@@ -131,9 +131,14 @@ class MealsModel: Identifiable {
         if let mealsPerDate = assignedMeals[date]{
             
             let totalCookTimePerMeal = mealsPerDate.values.reduce(0){totalTime, recipe in //hämta alla recept för dagen
-                let totalTimePerRecipe = (recipe.prepTimeMinutes + recipe.cookTimeMinutes) //ex pizza 15+ 20 = 35 /4 = 8.75, cookies 15+10=25/24= 1
-                let timePerServing = totalTimePerRecipe / Double(recipe.servings)
-                return totalTime + timePerServing
+                
+                let prepTime = recipe.prepTimeMinutes
+                let cookTime = recipe.cookTimeMinutes
+                
+                let totalTimePerRecipe = (prepTime / Double(recipe.servings))+cookTime //ex pizza 20/4= 5 + 15 = 20
+                
+                
+                return totalTime + totalTimePerRecipe
             }
             return totalCookTimePerMeal
             
