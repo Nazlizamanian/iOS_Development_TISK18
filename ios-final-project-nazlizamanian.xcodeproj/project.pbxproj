@@ -19,11 +19,11 @@
 		6C1C51D92C22E9B200890A50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51D82C22E9B200890A50 /* CardView.swift */; };
 		6C1C51DB2C22E9CF00890A50 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51DA2C22E9CF00890A50 /* LikedView.swift */; };
 		6C43097B2C3019980020E103 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C43097A2C3019980020E103 /* RecipeModel.swift */; };
-		6C6B919F2D63B957001D6413 /* MealsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6B919E2D63B957001D6413 /* MealsModelTests.swift */; };
 		6CB11C142D5BA56F009CD2F8 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C132D5BA56F009CD2F8 /* DayView.swift */; };
 		6CB11C162D610A7A009CD2F8 /* ImageLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C152D610A7A009CD2F8 /* ImageLoading.swift */; };
 		6CB11C182D610B9E009CD2F8 /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C172D610B9E009CD2F8 /* URLImageView.swift */; };
 		6CB11C1A2D611241009CD2F8 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C192D611241009CD2F8 /* Card.swift */; };
+		6CBEDC5D2D6F441400C6C98C /* MealsModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEDC5C2D6F441400C6C98C /* MealsModelTest.swift */; };
 		6CF47CEC2D4E29EC006E7AF9 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF47CEB2D4E29EC006E7AF9 /* DetailsView.swift */; };
 		6CF47CF02D4E4054006E7AF9 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF47CEF2D4E4054006E7AF9 /* CalendarHelper.swift */; };
 /* End PBXBuildFile section */
@@ -61,11 +61,11 @@
 		6C1C51D82C22E9B200890A50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		6C1C51DA2C22E9CF00890A50 /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		6C43097A2C3019980020E103 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
-		6C6B919E2D63B957001D6413 /* MealsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsModelTests.swift; sourceTree = "<group>"; };
 		6CB11C132D5BA56F009CD2F8 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		6CB11C152D610A7A009CD2F8 /* ImageLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoading.swift; sourceTree = "<group>"; };
 		6CB11C172D610B9E009CD2F8 /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		6CB11C192D611241009CD2F8 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		6CBEDC5C2D6F441400C6C98C /* MealsModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsModelTest.swift; sourceTree = "<group>"; };
 		6CF47CEB2D4E29EC006E7AF9 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		6CF47CEF2D4E4054006E7AF9 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				6C1C51722C22D66100890A50 /* ios_final_project_nazlizamanianTests.swift */,
-				6C6B919E2D63B957001D6413 /* MealsModelTests.swift */,
+				6CBEDC5C2D6F441400C6C98C /* MealsModelTest.swift */,
 			);
 			path = "ios-final-project-nazlizamanianTests";
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C6B919F2D63B957001D6413 /* MealsModelTests.swift in Sources */,
+				6CBEDC5D2D6F441400C6C98C /* MealsModelTest.swift in Sources */,
 				6C1C51732C22D66100890A50 /* ios_final_project_nazlizamanianTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

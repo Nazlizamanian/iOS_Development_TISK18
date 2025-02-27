@@ -21,7 +21,6 @@ import Observation
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
 //ToDO:
-// 2. ingredients calculations
 // 3. unit testing
 //4. Swiftdata save liked list and assignedMeals
 
@@ -29,7 +28,7 @@ import Observation
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
-    var assignedMeals: [Date: [String: Recipe]] = [:] //dictionary Date: mealtype O(1)
+    var assignedMeals: [Date: [String: Recipe]] = [:] //6 dic O(1) 
     
     
     func fetch() { //5
@@ -68,14 +67,42 @@ class MealsModel: Identifiable {
         task.resume() // Resume the task to initiate the request
     }
     
-    func addToFavorites(recipe: Recipe) {
-        if !favoriteRecipes.contains(where: { $0.id == recipe.id }) {
+    func addToFavorites(recipe: Recipe) { //objective convert into favRecipei and store that one
+       if !favoriteRecipes.contains(where: { $0.id == recipe.id }) {
             favoriteRecipes.append(recipe)
-        }
+        }/*
+        let fetchDescriptor = FetchDescriptor<FavoriteRecipe>(predicate: #Predicate { $0.id == recipe.id })
+            let existingRecipe = try? context.fetch(fetchDescriptor).first
+
+            if existingRecipe == nil {
+                // Convert Recipe to FavoriteRecipe
+                let favoriteRecipe = FavoriteRecipe(
+                    id: recipe.id,
+                    name: recipe.name,
+                    image: recipe.image,
+                    ingredients: recipe.ingredients,
+                    instructions: recipe.instructions,
+                    difficulty: recipe.difficulty,
+                    rating: recipe.rating,
+                    cuisine: recipe.cuisine,
+                    prepTimeMinutes: recipe.prepTimeMinutes,
+                    cookTimeMinutes: recipe.cookTimeMinutes,
+                    servings: recipe.servings,
+                    caloriesPerServing: recipe.caloriesPerServing,
+                    reviewCount: recipe.reviewCount
+                )
+                
+                // Insert into the context
+                context.insert(favoriteRecipe)
+                
+                // Save the context (SwiftData handles this automatically in most cases)
+                try? context.save()
+            } else {
+                print("Recipe already exists in favorites.")
+            }*/
+        
     }
-    /*func removeFromFavorites(recipe: Recipe){ //Lägg till swipa b ort func.
-        favoriteRecipes.removeAll{ $0.id == recipe.id}
-    }*/
+  
     
     //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {

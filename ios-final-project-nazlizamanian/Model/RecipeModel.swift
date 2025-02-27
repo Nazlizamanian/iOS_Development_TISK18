@@ -40,13 +40,13 @@ struct Recipe: Codable, Hashable, Identifiable{
     let reviewCount: Int
 }
 
-
 struct RecipesResponse: Codable {
     let recipes: [Recipe]
 }
 
 
-@Model
+
+@Model //creates our model confimt that we want to store
 final class FavoriteRecipe {
     @Attribute(.unique) var id: Int
     var name: String

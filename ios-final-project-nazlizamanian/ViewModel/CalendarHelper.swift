@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 import Observation
 
+/*
+ https://www.hackingwithswift.com/forums/swiftui/date-in-different-format/6344
+ */
+
 @Observable
 class CalendarHelper {
     

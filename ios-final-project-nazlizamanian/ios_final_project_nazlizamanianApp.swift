@@ -12,6 +12,7 @@ import SwiftData
 struct ios_final_project_nazlizamanianApp: App {
     @State private var model = MealsModel()
     
+        
     var body: some Scene {
         WindowGroup {
             ContentView()

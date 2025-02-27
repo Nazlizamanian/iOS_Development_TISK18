@@ -18,6 +18,7 @@ struct CardView: View {
     @Environment(MealsModel.self) var model
     @State private var card = Card() //Card instance of our model handles logci
     @State private var selectedDifficulty = "All"
+    
 
     
     var filteredRecipes: [Recipe] {
