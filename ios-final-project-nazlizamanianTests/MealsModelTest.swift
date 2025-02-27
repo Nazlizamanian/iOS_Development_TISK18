@@ -12,6 +12,7 @@ import Foundation //Date()
 
 struct MealsModelTest {
     
+    //Arrange
     let mealsModel = MealsModel()
     let recipe1 = Recipe(
         id: 1,
@@ -35,7 +36,7 @@ struct MealsModelTest {
         ingredients: ["Ingredient 2"],
         instructions: ["Step 2"],
         image: "image1",
-        difficulty: "Easy",
+        difficulty: "Medium",
         rating: 4.5,
         cuisine: "Italian",
         prepTimeMinutes: 15,
@@ -44,50 +45,72 @@ struct MealsModelTest {
         caloriesPerServing: 300,
         reviewCount: 100
         )
-    let date = Date()
+    
+    let recipe3 = Recipe(
+        id: 3,
+        name: "Recipe 3",
+        ingredients: ["Ingredient 2"],
+        instructions: ["Step 2"],
+        image: "image1",
+        difficulty: "Easy",
+        rating: 4.9,
+        cuisine: "American",
+        prepTimeMinutes: 15,
+        cookTimeMinutes: 10,
+        servings: 24,
+        caloriesPerServing: 150,
+        reviewCount: 13
+        )
+
+    
+    let date1 = Date()
+    let date2 = Date().addingTimeInterval(86400) // next day
     
     @Test("Test calculateCalories")
     func calculateCalories() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-        
-        //Arrange
-       
-        
+        // Write your test here and use APIs like `#expect(...)` to check expected conditions
+    
         //Act
-        mealsModel.courses = [recipe1, recipe2]
+        mealsModel.courses = [recipe1, recipe2, recipe3]
         
-        mealsModel.assignMeal(for: date, mealType: "Breakfast", recipe: recipe1)
-        mealsModel.assignMeal(for: date, mealType: "Lunch", recipe: recipe2)
+        mealsModel.assignMeal(for: date1, mealType: "Breakfast", recipe: recipe1)
+        mealsModel.assignMeal(for: date1, mealType: "Lunch", recipe: recipe2)
+        mealsModel.assignMeal(for: date2, mealType: "Dinner", recipe: recipe3)
         
-        let totalCal = mealsModel.calculateCalories(for: date)
+        let totalCalDay1 = mealsModel.calculateCalories(for: date1)
+        let totalCalDay2 = mealsModel.calculateCalories(for: date2)
+        
         let expectedCal = recipe1.caloriesPerServing + recipe2.caloriesPerServing
     
         //Assert
-        #expect(totalCal == expectedCal)
-        #expect(totalCal != 0 && expectedCal != 0 )
+        #expect(totalCalDay1 == expectedCal)
+        #expect(totalCalDay1 != 0 && expectedCal != 0  && totalCalDay2 != 0)
+        #expect( totalCalDay1 != totalCalDay2)
        
     }
     
     @Test("calculateCookTime()")
     func calculateCookTime() async throws {
         
-    
-        mealsModel.assignMeal(for: date, mealType: "Breakfast", recipe: recipe1)
-        mealsModel.assignMeal(for: date, mealType: "Lunch", recipe: recipe2)
+        //Act
+        mealsModel.assignMeal(for: date1, mealType: "Breakfast", recipe: recipe1)
+        mealsModel.assignMeal(for: date1, mealType: "Lunch", recipe: recipe2)
+        mealsModel.assignMeal(for: date2, mealType: "Snacks", recipe: recipe3)
         
-        let totalCookTime = mealsModel.calculateCookTime(for: date)
-        
+        let totalCookTimeDay1 = mealsModel.calculateCookTime(for: date1)
+        let totalCookTimeDay2 = mealsModel.calculateCookTime(for: date2)
         
         let prepTime1 = (recipe1.prepTimeMinutes / Double(recipe1.servings))
         let prepTime2 = (recipe2.prepTimeMinutes / Double(recipe2.servings))
         
-        
-        #expect( prepTime1 != 0 && prepTime2 != 0)
-        #expect( totalCookTime == 45.0)  //20 + 5+20= 45.0
-        
-        
-       
+        //Assert
+        #expect(prepTime1 != 0 && prepTime2 != 0)
+        #expect(totalCookTimeDay1 == 45.0)  //20 + 5+20= 45.0
+        #expect(totalCookTimeDay1 != totalCookTimeDay2)
     }
 
+    
+   
+    
     
 }
