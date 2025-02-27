@@ -58,6 +58,7 @@ struct DayView: View {
                     RecipePickerView(
                         recipes: model.favoriteRecipes, //visar endast vår likedlist recipes
                         mealType: selectedMealType,
+                        model: model,
                         onSelect: { recipe in //triggar vår assingmeal
                             model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
                             showRecipePicker = false
@@ -121,7 +122,10 @@ struct DayView: View {
 struct RecipePickerView: View {
     var recipes: [Recipe]
     var mealType: String
+    var model: MealsModel
     var onSelect: (Recipe) -> Void
+    
+
 
     var body: some View {
         NavigationStack {
@@ -137,6 +141,13 @@ struct RecipePickerView: View {
                         Text(recipe.name)
                             .font(.headline)
                             .foregroundColor(.primary)
+                        
+                        Spacer()
+                        if model.containsMeat(ingredients: recipe.ingredients){
+                            Image(systemName:"fish.fill" )
+                                .font(.system(size:50))
+                                .foregroundColor(.pink)
+                        }
                     }
                 }
             }

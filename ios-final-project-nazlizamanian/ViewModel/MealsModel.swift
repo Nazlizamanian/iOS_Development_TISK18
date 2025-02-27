@@ -146,6 +146,22 @@ class MealsModel: Identifiable {
         else { return 0.0 }
     }
     
+    func containsMeat(ingredients: [String]) -> Bool {
+        let meats = ["beef", "chicken", "fish", "lamb"]
+        
+        for ingredient in ingredients {
+            let words = ingredient.lowercased().components(separatedBy: " ")  // Split
+            
+            for word in words {
+                if meats.contains(word) {  
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+
     
     
     

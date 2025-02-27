@@ -17,7 +17,14 @@ struct MealsModelTest {
     let recipe1 = Recipe(
         id: 1,
         name: "Recipe 1",
-        ingredients: ["Ingredient 1"],
+        ingredients: [
+            "Pizza dough",
+            "Tomato sauce",
+            "Fresh mozzarella cheese",
+            "Fresh basil leaves",
+            "Olive oil",
+            "Salt and pepper to taste"
+          ],
         instructions: ["Step 1"],
         image: "image1",
         difficulty: "Easy",
@@ -33,7 +40,17 @@ struct MealsModelTest {
     let recipe2 = Recipe(
         id: 2,
         name: "Recipe 2",
-        ingredients: ["Ingredient 2"],
+        ingredients: [
+            "Chicken thighs, boneless and skinless",
+            "Green curry paste",
+            "Coconut milk",
+            "Fish sauce",
+            "Sugar",
+            "Eggplant, sliced",
+            "Bell peppers, sliced",
+            "Basil leaves",
+            "Jasmine rice for serving"
+          ],
         instructions: ["Step 2"],
         image: "image1",
         difficulty: "Medium",
@@ -49,7 +66,18 @@ struct MealsModelTest {
     let recipe3 = Recipe(
         id: 3,
         name: "Recipe 3",
-        ingredients: ["Ingredient 2"],
+        ingredients:  [
+            "Ground lamb or beef",
+            "Onions, grated",
+            "Garlic, minced",
+            "Parsley, finely chopped",
+            "Cumin",
+            "Coriander",
+            "Red pepper flakes",
+            "Salt and pepper to taste",
+            "Flatbread for serving",
+            "Tahini sauce"
+          ],
         instructions: ["Step 2"],
         image: "image1",
         difficulty: "Easy",
@@ -109,6 +137,18 @@ struct MealsModelTest {
         #expect(totalCookTimeDay1 != totalCookTimeDay2)
     }
 
+    @Test(" containsMeat()")
+     func containsMeath() async throws {
+        let containsMeatInRecipe1 = mealsModel.containsMeat(ingredients: recipe1.ingredients)
+        let containsMeatInRecipe2 = mealsModel.containsMeat(ingredients: recipe2.ingredients)
+        let containsMeatInRecipe3 = mealsModel.containsMeat(ingredients: recipe3.ingredients)
+                 
+        // Assert
+        #expect(containsMeatInRecipe1 == false)
+        #expect(containsMeatInRecipe2 == true)
+        #expect(containsMeatInRecipe3 == true)
+     }
+    
     
    @Test(" genereateDaysForMonth()")
     func generateDaysForMonth() async throws {
