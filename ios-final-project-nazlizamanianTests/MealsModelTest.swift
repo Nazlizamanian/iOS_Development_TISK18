@@ -110,7 +110,20 @@ struct MealsModelTest {
     }
 
     
-   
+   @Test(" genereateDaysForMonth()")
+    func generateDaysForMonth() async throws {
+        let calendarHelper = CalendarHelper()
+        
+        guard let febraryDate = DateFormatter().date(from: "2024-02-01") else { return }
+        //leap year for febraru was 2024
+        
+        calendarHelper.currentDate = febraryDate
+        let daysInFeb = calendarHelper.generateDaysForMonth()
+        
+        let expectedInFeb = 29
+        #expect(daysInFeb.count == expectedInFeb)
+        #expect(daysInFeb.last == 29)
+    }
     
     
 }
