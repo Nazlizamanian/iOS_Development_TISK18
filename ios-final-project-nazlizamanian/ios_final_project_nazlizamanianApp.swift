@@ -16,8 +16,8 @@ struct ios_final_project_nazlizamanianApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(MealsModel())
+                .environment(model)
         }
-        //.modelContainer(for: RecipeSummary.self)
+        .modelContainer(for: FavoriteRecipe.self)
     }
 }

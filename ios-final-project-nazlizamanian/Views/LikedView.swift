@@ -16,50 +16,33 @@ import SwiftData
 
 struct LikedView: View {
     @State private var searchString = ""
-    @Environment(MealsModel.self) var model
+    @Query private var favoriteRecipes: [FavoriteRecipe]
     
-    @Environment(\.modelContext) var modelContext
-  
-    @State private var mealPages = []
-    
-    
-    //@EnvironmentObject var model: MealsModel
-    
-    private var filteredRecipes: [Recipe] {
-        guard !searchString.isEmpty else {
-            return model.favoriteRecipes
+    private var filteredRecipes: [FavoriteRecipe] {
+        if searchString.isEmpty {
+            return favoriteRecipes
+        } else {
+            return favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
         }
-       // modelContext.insert()
-        return model.favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
     }
     
     var body: some View {
         NavigationStack {
-            VStack {
-               
-                List {
-                    ForEach(filteredRecipes) { meal in
-                        NavigationLink(destination: DetailsView(meal: meal)) {
-                            HStack {
-                                URLImage(urlString: meal.image)
-                                    .frame(width: 140, height: 70)
-                                    .scaledToFill()
-                                
-                                Text(meal.name)
-                            }
-                            .padding(3)
-                        }
-                      
+            List(filteredRecipes) { meal in
+                NavigationLink(destination: DetailsView(meal: meal)) {
+                    HStack {
+                        URLImage(urlString: meal.image)
+                            .frame(width: 140, height: 70)
+                            .scaledToFill()
+                        
+                        Text(meal.name)
                     }
-                }
-                .searchable(text: $searchString)
-                .navigationTitle("Liked meals")
-                .onAppear {
-                    model.fetch()
+                    .padding(3)
                 }
             }
+            .searchable(text: $searchString)
+            .navigationTitle("Liked meals")
         }
     }
-
 }
 

@@ -94,7 +94,7 @@ struct MealsModelTest {
     let date1 = Date()
     let date2 = Date().addingTimeInterval(86400) // next day
     
-    @Test("Test calculateCalories")
+    @Test("Test calculateCalories()")
     func calculateCalories() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions
     

@@ -67,41 +67,26 @@ class MealsModel: Identifiable {
         task.resume() // Resume the task to initiate the request
     }
     
-    func addToFavorites(recipe: Recipe) { //objective convert into favRecipei and store that one
-       if !favoriteRecipes.contains(where: { $0.id == recipe.id }) {
-            favoriteRecipes.append(recipe)
-        }/*
-        let fetchDescriptor = FetchDescriptor<FavoriteRecipe>(predicate: #Predicate { $0.id == recipe.id })
-            let existingRecipe = try? context.fetch(fetchDescriptor).first
-
-            if existingRecipe == nil {
-                // Convert Recipe to FavoriteRecipe
-                let favoriteRecipe = FavoriteRecipe(
-                    id: recipe.id,
-                    name: recipe.name,
-                    image: recipe.image,
-                    ingredients: recipe.ingredients,
-                    instructions: recipe.instructions,
-                    difficulty: recipe.difficulty,
-                    rating: recipe.rating,
-                    cuisine: recipe.cuisine,
-                    prepTimeMinutes: recipe.prepTimeMinutes,
-                    cookTimeMinutes: recipe.cookTimeMinutes,
-                    servings: recipe.servings,
-                    caloriesPerServing: recipe.caloriesPerServing,
-                    reviewCount: recipe.reviewCount
-                )
-                
-                // Insert into the context
-                context.insert(favoriteRecipe)
-                
-                // Save the context (SwiftData handles this automatically in most cases)
-                try? context.save()
-            } else {
-                print("Recipe already exists in favorites.")
-            }*/
-        
-    }
+    func addToFavorites(recipe: Recipe, in context: ModelContext) { //CHatis projectIos ask about the sorcing how t source the saved projct
+            let favoriteRecipe = FavoriteRecipe(
+                id: recipe.id,
+                name: recipe.name,
+                image: recipe.image,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions,
+                difficulty: recipe.difficulty,
+                rating: recipe.rating,
+                cuisine: recipe.cuisine,
+                prepTimeMinutes: recipe.prepTimeMinutes,
+                cookTimeMinutes: recipe.cookTimeMinutes,
+                servings: recipe.servings,
+                caloriesPerServing: recipe.caloriesPerServing,
+                reviewCount: recipe.reviewCount
+            )
+            context.insert(favoriteRecipe)
+            try? context.save()
+        }
+    
   
     
     //filteres courses []
@@ -166,3 +151,4 @@ class MealsModel: Identifiable {
     
     
 }
+

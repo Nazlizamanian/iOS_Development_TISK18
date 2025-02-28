@@ -10,12 +10,8 @@ import SwiftUI
 //refactor this code its similar hmmm
 
 struct DetailsView: View {
-    let meal: Recipe
-    //@State private var addToMealPlan = false
-   // @State private var showCartAlert = false // New state for cart button
-  // @EnvironmentObject var shoppingListVM: ShoppingListViewModel
-        
-    
+    let meal: FavoriteRecipe
+  
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {

@@ -7,6 +7,7 @@
 import Foundation
 import SwiftUI
 import Observation
+import SwiftData
 
 /*
  Sources used in this file:
@@ -31,22 +32,19 @@ class Card  {
         }
     }
     
-    func swipeCard(width: CGFloat, filteredRecipes: [Recipe], model: MealsModel){
-        withAnimation{
-            if width < -150 {
-                moveToNextCard()
-            }
-            else if width > 150{
-                if currentIndex < filteredRecipes.count{
-                    let likedRecipe = filteredRecipes[currentIndex]
-                    model.addToFavorites(recipe: likedRecipe)
+    func swipeCard(width: CGFloat, filteredRecipes: [Recipe], model: MealsModel, context: ModelContext) {
+            withAnimation {
+                if width < -150 {
+                    moveToNextCard()
                     
+                } else if width > 150 {
+                    if currentIndex < filteredRecipes.count {
+                        let likedRecipe = filteredRecipes[currentIndex]
+                        model.addToFavorites(recipe: likedRecipe, in: context)
+                    }
+                    moveToNextCard()
                 }
-                moveToNextCard()
             }
         }
-       
-    }
-    
    
 }

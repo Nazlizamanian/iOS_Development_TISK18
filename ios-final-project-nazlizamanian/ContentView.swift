@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import _SwiftData_SwiftUI
 
 /*
  Soruces in this file:
@@ -15,9 +14,6 @@ import _SwiftData_SwiftUI
 
 struct ContentView: View {
     @State var viewModel = MealsModel() //stateobj init once and shared across or views
-    
-    @Environment(\.modelContext) private var modelContext
-    @Query private var favoriteRecipes: [FavoriteRecipe]
     
     @State private var selectedIndex: Int = 0
 
@@ -33,7 +29,7 @@ struct ContentView: View {
                 .tag(0)
                 
                 NavigationStack(){ //liked list
-                        LikedView()
+                    LikedView()
                 }
                 .tabItem{
                     Label("Liked", systemImage: "heart.fill")

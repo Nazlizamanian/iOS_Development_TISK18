@@ -11,15 +11,12 @@ import SwiftUI
  Sources used in this file:
  2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
  */
-
-
-//Todo: fix bug logic what happens if you swipped on all cards?
 struct CardView: View {
     @Environment(MealsModel.self) var model
-    @State private var card = Card() //Card instance of our model handles logci
-    @State private var selectedDifficulty = "All"
+    @Environment(\.modelContext) var modelContext
     
-
+    @State private var card = Card() // Card instance handling logic
+    @State private var selectedDifficulty = "All"
     
     var filteredRecipes: [Recipe] {
         switch selectedDifficulty {
@@ -51,40 +48,35 @@ struct CardView: View {
                                     .cornerRadius(20)
                                     .clipped()
                                     .aspectRatio(contentMode: .fill)
-                                    .offset(x: card.offset.width, y: card.cardOffset.height) // Moves horizontally and vertically
-                                    .rotationEffect(.degrees(Double(card.offset.width / 20))) // Slight rotation effect
+                                    .offset(x: card.offset.width, y: card.cardOffset.height)
+                                    .rotationEffect(.degrees(Double(card.offset.width / 20)))
                                     .gesture(
                                         DragGesture()
                                             .onChanged { gesture in
                                                 if abs(gesture.translation.width) > abs(gesture.translation.height) {
-                                                    // Horizontal swipe (left/right)
                                                     card.offset = gesture.translation
                                                 } else {
-                                                    // Vertical swipe (up/down)
                                                     card.cardOffset.height = gesture.translation.height
                                                 }
                                             }
                                             .onEnded { _ in
                                                 withAnimation {
-                                                    // Handle horizontal swipe (left/right)
                                                     if card.offset.width < -100 {
                                                         // Swiped left
                                                         card.moveToNextCard()
                                                     } else if card.offset.width > 100 {
                                                         // Swiped right (liked)
-                                                        model.addToFavorites(recipe: filteredRecipes[card.currentIndex])
+                                                        let recipe = filteredRecipes[card.currentIndex]
+                                                        model.addToFavorites(recipe: recipe, in: modelContext)
                                                         card.moveToNextCard()
                                                     } else {
                                                         card.offset = .zero
                                                     }
 
-                                                    // Handle vertical swipe (up/down)
                                                     if card.cardOffset.height < -100 {
-                                                        // Swipe up to show details
                                                         card.showDetails = true
-                                                        card.cardOffset.height = -350 // Move image up
+                                                        card.cardOffset.height = -350
                                                     } else {
-                                                        // Reset details view
                                                         card.showDetails = false
                                                         card.cardOffset.height = .zero
                                                     }
@@ -96,9 +88,15 @@ struct CardView: View {
                                     DetailsOverlay(recipe: recipe)
                                         .transition(.move(edge: .bottom))
                                 }
-                                HStack { //Buttons
+                                
+                                HStack {
                                     Spacer()
-                                    Button(action: { withAnimation { card.swipeCard(width: -200, filteredRecipes: filteredRecipes, model: model) } }) {
+                                    Button(action: {
+                                        withAnimation {
+                                            // For dislike, simply call swipeCard (context is passed even though it's not used in the left branch)
+                                            card.swipeCard(width: -200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
+                                        }
+                                    }) {
                                         Image(systemName: "xmark")
                                             .resizable()
                                             .frame(width: 30, height: 30)
@@ -106,16 +104,23 @@ struct CardView: View {
                                             .padding(14)
                                     }
                                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.red, lineWidth: 2))
+                                    
                                     Spacer()
-                                    Button(action: { withAnimation { card.swipeCard(width: 200, filteredRecipes: filteredRecipes, model: model) } }) {
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            // Heart button now uses the same swipe logic for a "yes" (like)
+                                            card.swipeCard(width: 200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
+                                        }
+                                    }) {
                                         Image(systemName: "heart.fill")
                                             .resizable()
                                             .frame(width: 30, height: 30)
                                             .foregroundColor(.green)
                                             .padding(14)
                                     }
-                                    
                                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.green, lineWidth: 2))
+                                    
                                     Spacer()
                                 }
                                 .padding(.horizontal, 40)
@@ -130,5 +135,6 @@ struct CardView: View {
             .onAppear { model.fetch() }
         }
     }
-
 }
+
+
