@@ -5,6 +5,8 @@
 //  Created by Nazli  on 11/02/25.
 
 import SwiftUI
+import SwiftData
+
 /*
  Soruces used in this file:
  8. iterating over list: https://stackoverflow.com/questions/61187277/swiftui-build-a-list-using-enums
@@ -18,6 +20,8 @@ struct DayView: View {
     @Environment(MealsModel.self) var model
     @State private var showRecipePicker = false
     @State private var selectedMealType: String?
+    
+    @Query private var storedFavorites: [FavoriteRecipe]
 
     var body: some View {
         ScrollView {
@@ -55,6 +59,7 @@ struct DayView: View {
             .background(Color.black.edgesIgnoringSafeArea(.all))
             .sheet(isPresented: $showRecipePicker) { //9 and 10
                 if let selectedMealType {
+                    
                     RecipePickerView(
                         recipes: model.favoriteRecipes, //visar endast vår likedlist recipes
                         mealType: selectedMealType,
