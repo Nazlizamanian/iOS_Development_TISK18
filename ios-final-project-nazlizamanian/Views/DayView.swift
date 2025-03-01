@@ -148,10 +148,10 @@ struct RecipePickerView: View {
                             .foregroundColor(.primary)
                         
                         Spacer()
-                        if model.containsMeat(ingredients: recipe.ingredients){
-                            Image(systemName:"fish.fill" )
+                        if !model.containsMeat(ingredients: recipe.ingredients){
+                            Image(systemName:"leaf.fill" )
                                 .font(.system(size:50))
-                                .foregroundColor(.pink)
+                                .foregroundColor(.green)
                         }
                     }
                 }

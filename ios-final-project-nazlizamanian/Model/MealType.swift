@@ -7,6 +7,15 @@
 
 import Foundation
 
+enum Meat: String, CaseIterable {
+    case beef = "beef"
+    case cow = "cow"
+    case chicken = "chicken"
+    case fish = "fish"
+    case lamb = "lamb"
+    case shrimp = "shrimp"
+}
+
 enum MealType: String, CaseIterable {
     case breakfast = "Breakfast"
     case lunch = "Lunch"

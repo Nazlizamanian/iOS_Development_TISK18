@@ -119,14 +119,13 @@ class MealsModel: Identifiable {
     }
     
     func containsMeat(ingredients: [String]) -> Bool {
-        let meats = ["beef", "chicken", "fish", "lamb", "shrimp"]
         
         for ingredient in ingredients {
             let words = ingredient.lowercased().components(separatedBy: " ")  // Split
             
             for word in words {
                 let cleanWord = word.trimmingCharacters(in: .punctuationCharacters)
-                if meats.contains(cleanWord) {
+                if Meat.allCases.contains(where: {$0.rawValue == cleanWord}) {
                     return true
                 }
             }
