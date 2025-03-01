@@ -27,8 +27,8 @@ import Observation
 @Observable
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
-    var favoriteRecipes: [Recipe] = [] //we gonna add the favs to this array
-    var assignedMeals: [Date: [String: Recipe]] = [:] //6 dic O(1) 
+    
+    var assignedMeals: [Date: [String: Recipe]] = [:] //6 dic O(1)
     
     
     func fetch() { //5
@@ -67,27 +67,12 @@ class MealsModel: Identifiable {
         task.resume() // Resume the task to initiate the request
     }
     
-    func addToFavorites(recipe: Recipe, in context: ModelContext) { //CHatis projectIos ask about the sorcing how t source the saved projct
-            let favoriteRecipe = FavoriteRecipe(
-                id: recipe.id,
-                name: recipe.name,
-                image: recipe.image,
-                ingredients: recipe.ingredients,
-                instructions: recipe.instructions,
-                difficulty: recipe.difficulty,
-                rating: recipe.rating,
-                cuisine: recipe.cuisine,
-                prepTimeMinutes: recipe.prepTimeMinutes,
-                cookTimeMinutes: recipe.cookTimeMinutes,
-                servings: recipe.servings,
-                caloriesPerServing: recipe.caloriesPerServing,
-                reviewCount: recipe.reviewCount
-            )
-            context.insert(favoriteRecipe)
-            try? context.save()
-        }
-    
-  
+    func addToFavorites(recipe: Recipe, in context: ModelContext) {
+        let favoriteRecipe = FavoriteRecipe(from: recipe)
+        context.insert(favoriteRecipe)
+        try? context.save()
+    }
+
     
     //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
@@ -146,6 +131,6 @@ class MealsModel: Identifiable {
         }
         
         return false
-    } 
+    }
     
 }

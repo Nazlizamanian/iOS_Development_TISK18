@@ -32,7 +32,7 @@ struct DayView: View {
                     .bold()
                     .padding([.horizontal, .top])
 
-                // Dynamic meal sections enum
+                // Dynamic meal sections based on MealType enum
                 ForEach(MealType.allCases, id: \.self) { mealType in
                     mealSection(mealType: mealType)
                 }
@@ -49,26 +49,29 @@ struct DayView: View {
                     .frame(width: 120, height: 120)
                     .overlay(
                         Text("\(String(format: "%.0f", model.calculateCookTime(for: selectedDate))) min")
-                      
-                            
                     )
                     .font(.title)
                     .fontWeight(.bold)
             }
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))
-            .sheet(isPresented: $showRecipePicker) { //9 and 10
-                if let selectedMealType {
-                    
-                    RecipePickerView(
-                        recipes: model.favoriteRecipes, //visar endast vår likedlist recipes
-                        mealType: selectedMealType,
-                        model: model,
-                        onSelect: { recipe in //triggar vår assingmeal
-                            model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
-                            showRecipePicker = false
-                        }
-                    )
+            .sheet(isPresented: $showRecipePicker) {
+                Group {
+                    if let selectedMealType = selectedMealType {
+                        
+                        let favoriteRecipesAsRecipes = storedFavorites.map { Recipe(from: $0) }
+                        RecipePickerView(
+                            recipes: favoriteRecipesAsRecipes,
+                            mealType: selectedMealType,
+                            model: model,
+                            onSelect: { recipe in
+                                model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
+                                showRecipePicker = false
+                            }
+                        )
+                    } else {
+                        EmptyView()
+                    }
                 }
             }
         }
@@ -90,8 +93,7 @@ struct DayView: View {
             }
 
             if let meal = model.getMeal(for: selectedDate, mealType: mealType.rawValue) {
-
-                HStack { //selected meal
+                HStack { // Display selected meal
                     URLImage(urlString: meal.image)
                         .frame(width: 50, height: 50)
                         .cornerRadius(10)
@@ -101,7 +103,7 @@ struct DayView: View {
                         .foregroundColor(.white)
                 }
             } else {
-                // Placeholder text when no meal is selected
+                // Placeholder when no meal is selected
                 Text("Add \(mealType.title.lowercased()) here")
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
@@ -115,14 +117,14 @@ struct DayView: View {
             selectedMealType = mealType.rawValue
             showRecipePicker = true
         }
-        .onChange(of: showRecipePicker) { newValue in //Måste ha för att se till att den visar listan första gången
+        .onChange(of: showRecipePicker) { newValue in
             if !newValue {
                 selectedMealType = nil
             }
-            
         }
     }
 }
+
 
 struct RecipePickerView: View {
     var recipes: [Recipe]
