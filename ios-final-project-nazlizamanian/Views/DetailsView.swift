@@ -116,7 +116,7 @@ struct DetailsOverlay: View {
                     VStack {
                         Text("Prep Time")
                             .foregroundColor(Color.gray)
-                        Text("\(recipe.prepTimeMinutes)m")
+                        Text("\(String(format: "%.0f", recipe.prepTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
                     }
@@ -125,7 +125,7 @@ struct DetailsOverlay: View {
                     VStack {
                         Text("Cook Time")
                             .foregroundColor(Color.gray)
-                        Text("\(recipe.cookTimeMinutes)m")
+                        Text("\(String(format: "%.0f", recipe.prepTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
                     }

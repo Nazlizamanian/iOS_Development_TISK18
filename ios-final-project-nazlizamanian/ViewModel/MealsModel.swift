@@ -21,15 +21,13 @@ import Observation
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
 //ToDO:
-// 3. unit testing
-//4. Swiftdata save liked list and assignedMeals
+// Swiftdata save liked list and assignedMeals
 
 @Observable
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     
     var assignedMeals: [Date: [String: Recipe]] = [:] //6 dic O(1)
-    
     
     func fetch() { //5
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }

@@ -19,15 +19,19 @@ struct CardView: View {
     @State private var selectedDifficulty = "All"
     
     var filteredRecipes: [Recipe] {
+        let recipes: [Recipe]
+        
         switch selectedDifficulty {
         case "Easy":
-            return model.filterRecipes(byDifficulties: ["easy"])
+            recipes = model.filterRecipes(byDifficulties: ["easy"])
         case "Medium":
-            return model.filterRecipes(byDifficulties: ["medium"])
+            recipes = model.filterRecipes(byDifficulties: ["medium"])
         default:
-            return model.courses
+            recipes = model.courses
         }
+        return recipes.shuffled()
     }
+
 
     var body: some View {
         VStack {
@@ -97,14 +101,13 @@ struct CardView: View {
                                             card.swipeCard(width: -200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
                                         }
                                     }) {
-                                        Image(systemName: "xmark")
+                                        Image(systemName: "xmark.circle.fill")
                                             .resizable()
-                                            .frame(width: 30, height: 30)
+                                            .frame(width: 70, height: 70)
                                             .foregroundColor(.red)
                                             .padding(14)
                                     }
-                                    .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.red, lineWidth: 2))
-                                    
+                                  
                                     Spacer()
                                     
                                     Button(action: {
@@ -113,14 +116,12 @@ struct CardView: View {
                                             card.swipeCard(width: 200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
                                         }
                                     }) {
-                                        Image(systemName: "heart.fill")
+                                        Image(systemName: "heart.circle.fill")
                                             .resizable()
-                                            .frame(width: 30, height: 30)
+                                            .frame(width: 70, height: 70)
                                             .foregroundColor(.green)
-                                            .padding(14)
+                                            .padding(5)
                                     }
-                                    .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.green, lineWidth: 2))
-                                    
                                     Spacer()
                                 }
                                 .padding(.horizontal, 40)
