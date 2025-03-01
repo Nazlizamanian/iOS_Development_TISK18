@@ -132,9 +132,7 @@ struct RecipePickerView: View {
     var model: MealsModel
     var onSelect: (Recipe) -> Void
     
-
-
-    var body: some View {
+  var body: some View {
         NavigationStack {
             List(recipes) { recipe in
                 Button {

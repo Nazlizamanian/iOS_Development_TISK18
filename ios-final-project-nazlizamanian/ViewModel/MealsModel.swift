@@ -74,6 +74,8 @@ class MealsModel: Identifiable {
     }
 
     
+  
+    
     //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
         return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }

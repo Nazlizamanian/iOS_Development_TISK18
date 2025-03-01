@@ -36,18 +36,20 @@ struct DetailsView: View {
                     VStack {
                         Text("Prep Time")
                             .foregroundColor(Color.gray)
-                        Text("\(meal.prepTimeMinutes)m")
+                        Text("\(String(format: "%.0f", meal.prepTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
+
                     }
                     Spacer()
                     
                     VStack {
                         Text("Cook Time")
                             .foregroundColor(Color.gray)
-                        Text("\(meal.cookTimeMinutes)m")
+                        Text("\(String(format: "%.0f", meal.cookTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
+
                     }
                     Spacer()
                     
