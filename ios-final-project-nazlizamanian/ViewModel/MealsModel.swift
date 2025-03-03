@@ -21,6 +21,7 @@ import Observation
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
 //ToDO:
+//unit testing
 // Swiftdata save liked list and assignedMeals
 
 @Observable
@@ -65,15 +66,26 @@ class MealsModel: Identifiable {
         task.resume() // Resume the task to initiate the request
     }
     
-    func addToFavorites(recipe: Recipe, in context: ModelContext) {
-        let favoriteRecipe = FavoriteRecipe(from: recipe)
+    func addToFavorites(recipe: Recipe, in context: ModelContext) { //CHATIS
+        let favoriteRecipe = FavoriteRecipe(
+                id: recipe.id,
+                name: recipe.name,
+                image: recipe.image,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions,
+                difficulty: recipe.difficulty,
+                rating: recipe.rating,
+                cuisine: recipe.cuisine,
+                prepTimeMinutes: recipe.prepTimeMinutes,
+                cookTimeMinutes: recipe.cookTimeMinutes,
+                servings: recipe.servings,
+                caloriesPerServing: recipe.caloriesPerServing,
+                reviewCount: recipe.reviewCount
+            )
         context.insert(favoriteRecipe)
         try? context.save()
     }
 
-    
-  
-    
     //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
         return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }

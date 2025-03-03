@@ -39,23 +39,4 @@ final class FavoriteRecipe {
         self.caloriesPerServing = caloriesPerServing
         self.reviewCount = reviewCount
     }
-    
-    // Convenience initializer from Recipe
-    convenience init(from recipe: Recipe) {
-        self.init(
-            id: recipe.id,
-            name: recipe.name,
-            image: recipe.image,
-            ingredients: recipe.ingredients,
-            instructions: recipe.instructions,
-            difficulty: recipe.difficulty,
-            rating: recipe.rating,
-            cuisine: recipe.cuisine,
-            prepTimeMinutes: recipe.prepTimeMinutes,
-            cookTimeMinutes: recipe.cookTimeMinutes,
-            servings: recipe.servings,
-            caloriesPerServing: recipe.caloriesPerServing,
-            reviewCount: recipe.reviewCount
-        )
-    }
 }

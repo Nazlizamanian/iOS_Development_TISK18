@@ -103,9 +103,9 @@ struct CardView: View {
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
                                             .resizable()
-                                            .frame(width: 70, height: 70)
+                                            .frame(width: 75, height: 75)
                                             .foregroundColor(.red)
-                                            .padding(14)
+                                            .padding(5)
                                     }
                                   
                                     Spacer()
@@ -118,7 +118,7 @@ struct CardView: View {
                                     }) {
                                         Image(systemName: "heart.circle.fill")
                                             .resizable()
-                                            .frame(width: 70, height: 70)
+                                            .frame(width: 75, height: 75)
                                             .foregroundColor(.green)
                                             .padding(5)
                                     }

@@ -16,7 +16,7 @@ enum Meat: String, CaseIterable {
     case shrimp = "shrimp"
 }
 
-enum MealType: String, CaseIterable {
+enum MealType: String, CaseIterable, Codable {
     case breakfast = "Breakfast"
     case lunch = "Lunch"
     case dinner = "Dinner"
@@ -30,3 +30,4 @@ enum MealType: String, CaseIterable {
        
     }
 }
+

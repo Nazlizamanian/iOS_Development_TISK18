@@ -42,8 +42,6 @@ struct Recipe: Codable, Hashable, Identifiable {
     }
 }
 
-
-
 struct RecipesResponse: Codable {
     let recipes: [Recipe]
 }
