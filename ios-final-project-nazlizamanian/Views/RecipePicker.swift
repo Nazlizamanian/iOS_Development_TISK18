@@ -9,16 +9,20 @@ import Foundation
 import SwiftUI
 
 struct RecipePickerView: View {
-    var recipes: [Recipe]
-    var mealType: String
+    var mealType: MealType
+    var day: Day
+    var favoriteRecipes: [Recipe]
     var model: MealsModel
-    var onSelect: (Recipe) -> Void
+    
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
-        NavigationStack {
-            List(recipes) { recipe in
+        NavigationView {
+            List(favoriteRecipes, id: \.id) { recipe in
                 Button {
-                    onSelect(recipe)
+                    model.assignRecipe(recipe, to: mealType, on: day, context: modelContext)
+                    dismiss()
                 } label: {
                     HStack {
                         URLImage(urlString: recipe.image)
@@ -30,17 +34,16 @@ struct RecipePickerView: View {
                             .foregroundColor(.primary)
                         
                         Spacer()
-                        if !model.containsMeat(ingredients: recipe.ingredients) {
-                            Image(systemName:"leaf.fill")
+                        
+                        if !model.containsMeat(ingredients: recipe.ingredients){
+                            Image(systemName: "leaf.fill")
                                 .font(.system(size: 50))
                                 .foregroundColor(.green)
                         }
                     }
                 }
             }
-            .navigationTitle("Choose \(mealType)")
+            .navigationTitle("Choose a meal")
         }
     }
 }
-
-

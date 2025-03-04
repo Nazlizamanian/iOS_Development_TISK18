@@ -17,7 +17,7 @@ struct ios_final_project_nazlizamanianApp: App {
         WindowGroup {
             ContentView()
                 .environment(model)
-                .modelContainer(for: FavoriteRecipes.self)
+                .modelContainer(for: [FavoriteRecipes.self, Day.self, Meal.self])
         }
     }
 }
