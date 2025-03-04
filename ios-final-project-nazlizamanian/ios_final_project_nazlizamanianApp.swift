@@ -10,14 +10,14 @@ import SwiftData
 
 @main
 struct ios_final_project_nazlizamanianApp: App {
-    @State private var model = MealsModel()
     
+    @State private var model = MealsModel()
         
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(model)
+                .modelContainer(for: FavoriteRecipes.self)
         }
-        .modelContainer(for: FavoriteRecipe.self)
     }
 }

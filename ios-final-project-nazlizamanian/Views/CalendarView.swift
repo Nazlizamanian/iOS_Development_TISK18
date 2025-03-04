@@ -75,8 +75,6 @@ struct CalendarView: View {
                                     .cornerRadius(30)
                             }
                         }
-                    
-                       
                     }
                 }
                 .padding(.top)

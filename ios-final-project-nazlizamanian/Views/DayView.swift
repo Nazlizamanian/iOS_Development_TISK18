@@ -18,11 +18,13 @@ struct DayView: View {
     var selectedDate: Date
 
     @Environment(MealsModel.self) var model
+    @Environment(\.modelContext) var modelContext
+    
     @State private var showRecipePicker = false
     @State private var selectedMealType: String?
     
-    @Query private var storedFavorites: [FavoriteRecipe]
-
+    @Query private var storedFavorites: [FavoriteRecipes]
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
@@ -56,22 +58,16 @@ struct DayView: View {
             .padding()
             .background(Color.black.edgesIgnoringSafeArea(.all))
             .sheet(isPresented: $showRecipePicker) {
-                Group {
-                    if let selectedMealType = selectedMealType {
-                        
-                        let favoriteRecipesAsRecipes = storedFavorites.map { Recipe(from: $0) }
-                        RecipePickerView(
-                            recipes: favoriteRecipesAsRecipes,
-                            mealType: selectedMealType,
-                            model: model,
-                            onSelect: { recipe in
-                                model.assignMeal(for: selectedDate, mealType: selectedMealType, recipe: recipe)
-                                showRecipePicker = false
-                            }
-                        )
-                    } else {
-                        EmptyView()
+                if let mealType = selectedMealType,
+                   let favorites = storedFavorites.first?.favoriteRecipes,
+                   !favorites.isEmpty {
+                    RecipePickerView(recipes: favorites, mealType: mealType, model: model){ selectedRecipe in
+                        model.assignMeal(for: selectedDate, mealType: mealType, recipe: selectedRecipe)
+                        showRecipePicker = false
                     }
+                }
+                else {
+                    Text("No favorite recipes available")
                 }
             }
         }
@@ -121,42 +117,6 @@ struct DayView: View {
             if !newValue {
                 selectedMealType = nil
             }
-        }
-    }
-}
-
-
-struct RecipePickerView: View {
-    var recipes: [Recipe]
-    var mealType: String
-    var model: MealsModel
-    var onSelect: (Recipe) -> Void
-    
-  var body: some View {
-        NavigationStack {
-            List(recipes) { recipe in
-                Button {
-                    onSelect(recipe)
-                } label: {
-                    HStack {
-                        URLImage(urlString: recipe.image)
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(10)
-                        
-                        Text(recipe.name)
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                        
-                        Spacer()
-                        if !model.containsMeat(ingredients: recipe.ingredients){
-                            Image(systemName:"leaf.fill" )
-                                .font(.system(size:50))
-                                .foregroundColor(.green)
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Choose \(mealType)")
         }
     }
 }

@@ -13,24 +13,24 @@ import SwiftData
  3. NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
  */
 
-
 struct LikedView: View {
-    @State private var searchString = ""
-    @Query private var favoriteRecipes: [FavoriteRecipe]
-    
-    private var filteredRecipes: [FavoriteRecipe] {
+    @State private var searchString: String = ""
+    @Query private var favorites: [FavoriteRecipes]
+
+    var filteredRecipes: [Recipe] {
+        guard let favoriteList = favorites.first else { return [] }
         if searchString.isEmpty {
-            return favoriteRecipes
+            return favoriteList.favoriteRecipes
         } else {
-            return favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
+            return favoriteList.favoriteRecipes.filter { $0.name.lowercased().contains(searchString.lowercased()) }
         }
     }
     
     var body: some View {
         NavigationStack {
-            List(filteredRecipes) { meal in
-                NavigationLink(destination: DetailsView(meal: meal)) {
-                    HStack {
+            List(filteredRecipes){ meal in
+                NavigationLink(destination: DetailsView(meal: meal)){
+                    HStack{
                         URLImage(urlString: meal.image)
                             .frame(width: 140, height: 70)
                             .scaledToFill()
@@ -45,4 +45,3 @@ struct LikedView: View {
         }
     }
 }
-

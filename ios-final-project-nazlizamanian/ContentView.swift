@@ -24,12 +24,11 @@ struct ContentView: View {
                 }
                 .tabItem{
                     Label("Swipe", systemImage: "flame.fill")
-                
                 }
                 .tag(0)
                 
                 NavigationStack(){ //liked list
-                    LikedView()
+                   LikedView()
                 }
                 .tabItem{
                     Label("Liked", systemImage: "heart.fill")
@@ -46,8 +45,6 @@ struct ContentView: View {
                 
             }//Tabview
             .tint(.mint)
-        }
     }
-
-
+}
 

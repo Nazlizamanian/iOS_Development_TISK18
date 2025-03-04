@@ -10,7 +10,7 @@ import SwiftUI
 //refactor this code its similar hmmm
 
 struct DetailsView: View {
-    let meal: FavoriteRecipe
+    let meal: Recipe
   
     var body: some View {
         ScrollView {

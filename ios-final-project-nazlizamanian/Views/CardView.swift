@@ -6,6 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
+
+/*
+ Sources used in this file:
+ 2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
+ */
+import SwiftUI
+import SwiftData
 
 /*
  Sources used in this file:
@@ -14,9 +22,11 @@ import SwiftUI
 struct CardView: View {
     @Environment(MealsModel.self) var model
     @Environment(\.modelContext) var modelContext
-    
-    @State private var card = Card() // Card instance handling logic
+  
+    @State private var card = Card()
     @State private var selectedDifficulty = "All"
+    
+    @Query private var favorites: [FavoriteRecipes]
     
     var filteredRecipes: [Recipe] {
         let recipes: [Recipe]
@@ -29,9 +39,8 @@ struct CardView: View {
         default:
             recipes = model.courses
         }
-        return recipes.shuffled()
+        return recipes
     }
-
 
     var body: some View {
         VStack {
@@ -41,11 +50,12 @@ struct CardView: View {
                 Text("Medium").tag("Medium")
             }
             .pickerStyle(SegmentedPickerStyle())
+            .padding()
 
             ZStack {
                 if card.currentIndex < filteredRecipes.count {
                     ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
-                        if index == card.currentIndex { // Only show one recipe at a time
+                        if index == card.currentIndex {
                             ZStack(alignment: .bottomLeading) {
                                 URLImage(urlString: recipe.image)
                                     .frame(width: 375, height: 600)
@@ -66,17 +76,26 @@ struct CardView: View {
                                             .onEnded { _ in
                                                 withAnimation {
                                                     if card.offset.width < -100 {
-                                                        // Swiped left
                                                         card.moveToNextCard()
                                                     } else if card.offset.width > 100 {
-                                                        // Swiped right (liked)
-                                                        let recipe = filteredRecipes[card.currentIndex]
-                                                        model.addToFavorites(recipe: recipe, in: modelContext)
+                                                        
+                                                        let favoriteList: FavoriteRecipes
+                                                        
+                                                        if let existingFavorites = favorites.first {
+                                                            favoriteList = existingFavorites
+                                                        }
+                                                        else {
+                                                            favoriteList = FavoriteRecipes()
+                                                            modelContext.insert(favoriteList)
+                                                        }
+                                                        let currentRecipe = filteredRecipes[card.currentIndex]
+                                                        model.addToFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
                                                         card.moveToNextCard()
+                                                        
                                                     } else {
                                                         card.offset = .zero
                                                     }
-
+                                                    
                                                     if card.cardOffset.height < -100 {
                                                         card.showDetails = true
                                                         card.cardOffset.height = -350
@@ -97,8 +116,7 @@ struct CardView: View {
                                     Spacer()
                                     Button(action: {
                                         withAnimation {
-                                            // For dislike, simply call swipeCard (context is passed even though it's not used in the left branch)
-                                            card.swipeCard(width: -200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
+                                            card.moveToNextCard()
                                         }
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
@@ -112,8 +130,18 @@ struct CardView: View {
                                     
                                     Button(action: {
                                         withAnimation {
-                                            // Heart button now uses the same swipe logic for a "yes" (like)
-                                            card.swipeCard(width: 200, filteredRecipes: filteredRecipes, model: model, context: modelContext)
+                                            let favoriteList: FavoriteRecipes
+                                            if let existingFavorites = favorites.first {
+                                                favoriteList = existingFavorites
+                                            }
+                                            else {
+                                                favoriteList = FavoriteRecipes()
+                                                modelContext.insert(favoriteList)
+                                            }
+                                            let currentRecipe = filteredRecipes[card.currentIndex]
+                                            model.addToFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
+
+                                            card.moveToNextCard()
                                         }
                                     }) {
                                         Image(systemName: "heart.circle.fill")
@@ -137,5 +165,3 @@ struct CardView: View {
         }
     }
 }
-
-
