@@ -80,20 +80,41 @@ struct DayView: View {
                     .background(Color.mint)
                     .cornerRadius(20)
                 }
-                Text("Total Cal: \(model.calculateCalories(for: day))")
-                    .font(.title)
-                    .fontWeight(.bold)
                 
-                Circle()
-                    .fill(Color.mint)
-                    .frame(width: 120, height: 120)
-                    .overlay(
-                        Text("Total Cook Time: \(model.calculateCookTime(for: day), specifier: "%.0f") min")
-                            .font(.title3)
-                            .fontWeight(.bold)
+                HStack(spacing: 20){
+                    Circle()
+                        .fill(Color.mint)
+                        .frame(width: 125, height: 125)
+                        .overlay(
+                            VStack{
+                                Image(systemName: "stopwatch" )
+                                    .font(.system(size: 35))
+                                Text("Cook time")
+                                    .font(.caption)
+                                Text("\(model.calculateCookTime(for: day), specifier: "%.f") min")
+                                    .fontWeight(.bold)
+                                    .font(.title2)
+                            }
+                        )
+                    Spacer()
+                        .frame(maxWidth: 10)
 
-                    )
-                    
+                    Circle()
+                        .fill(Color.mint)
+                        .frame(width: 125, height: 125)
+                        .overlay(
+                            VStack{
+                                Image(systemName: "flame")
+                                    .font(.system(size: 35))
+                                Text("Calories")
+                                    .font(.caption)
+                                Text("\(model.calculateCalories(for: day)) kcal")
+                                    .fontWeight(.bold)
+                                    .font(.title2)
+                            }
+                        )
+                }//HStack
+                .padding(.horizontal, 30)
             }
             .padding()
         }

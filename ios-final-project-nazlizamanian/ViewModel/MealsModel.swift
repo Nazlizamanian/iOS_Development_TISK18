@@ -20,9 +20,8 @@ import Observation
 
 //ToDO:
 //fixa shuffle igen
-
 //unit testing
-// Swiftdata save liked list and assignedMeals
+//calendar bugg?
 
 @Observable
 class MealsModel: Identifiable {
