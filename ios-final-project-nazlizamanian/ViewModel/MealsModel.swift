@@ -19,7 +19,6 @@ import Observation
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
 //ToDO:
-//fixa shuffle igen
 //unit testing
 //calendar bugg?
 
@@ -27,8 +26,7 @@ import Observation
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     
-  
-    func fetch() { //5
+    func fetch(completion: @escaping () -> Void) { //DeepSeek modifified escaping
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -43,6 +41,7 @@ class MealsModel: Identifiable {
 
                 DispatchQueue.main.async {
                     self?.courses = recipesResponse.recipes
+                    completion() // Call the completion handler
                 }
                 
                 if let firstRecipe = self?.courses.first {

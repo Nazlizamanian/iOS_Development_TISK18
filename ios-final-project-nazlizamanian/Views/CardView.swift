@@ -12,20 +12,16 @@ import SwiftData
  Sources used in this file:
  2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
  */
-import SwiftUI
-import SwiftData
 
-/*
- Sources used in this file:
- 2.) Swipe card logic: https://www.youtube.com/watch?v=O2JXv9BnE70&t=311s
- */
 struct CardView: View {
     @Environment(MealsModel.self) var model
     @Environment(\.modelContext) var modelContext
   
     @State private var card = Card()
     @State private var selectedDifficulty = "All"
-    
+    @State private var shuffledRecipes: [Recipe] = [] // Store shuffled recipes
+    @State private var isDataLoaded = false // Track if data has been fetched
+
     @Query private var favorites: [FavoriteRecipes]
     
     var filteredRecipes: [Recipe] {
@@ -44,6 +40,7 @@ struct CardView: View {
 
     var body: some View {
         VStack {
+            // Difficulty Picker
             Picker("Difficulty", selection: $selectedDifficulty) {
                 Text("All").tag("All")
                 Text("Easy").tag("Easy")
@@ -51,10 +48,16 @@ struct CardView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
+            .onChange(of: selectedDifficulty) { _ in
+                // Shuffle recipes when difficulty changes
+                shuffledRecipes = filteredRecipes.shuffled()
+                card.currentIndex = 0
+            }
 
+            // Card Stack
             ZStack {
-                if card.currentIndex < filteredRecipes.count {
-                    ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { index, recipe in
+                if card.currentIndex < shuffledRecipes.count {
+                    ForEach(Array(shuffledRecipes.enumerated()), id: \.element.id) { index, recipe in
                         if index == card.currentIndex {
                             ZStack(alignment: .bottomLeading) {
                                 URLImage(urlString: recipe.image)
@@ -78,20 +81,16 @@ struct CardView: View {
                                                     if card.offset.width < -100 {
                                                         card.moveToNextCard()
                                                     } else if card.offset.width > 100 {
-                                                        
                                                         let favoriteList: FavoriteRecipes
-                                                        
                                                         if let existingFavorites = favorites.first {
                                                             favoriteList = existingFavorites
-                                                        }
-                                                        else {
+                                                        } else {
                                                             favoriteList = FavoriteRecipes()
                                                             modelContext.insert(favoriteList)
                                                         }
-                                                        let currentRecipe = filteredRecipes[card.currentIndex]
+                                                        let currentRecipe = shuffledRecipes[card.currentIndex]
                                                         model.addToFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
                                                         card.moveToNextCard()
-                                                        
                                                     } else {
                                                         card.offset = .zero
                                                     }
@@ -107,11 +106,13 @@ struct CardView: View {
                                             }
                                     )
 
+                                // Show details overlay
                                 if card.showDetails {
                                     DetailsOverlay(recipe: recipe)
                                         .transition(.move(edge: .bottom))
                                 }
                                 
+                                // Swipe buttons
                                 HStack {
                                     Spacer()
                                     Button(action: {
@@ -133,14 +134,12 @@ struct CardView: View {
                                             let favoriteList: FavoriteRecipes
                                             if let existingFavorites = favorites.first {
                                                 favoriteList = existingFavorites
-                                            }
-                                            else {
+                                            } else {
                                                 favoriteList = FavoriteRecipes()
                                                 modelContext.insert(favoriteList)
                                             }
-                                            let currentRecipe = filteredRecipes[card.currentIndex]
+                                            let currentRecipe = shuffledRecipes[card.currentIndex]
                                             model.addToFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
-
                                             card.moveToNextCard()
                                         }
                                     }) {
@@ -155,13 +154,25 @@ struct CardView: View {
                                 .padding(.horizontal, 40)
                                 .padding(.bottom, 20)
                             }
-                            .zIndex(Double(model.courses.count - index))
+                            .zIndex(Double(shuffledRecipes.count - index))
                         }
                     }
+                } else if isDataLoaded && shuffledRecipes.isEmpty {
+                    Text("No recipes available")
+                        .font(.title)
+                        .foregroundColor(.gray)
                 }
             }
             .padding()
-            .onAppear { model.fetch() }
+            .onAppear {
+                if !isDataLoaded {
+                    model.fetch {
+                        // Update shuffledRecipes after data is fetched
+                        shuffledRecipes = filteredRecipes.shuffled()
+                        isDataLoaded = true
+                    }
+                }
+            }
         }
     }
 }
