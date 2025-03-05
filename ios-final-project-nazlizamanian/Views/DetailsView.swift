@@ -73,17 +73,20 @@ struct DetailsView: View {
                             .font(.headline)
                     }
                     
-                    VStack(spacing: 3){
+                    VStack(spacing: 1){
                         if let cusine = Cuisine(rawValue: meal.cuisine){
                             Text(cusine.flag)
-                                .font(.system(size: 40))
+                                .font(.system(size: 35))
                             Text("Cusine")
                                 .font(.caption)
                                 .foregroundColor(.gray)
+                                .padding(.top, -4)
+                            Text(cusine.rawValue)
+                                .font(.headline)
                         }
                         
                     }
-                }
+                }//HStack
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(Color.gray.opacity(0.1))

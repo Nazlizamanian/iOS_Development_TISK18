@@ -19,10 +19,12 @@
 		6C1C51D92C22E9B200890A50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51D82C22E9B200890A50 /* CardView.swift */; };
 		6C1C51DB2C22E9CF00890A50 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C51DA2C22E9CF00890A50 /* LikedView.swift */; };
 		6C43097B2C3019980020E103 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C43097A2C3019980020E103 /* Recipe.swift */; };
-		6C9DB2712D733CC7002C7AB2 /* FavoriteRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2702D733CC7002C7AB2 /* FavoriteRecipe.swift */; };
+		6C9DB2712D733CC7002C7AB2 /* FavoriteRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */; };
 		6C9DB2732D733CFD002C7AB2 /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2722D733CFD002C7AB2 /* MealType.swift */; };
 		6C9DB2772D759692002C7AB2 /* DailyMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2762D759692002C7AB2 /* DailyMeals.swift */; };
 		6C9DB2792D7601C8002C7AB2 /* RecipePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2782D7601C8002C7AB2 /* RecipePicker.swift */; };
+		6C9DB2B72D78C5D8002C7AB2 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2B62D78C5D8002C7AB2 /* Cuisine.swift */; };
+		6C9DB2B92D78C626002C7AB2 /* Meat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2B82D78C626002C7AB2 /* Meat.swift */; };
 		6CB11C142D5BA56F009CD2F8 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C132D5BA56F009CD2F8 /* DayView.swift */; };
 		6CB11C162D610A7A009CD2F8 /* ImageLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C152D610A7A009CD2F8 /* ImageLoading.swift */; };
 		6CB11C182D610B9E009CD2F8 /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB11C172D610B9E009CD2F8 /* URLImageView.swift */; };
@@ -65,10 +67,12 @@
 		6C1C51D82C22E9B200890A50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		6C1C51DA2C22E9CF00890A50 /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		6C43097A2C3019980020E103 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		6C9DB2702D733CC7002C7AB2 /* FavoriteRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipe.swift; sourceTree = "<group>"; };
+		6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipes.swift; sourceTree = "<group>"; };
 		6C9DB2722D733CFD002C7AB2 /* MealType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealType.swift; sourceTree = "<group>"; };
 		6C9DB2762D759692002C7AB2 /* DailyMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMeals.swift; sourceTree = "<group>"; };
 		6C9DB2782D7601C8002C7AB2 /* RecipePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePicker.swift; sourceTree = "<group>"; };
+		6C9DB2B62D78C5D8002C7AB2 /* Cuisine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
+		6C9DB2B82D78C626002C7AB2 /* Meat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meat.swift; sourceTree = "<group>"; };
 		6CB11C132D5BA56F009CD2F8 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		6CB11C152D610A7A009CD2F8 /* ImageLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoading.swift; sourceTree = "<group>"; };
 		6CB11C172D610B9E009CD2F8 /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
@@ -126,7 +130,6 @@
 		6C1C51602C22D65800890A50 /* ios-final-project-nazlizamanian */ = {
 			isa = PBXGroup;
 			children = (
-				6C1C51D52C22E98700890A50 /* Data */,
 				6C43097C2C3019FF0020E103 /* ViewModel */,
 				6C1C51D22C22E97000890A50 /* Model */,
 				6C1C51D12C22E92900890A50 /* Views */,
@@ -181,19 +184,14 @@
 		6C1C51D22C22E97000890A50 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6C9DB2B82D78C626002C7AB2 /* Meat.swift */,
+				6C9DB2B62D78C5D8002C7AB2 /* Cuisine.swift */,
 				6C43097A2C3019980020E103 /* Recipe.swift */,
-				6C9DB2702D733CC7002C7AB2 /* FavoriteRecipe.swift */,
+				6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */,
 				6C9DB2722D733CFD002C7AB2 /* MealType.swift */,
 				6C9DB2762D759692002C7AB2 /* DailyMeals.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		6C1C51D52C22E98700890A50 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		6C43097C2C3019FF0020E103 /* ViewModel */ = {
@@ -337,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C9DB2B72D78C5D8002C7AB2 /* Cuisine.swift in Sources */,
 				6C9DB2772D759692002C7AB2 /* DailyMeals.swift in Sources */,
 				6C1C51DB2C22E9CF00890A50 /* LikedView.swift in Sources */,
 				6CB11C142D5BA56F009CD2F8 /* DayView.swift in Sources */,
@@ -345,10 +344,11 @@
 				6C9DB2732D733CFD002C7AB2 /* MealType.swift in Sources */,
 				6CF47CEC2D4E29EC006E7AF9 /* DetailsView.swift in Sources */,
 				6C1C51D42C22E98000890A50 /* MealsModel.swift in Sources */,
+				6C9DB2B92D78C626002C7AB2 /* Meat.swift in Sources */,
 				6CF47CF02D4E4054006E7AF9 /* CalendarHelper.swift in Sources */,
 				6CB11C162D610A7A009CD2F8 /* ImageLoading.swift in Sources */,
 				6C1C51642C22D65800890A50 /* ContentView.swift in Sources */,
-				6C9DB2712D733CC7002C7AB2 /* FavoriteRecipe.swift in Sources */,
+				6C9DB2712D733CC7002C7AB2 /* FavoriteRecipes.swift in Sources */,
 				6CB11C1A2D611241009CD2F8 /* Card.swift in Sources */,
 				6C9DB2792D7601C8002C7AB2 /* RecipePicker.swift in Sources */,
 				6C43097B2C3019980020E103 /* Recipe.swift in Sources */,
