@@ -16,20 +16,27 @@ enum Meat: String, CaseIterable {
     case shrimp = "shrimp"
 }
 
-enum MealType: String, CaseIterable, Codable {
+enum MealType: String, CaseIterable, Codable, Identifiable {
     case breakfast = "Breakfast"
     case lunch = "Lunch"
     case dinner = "Dinner"
     case snacks = "Snacks"
 
+    var id: String { rawValue }
     var title: String { rawValue }
+
     var iconName: String {
-        if self == .breakfast { return "cup.and.saucer"}
-        else if self == .lunch || self == .dinner { return "fork.knife.circle" }
-        else { return "takeoutbag.and.cup.and.straw"}
-       
+        switch self {
+        case .breakfast:
+            return "cup.and.saucer"
+        case .lunch, .dinner:
+            return "fork.knife.circle"
+        case .snacks:
+            return "takeoutbag.and.cup.and.straw"
+        }
     }
 }
+
 
 enum Cuisine: String, CaseIterable, Identifiable {
     case american = "American"

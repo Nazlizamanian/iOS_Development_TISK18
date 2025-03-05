@@ -38,8 +38,12 @@ struct DayView: View {
 
                     VStack(alignment: .leading) {
                         Button {
-                            selectedMealType = mealType
-                            showRecipePicker = true
+                            //Bug fixed, needed to check if list !empty then show recipePickerView otherwise it will show empty from being
+                            if let favorites = favoriteRecipes.first, !favorites.favoriteRecipes.isEmpty {
+                                selectedMealType = mealType
+                                showRecipePicker = true
+                            }
+                            
                         } label: {
                             HStack (spacing: 15){
                                 Image(systemName: mealType.iconName)
@@ -96,15 +100,16 @@ struct DayView: View {
         .onAppear {
             day = model.loadOrCreateDay(for: selectedDate, context: modelContext)
         }
-        .sheet(isPresented: $showRecipePicker) {
-            if let selectedMealType = selectedMealType {
+        .sheet(item: $selectedMealType){ mealType in
+            if let day = day, let favorites = favoriteRecipes.first {
                 RecipePickerView(
-                    mealType: selectedMealType,
-                    day: day!,
-                    favoriteRecipes: favoriteRecipes.first?.favoriteRecipes ?? [],
-                    model: model
+                    mealType: mealType,
+                    day: day,
+                    favoriteRecipes: favorites.favoriteRecipes,
+                    model: model 
                 )
             }
+            
         }
     }
 }
