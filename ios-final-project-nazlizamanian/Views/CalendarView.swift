@@ -1,16 +1,4 @@
-//
-//  ShoppingList.swift
-//  ios-final-project-nazlizamanian
-//
-//  Created by Nazli  on 22/01/25.
-//
-
 import SwiftUI
-
-/*
- Sources used in this file:
- 4. Impleneting a calendar: https://www.youtube.com/watch?v=jBvkFKhnYLI&t=45s
- */
 
 struct CalendarView: View {
     @State private var calendarVM = CalendarHelper()
@@ -19,6 +7,7 @@ struct CalendarView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                // Month navigation header
                 HStack {
                     Button(action: {
                         calendarVM.changeMonth(by: -1)
@@ -34,7 +23,7 @@ struct CalendarView: View {
                         .fontWeight(.bold)
                     Spacer()
                     Button(action: {
-                        calendarVM.changeMonth(by: +1)
+                        calendarVM.changeMonth(by: 1)
                     }) {
                         Image(systemName: "arrow.right")
                             .font(.title)
@@ -44,6 +33,7 @@ struct CalendarView: View {
                 }
                 .padding()
 
+                // Weekday headers
                 HStack {
                     ForEach(calendarVM.calendar.veryShortWeekdaySymbols.indices, id: \.self) { index in
                         let newIndex = (index + (calendarVM.calendar.firstWeekday - 1)) % 7
@@ -53,28 +43,36 @@ struct CalendarView: View {
                     }
                 }
 
-                // 4, Calendar grid
-                let days = calendarVM.generateDaysForMonth()
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                    ForEach(days, id: \.self) { day in
-                        if day == 0 {
-                            Text("")
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                        else {
-                            NavigationLink( destination: DayView( selectedDate: calendarVM.getDate(for: day))) {
-                                Text("\(day)")
+                // Calendar grid
+                ScrollView {
+                    let days = calendarVM.generateDaysForMonth()
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                        ForEach(0..<days.count, id: \.self) { index in
+                            let day = days[index]
+                            if day == 0 {
+                                Text("")
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .padding(4)
-                                    .foregroundColor(.white)
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .background( day == calendarVM.calendar.component(.day, from: Date()) ? Color.mint : Color.gray.opacity(0.3)
-                                    )
-                                    .cornerRadius(30)
+                            } else {
+                                NavigationLink(destination: DayView(selectedDate: calendarVM.getDate(for: day))) {
+                                    Text("\(day)")
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        .padding(4)
+                                        .foregroundColor(.white)
+                                        .aspectRatio(1, contentMode: .fit)
+                                        .background(
+                                            day == calendarVM.calendar.component(.day, from: Date())
+                                                ? Color.mint
+                                                : Color.gray.opacity(0.3)
+                                        )
+                                        .cornerRadius(30)
+                                }
                             }
                         }
                     }
+                    .padding(.top)
+                    .id(calendarVM.currentDate)
                 }
+
                 .padding(.top)
                 Spacer()
             }

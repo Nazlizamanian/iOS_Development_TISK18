@@ -11,12 +11,17 @@ import SwiftData
 
 /*Source used in this file:
  3. NavigationStack: https://pixelkind.github.io/iOS-development/chapter3/navigationstack/
+ 4. SwipeButton: https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-custom-swipe-action-buttons-to-a-list-row
  */
 
 struct LikedView: View {
     @State private var searchString: String = ""
     @Query private var favorites: [FavoriteRecipes]
+    
 
+    @Environment(\.modelContext) private var modelContext
+    @Environment(MealsModel.self) var model
+    
     var filteredRecipes: [Recipe] {
         guard let favoriteList = favorites.first else { return [] }
         if searchString.isEmpty {
@@ -39,6 +44,7 @@ struct LikedView: View {
                     }
                     .padding(3)
                 }
+                
             }
             .searchable(text: $searchString)
             .navigationTitle("Liked meals")

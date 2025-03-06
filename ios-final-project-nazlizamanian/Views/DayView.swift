@@ -121,7 +121,7 @@ struct DayView: View {
         .onAppear {
             day = model.loadOrCreateDay(for: selectedDate, context: modelContext)
         }
-        .sheet(item: $selectedMealType){ mealType in
+        .sheet(item: $selectedMealType){ mealType in //8,9 
             if let day = day, let favorites = favoriteRecipes.first {
                 RecipePickerView(
                     mealType: mealType,

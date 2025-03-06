@@ -80,7 +80,9 @@ struct CardView: View {
                                                 withAnimation {
                                                     if card.offset.width < -100 {
                                                         card.moveToNextCard()
+                                                        
                                                     } else if card.offset.width > 100 {
+                                                        
                                                         let favoriteList: FavoriteRecipes
                                                         if let existingFavorites = favorites.first {
                                                             favoriteList = existingFavorites

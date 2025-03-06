@@ -51,7 +51,6 @@ class CalendarHelper {
 
         return emptyDays + days
     }
-
     
     func getDate(for day: Int) -> Date {
         let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
@@ -60,6 +59,4 @@ class CalendarHelper {
         }
         return Date() 
     }
-
-    
 }

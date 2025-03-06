@@ -20,7 +20,6 @@ import Observation
 
 //ToDO:
 //unit testing
-//calendar bugg?
 
 @Observable
 class MealsModel: Identifiable {
