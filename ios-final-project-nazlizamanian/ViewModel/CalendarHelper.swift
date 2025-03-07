@@ -14,24 +14,15 @@ import Observation
  */
 
 @Observable
-class CalendarHelper {
+class CalendarHelper  {
     
     var currentDate: Date = Date()
-    
-    let calendar: Calendar = {
-        var calendar = Calendar.current
-        calendar.firstWeekday = 2
-        return calendar
-    }()
-    
-   let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM YYYY" // för o få månad o år
-        return formatter
-    }()
+    let calendar = Calendar.current
     
     var currentMonthText: String {
-        dateFormatter.string(from: currentDate)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "LLLL yyyy"
+        return formatter.string(from: currentDate)
     }
     
     func changeMonth(by value: Int){
@@ -40,23 +31,35 @@ class CalendarHelper {
         }
     }
     
-    func generateDaysForMonth() -> [Int] {
-        guard let range = calendar.range(of: .day, in: .month, for: currentDate) else { return [] }
-        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        let weekDayOfFirstDay = calendar.component(.weekday, from: firstDayOfMonth)
-
-        let offset = (weekDayOfFirstDay - calendar.firstWeekday + 7) % 7
-        let emptyDays = Array(repeating: 0, count: offset)
-        let days = Array(range)
-
-        return emptyDays + days
+    func generateDaysForMonth() -> [Int] { //Chatis modified
+        let components = calendar.dateComponents([.year, .month], from: currentDate)
+        guard let firstOfMonth = calendar.date(from: components) else {
+            return []
+        }
+        
+        let weekday = calendar.component(.weekday, from: firstOfMonth)
+        // Determine number of days in the month
+        guard let range = calendar.range(of: .day, in: .month, for: firstOfMonth) else { return [] }
+        let numDays = range.count
+        
+        var days = [Int]()
+        // Calculate the number of leading empty cells so that the first day aligns correctly
+        let firstWeekday = calendar.firstWeekday
+        var leadingEmptyDays = weekday - firstWeekday
+        if leadingEmptyDays < 0 { leadingEmptyDays += 7 }
+        for _ in 0..<leadingEmptyDays {
+            days.append(0)
+        }
+        
+        for day in 1...numDays {
+            days.append(day)
+        }
+        return days
     }
     
     func getDate(for day: Int) -> Date {
-        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        if let correctedDate = calendar.date(byAdding: .day, value: day - 1, to: firstDayOfMonth) {
-            return correctedDate
-        }
-        return Date() 
+        var components = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        components.day = day
+        return calendar.date(from: components) ?? Date()
     }
 }

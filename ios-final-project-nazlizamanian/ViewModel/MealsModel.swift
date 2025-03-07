@@ -20,6 +20,7 @@ import Observation
 
 //ToDO:
 //unit testing
+//calendar bugg?
 
 @Observable
 class MealsModel: Identifiable {
@@ -79,6 +80,19 @@ class MealsModel: Identifiable {
         }
     }
     
+    func removeFromFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext){
+        if let index = favoriteRecipes.favoriteRecipes.firstIndex(where: {$0.id == recipe.id}){
+            favoriteRecipes.favoriteRecipes.remove(at: index)
+            
+            do{
+                try context.save()
+            }catch{
+                print("Failed to remove recipe to favorites: \(error)")
+            }
+        } else {
+            print("Recipe is not in fav.")
+        }
+    }
     func assignRecipe( _ recipe: Recipe, to mealType: MealType, on day: Day, context: ModelContext) { //CHATIS
         let meal = Meal(type: mealType, recipe: recipe, day: day)
         day.meals.append(meal)

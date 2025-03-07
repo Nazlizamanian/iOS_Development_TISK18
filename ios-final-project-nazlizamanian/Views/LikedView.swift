@@ -44,7 +44,14 @@ struct LikedView: View {
                     }
                     .padding(3)
                 }
-                
+                .swipeActions(edge: .trailing, allowsFullSwipe: true){ //4
+                    Button(role: .destructive){
+                        guard let favoriteList = favorites.first else { return }
+                        model.removeFromFavorites(recipe: meal, favoriteRecipes: favoriteList, context: modelContext)
+                    } label: {
+                        Label("Remove", systemImage: "trash")
+                    }
+                }
             }
             .searchable(text: $searchString)
             .navigationTitle("Liked meals")

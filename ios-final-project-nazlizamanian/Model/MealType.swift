@@ -13,8 +13,8 @@ enum MealType: String, CaseIterable, Codable, Identifiable {
     case dinner = "Dinner"
     case snacks = "Snacks"
 
-    var id: String { rawValue }
-    var title: String { rawValue }
+    var id: String { self.rawValue }
+    var title: String { self.rawValue }
 
     var iconName: String {
         switch self {

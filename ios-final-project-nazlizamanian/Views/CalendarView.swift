@@ -70,6 +70,7 @@ struct CalendarView: View {
                         }
                     }
                     .padding(.top)
+                    // Adding an id forces the grid to reload when currentDate changes
                     .id(calendarVM.currentDate)
                 }
 

@@ -130,7 +130,6 @@ struct DayView: View {
                     model: model 
                 )
             }
-            
         }
     }
 }
