@@ -45,16 +45,22 @@ struct MealsModelTest {
         id: 2,
         name: "Recipe 2",
         ingredients: [
-            "Chicken thighs, boneless and skinless",
-            "Green curry paste",
-            "Coconut milk",
-            "Fish sauce",
-            "Sugar",
-            "Eggplant, sliced",
-            "Bell peppers, sliced",
-            "Basil leaves",
-            "Jasmine rice for serving"],
-        instructions: ["Step 2"],
+            Ingredient(name: "Chicken thighs, boneless and skinless"),
+            Ingredient(name: "Green curry paste"),
+            Ingredient(name: "Coconut milk"),
+            Ingredient(name: "Fish sauce"),
+            Ingredient(name: "Sugar"),
+            Ingredient(name: "Eggplant, sliced"),
+            Ingredient(name: "Bell peppers, sliced"),
+            Ingredient(name: "Basil leaves"),
+            Ingredient(name: "Jasmine rice for serving")],
+        instructions: [
+            Instruction(name: "Marinate the chicken thighs with green curry paste and a splash of fish sauce for 15 minutes."),
+            Instruction(name: "In a large pot, heat the coconut milk."),
+            Instruction(name: "Add the marinated chicken and cook until it's browned on all sides."),
+            Instruction( name: "Stir in the sliced eggplant and let the mixture simmer."),
+            Instruction(name: "Adjust the seasoning with a bit fish sauce if needed."),
+        ],
         image: "image1",
         difficulty: "Medium",
         rating: 4.5,
@@ -70,17 +76,22 @@ struct MealsModelTest {
         id: 3,
         name: "Recipe 3",
         ingredients: [
-            "Ground lamb or beef",
-            "Onions, grated",
-            "Garlic, minced",
-            "Parsley, finely chopped",
-            "Cumin",
-            "Coriander",
-            "Red pepper flakes",
-            "Salt and pepper to taste",
-            "Flatbread for serving",
-            "Tahini sauce"],
-        instructions: ["Step 2"],
+            Ingredient(name: "Ground lamb or beef"),
+            Ingredient(name: "Onions, grated"),
+            Ingredient(name: "Garlic, minced"),
+            Ingredient(name: "Parsley, finely chopped"),
+            Ingredient(name: "Cumin"),
+            Ingredient(name: "Coriander"),
+            Ingredient(name: "Red pepper flakes"),
+            Ingredient(name: "Salt and pepper to taste"),
+            Ingredient(name: "Flatbread for serving"),
+            Ingredient(name: "Tahini sauce")
+        ],
+        instructions: [
+            Instruction(name: "In a large bowl, combine the ground meat with the grated onions, minced garlic, and finely chopped parsley."),
+            Instruction(name: "Sprinkle in the spices: cumin, coriander, red pepper flakes, salt, and pepper."),
+            Instruction(name: "Mix everything thoroughly until the spices and aromatics are evenly distributed through the meat."),
+        ],
         image: "image1",
         difficulty: "Medium",
         rating: 4.9,
@@ -144,30 +155,33 @@ struct MealsModelTest {
     @Test(" containsMeat()")
     func containsMeath() async throws {
         
-         let containsMeatInRecipe1 = mealsModel.containsMeat(ingredients: recipe1.ingredients)
-         let containsMeatInRecipe2 = mealsModel.containsMeat(ingredients: recipe2.ingredients)
-         let containsMeatInRecipe3 = mealsModel.containsMeat(ingredients: recipe3.ingredients)
+        let containsMeatInRecipe1 = recipe1.ingredients.map {$0.name}
+        let result1 = mealsModel.containsMeat(ingredients: containsMeatInRecipe1)
+        
+        let containsMeatInRecipe2 = recipe2.ingredients.map {$0.name}
+        let result2 = mealsModel.containsMeat(ingredients: containsMeatInRecipe2)
+        
+        let containsMeatInRecipe3 = recipe3.ingredients.map {$0.name}
+        let result3 = mealsModel.containsMeat(ingredients: containsMeatInRecipe3)
          
          // Assert
-         #expect(containsMeatInRecipe1 == false)
-         #expect(containsMeatInRecipe2 == true)
-         #expect(containsMeatInRecipe3 == true)
-         }
+         #expect(result1  == false)
+         #expect(result2 == true)
+         #expect(result3 == true)
+    }
          
-         
-         @Test(" genereateDaysForMonth()")
-         func generateDaysForMonth() async throws {
-         let calendarHelper = CalendarHelper()
-         
-         guard let febraryDate = DateFormatter().date(from: "2024-02-01") else { return }
+    @Test(" genereateDaysForMonth()")
+    func generateDaysForMonth() async throws {
+        let calendarHelper = CalendarHelper()
+        
+        guard let febraryDate = DateFormatter().date(from: "2024-02-01") else { return }
          //leap year for febraru was 2024
+        calendarHelper.currentDate = febraryDate
+        let daysInFeb = calendarHelper.generateDaysForMonth()
          
-         calendarHelper.currentDate = febraryDate
-         let daysInFeb = calendarHelper.generateDaysForMonth()
-         
-         let expectedInFeb = 29
-         #expect(daysInFeb.count == expectedInFeb)
-         #expect(daysInFeb.last == 29)
-         }
+        let expectedInFeb = 29
+        #expect(daysInFeb.count == expectedInFeb)
+        #expect(daysInFeb.last == 29)
+    }
         
 }

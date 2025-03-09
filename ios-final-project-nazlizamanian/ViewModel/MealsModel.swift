@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import SwiftData
-import Combine
 import Observation
 
 /*Sources used:
@@ -89,6 +88,7 @@ class MealsModel: Identifiable {
             print("Recipe is not in fav.")
         }
     }
+    
     func assignRecipe( _ recipe: Recipe, to mealType: MealType, on day: Day, context: ModelContext) { //CHATIS
         let meal = Meal(type: mealType, recipe: recipe, day: day)
         day.meals.append(meal)
@@ -154,4 +154,3 @@ class MealsModel: Identifiable {
     }
     
 }
-

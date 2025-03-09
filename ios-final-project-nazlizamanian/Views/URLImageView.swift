@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct URLImage: View {
-    @State private var viewModel = URLImageLoadingViewModel()
+    @State private var viewModel = URLImageLoading()
     let urlString: String
 
     var body: some View {

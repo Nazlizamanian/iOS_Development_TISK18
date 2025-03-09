@@ -105,11 +105,11 @@ struct CardView: View {
                                 // Swipe buttons
                                 HStack {
                                     Spacer()
-                                    Button(action: {
+                                    Button {
                                         withAnimation {
                                             card.moveToNextCard()
                                         }
-                                    }) {
+                                    } label: {
                                         Image(systemName: "xmark.circle.fill")
                                             .resizable()
                                             .frame(width: 75, height: 75)

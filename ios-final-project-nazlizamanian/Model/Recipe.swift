@@ -8,22 +8,6 @@
 import Foundation
 import SwiftData
 
-struct Ingredient: Codable {
-    let name: String
-    
-    init(name: String) {
-        self.name = name
-    }
-}
-
-struct Instruction: Codable {
-    let name: String
-    
-    init(name: String) {
-        self.name = name
-    }
-}
-
 /*CHAT*/
 @Model
 final class Recipe: Codable, Identifiable {
@@ -117,7 +101,6 @@ final class Recipe: Codable, Identifiable {
     }
 
 }
-
 
 struct RecipesResponse: Codable {
     let recipes: [Recipe]

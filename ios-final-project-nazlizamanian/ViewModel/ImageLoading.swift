@@ -11,7 +11,7 @@ import Observation
 
 //Resonpsible for showing image fetching
 @Observable
-class URLImageLoadingViewModel {
+class URLImageLoading {
     var imageData: Data?
     
     func fetchImage(from urlString: String) {
