@@ -18,10 +18,6 @@ import Observation
 
 /*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
 
-//ToDO:
-//unit testing
-//calendar bugg?
-
 @Observable
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
@@ -158,3 +154,4 @@ class MealsModel: Identifiable {
     }
     
 }
+

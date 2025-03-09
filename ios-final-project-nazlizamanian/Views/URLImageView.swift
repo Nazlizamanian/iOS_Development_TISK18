@@ -25,7 +25,7 @@ struct URLImage: View {
                     .onAppear { viewModel.fetchImage(from: urlString) }
             }
         }
-        .onChange(of: urlString){ newValue in //previoslut had published and changed to make obseravation and state doesnt auto trigger re render therefore onchange update image if we change breakfasts
+        .onChange(of: urlString){ oldValue, newValue in //previoslut had published and changed to make obseravation and state doesnt auto trigger re render therefore onchange update image if we change breakfasts
             viewModel.imageData = nil
             viewModel.fetchImage(from: newValue)
 

@@ -8,13 +8,29 @@
 import Foundation
 import SwiftData
 
+struct Ingredient: Codable {
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+struct Instruction: Codable {
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
 /*CHAT*/
 @Model
 final class Recipe: Codable, Identifiable {
     var id: Int
     var name: String
-    var ingredients: [String]
-    var instructions: [String]
+    var ingredients: [Ingredient]
+    var instructions: [Instruction]
     var image: String
     var difficulty: String
     var rating: Double
@@ -25,7 +41,21 @@ final class Recipe: Codable, Identifiable {
     var caloriesPerServing: Int
     var reviewCount: Int
 
-    init(id: Int, name: String, ingredients: [String], instructions: [String], image: String, difficulty: String, rating: Double, cuisine: String, prepTimeMinutes: Double, cookTimeMinutes: Double, servings: Int, caloriesPerServing: Int, reviewCount: Int) {
+    init(
+        id: Int,
+        name: String,
+        ingredients: [Ingredient],
+        instructions: [Instruction],
+        image: String,
+        difficulty: String,
+        rating: Double,
+        cuisine: String,
+        prepTimeMinutes: Double,
+        cookTimeMinutes: Double,
+        servings: Int,
+        caloriesPerServing: Int,
+        reviewCount: Int
+    ) {
         self.id = id
         self.name = name
         self.ingredients = ingredients
@@ -50,8 +80,8 @@ final class Recipe: Codable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(Int.self, forKey: .id)
         let name = try container.decode(String.self, forKey: .name)
-        let ingredients = try container.decode([String].self, forKey: .ingredients)
-        let instructions = try container.decode([String].self, forKey: .instructions)
+        let ingredientsString = try container.decode([String].self, forKey: .ingredients)
+        let instructionsString = try container.decode([String].self, forKey: .instructions)
         let image = try container.decode(String.self, forKey: .image)
         let difficulty = try container.decode(String.self, forKey: .difficulty)
         let rating = try container.decode(Double.self, forKey: .rating)
@@ -61,6 +91,10 @@ final class Recipe: Codable, Identifiable {
         let servings = try container.decode(Int.self, forKey: .servings)
         let caloriesPerServing = try container.decode(Int.self, forKey: .caloriesPerServing)
         let reviewCount = try container.decode(Int.self, forKey: .reviewCount)
+        
+        let ingredients = ingredientsString.map { Ingredient(name: $0) }
+        let instructions = instructionsString.map { Instruction(name: $0) }
+        
         self.init(id: id, name: name, ingredients: ingredients, instructions: instructions, image: image, difficulty: difficulty, rating: rating, cuisine: cuisine, prepTimeMinutes: prepTimeMinutes, cookTimeMinutes: cookTimeMinutes, servings: servings, caloriesPerServing: caloriesPerServing, reviewCount: reviewCount)
     }
 

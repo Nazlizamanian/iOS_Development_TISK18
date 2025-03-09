@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class FavoriteRecipes {
-    var favoriteRecipes: [Recipe]
+    @Relationship(deleteRule: .cascade) var favoriteRecipes: [Recipe]
     
     init(favoriteRecipes: [Recipe] = []){
         self.favoriteRecipes = favoriteRecipes

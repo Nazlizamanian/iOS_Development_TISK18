@@ -35,7 +35,7 @@ struct RecipePickerView: View {
                         
                         Spacer()
                         
-                        if !model.containsMeat(ingredients: recipe.ingredients){
+                        if !model.containsMeat(ingredients: recipe.ingredients.map { $0.name }){
                             Image(systemName: "leaf.fill")
                                 .font(.system(size: 50))
                                 .foregroundColor(.green)
@@ -47,3 +47,4 @@ struct RecipePickerView: View {
         }
     }
 }
+

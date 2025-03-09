@@ -17,14 +17,19 @@ struct MealsModelTest {
         id: 1,
         name: "Recipe 1",
         ingredients: [
-            "Pizza dough",
-            "Tomato sauce",
-            "Fresh mozzarella cheese",
-            "Fresh basil leaves",
-            "Olive oil",
-            "Salt and pepper to taste"
+            Ingredient(name: "Pizza dough"),
+            Ingredient(name: "Tomato sauce"),
+            Ingredient(name: "Fresh mozzarella cheese"),
+            Ingredient(name: "Fresh basil leaves"),
+            Ingredient(name: "Olive oil"),
+            Ingredient(name: "Salt and pepper to taste")
         ],
-        instructions: ["Step 1"],
+        instructions: [
+            Instruction(name: "Preheat your oven to 450°F."),
+            Instruction(name: "Spread the tomato sauce over the dough."),
+            Instruction(name: "Add mozzarella, basil, olive oil, salt, and pepper."),
+            Instruction(name: "Bake for 15 minutes until the crust is golden.")
+        ],
         image: "image1",
         difficulty: "Easy",
         rating: 4.5,

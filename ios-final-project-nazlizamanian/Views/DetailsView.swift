@@ -98,7 +98,7 @@ struct DetailsView: View {
                         Text("Ingredients")
                             .font(.title2)
                             .fontWeight(.bold)
-                        Text(meal.ingredients.joined(separator: ", "))
+                        Text(meal.ingredients.map { $0.name }.joined(separator: ", "))
                        
                     }
                     .padding()
@@ -117,7 +117,7 @@ struct DetailsView: View {
                             HStack(alignment: .top, spacing: 8) {
                                 Text("\(index + 1).")
                                     .fontWeight(.bold)
-                                Text(meal.instructions[index])
+                                Text(meal.instructions[index].name)
                             }
                         }
                     }
@@ -188,7 +188,7 @@ struct DetailsOverlay: View {
                         .padding(.horizontal)
                         .padding(.bottom, 4)
 
-                    Text(recipe.ingredients.joined(separator: ", "))
+                    Text(recipe.ingredients.map { $0.name }.joined(separator: ", "))
                         .padding(.horizontal)
                         .padding(.bottom, 8)
                         .lineLimit(nil)
@@ -201,7 +201,7 @@ struct DetailsOverlay: View {
                         .padding(.horizontal)
                         .padding(.bottom, 4)
 
-                    ForEach(recipe.instructions, id: \.self) { instruction in
+                    ForEach(recipe.instructions.map { $0.name }, id: \.self) { instruction in
                         Text(instruction)
                             .padding(.horizontal)
                             .padding(.bottom, 3)
@@ -218,3 +218,4 @@ struct DetailsOverlay: View {
         .frame(height: 400)
     }
 }
+
