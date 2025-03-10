@@ -32,5 +32,19 @@ class Card  {
         }
     }
     
+    func swipeCard(width: CGFloat, filteredRecipes: [Recipe], model: MealsModel, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
+        withAnimation {
+            if width < -150 {
+                moveToNextCard()
+            } else if width > 150 {
+                if currentIndex < filteredRecipes.count {
+                    
+                    let likedRecipe = filteredRecipes[currentIndex]
+                    model.addToFavorites(recipe: likedRecipe, favoriteRecipes: favoriteRecipes, context: context)
+                }
+                moveToNextCard()
+            }
+        }
+    }
    
 }

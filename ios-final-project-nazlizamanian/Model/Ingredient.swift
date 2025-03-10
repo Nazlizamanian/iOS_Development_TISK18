@@ -13,4 +13,3 @@ struct Ingredient: Codable {
         self.name = name
     }
 }
-

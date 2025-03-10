@@ -218,4 +218,3 @@ struct DetailsOverlay: View {
         .frame(height: 400)
     }
 }
-
