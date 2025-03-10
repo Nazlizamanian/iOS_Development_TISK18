@@ -117,7 +117,6 @@ struct MealsModelTest {
         let meal3 = Meal(type: .dinner, recipe: recipe3, day: date2)
         let meal4 = Meal(type: .snacks, recipe: recipe2, day: date2)
         
-       
         date1.meals.append(contentsOf: [meal1, meal2])
         date2.meals.append(contentsOf: [meal3, meal4])
         
@@ -134,22 +133,25 @@ struct MealsModelTest {
     @Test("calculateCookTime()")
     func calculateCookTime() async throws {
          //Act
-         let meal1 = Meal(type: .breakfast, recipe: recipe1, day: date1)
-         let meal2 = Meal(type: .lunch, recipe: recipe2, day: date1)
+        let meal1 = Meal(type: .breakfast, recipe: recipe1, day: date1)
+        let meal2 = Meal(type: .lunch, recipe: recipe2, day: date1)
          
-         let meal3 = Meal(type: .dinner, recipe: recipe3, day: date2)
-         let meal4 = Meal(type: .snacks, recipe: recipe2, day: date2)
+        let meal3 = Meal(type: .dinner, recipe: recipe3, day: date2)
+        let meal4 = Meal(type: .snacks, recipe: recipe2, day: date2)
         
-         let totalCookTimeDay1 = mealsModel.calculateCookTime(for: date1)
-         let totalCookTimeDay2 = mealsModel.calculateCookTime(for: date2)
+        date1.meals.append(contentsOf: [meal1, meal2])
+        
+        
+        let totalCookTimeDay1 = mealsModel.calculateCookTime(for: date1)
+        let totalCookTimeDay2 = mealsModel.calculateCookTime(for: date2)
          
-         let prepTime1 = (recipe1.prepTimeMinutes / Double(recipe1.servings))
-         let prepTime2 = (recipe2.prepTimeMinutes / Double(recipe2.servings))
+        let prepTime1 = (recipe1.prepTimeMinutes / Double(recipe1.servings))
+        let prepTime2 = (recipe2.prepTimeMinutes / Double(recipe2.servings))
          
          //Assert
-         #expect(prepTime1 != 0 && prepTime2 != 0)
-         #expect(totalCookTimeDay1 == 45.0)  //20 + 5+20= 45.0
-         #expect(totalCookTimeDay1 != totalCookTimeDay2)
+        #expect(prepTime1 != 0 && prepTime2 != 0)
+        #expect(totalCookTimeDay1 == 45.0)  //20 + 5+20= 45.0
+        #expect(totalCookTimeDay1 != totalCookTimeDay2)
     }
     
     @Test(" containsMeat()")
