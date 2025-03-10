@@ -140,7 +140,7 @@ struct MealsModelTest {
         let meal4 = Meal(type: .snacks, recipe: recipe2, day: date2)
         
         date1.meals.append(contentsOf: [meal1, meal2])
-        
+        date2.meals.append(contentsOf: [meal3, meal4])
         
         let totalCookTimeDay1 = mealsModel.calculateCookTime(for: date1)
         let totalCookTimeDay2 = mealsModel.calculateCookTime(for: date2)

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DetailsOverlay: View {
+struct DetailsOverlayView: View {
     var recipe: Recipe
 
     var body: some View {
@@ -81,6 +81,7 @@ struct DetailsOverlay: View {
             }
             .frame(maxWidth: .infinity)
             .background(Color.black.opacity(0.4))
+            .foregroundColor(.white)
             .cornerRadius(20)
             .padding(.top, 30)
             .shadow(radius: 10)

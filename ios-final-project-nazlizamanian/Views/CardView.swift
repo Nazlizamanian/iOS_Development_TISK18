@@ -98,7 +98,7 @@ struct CardView: View {
 
                                 // Show details overlay
                                 if card.showDetails {
-                                    DetailsOverlay(recipe: recipe)
+                                    DetailsOverlayView(recipe: recipe)
                                         .transition(.move(edge: .bottom))
                                 }
                                 
@@ -160,6 +160,7 @@ struct CardView: View {
     
     func addToFavorites() {
         let favoriteList: FavoriteRecipes
+        
         if let existingFavorites = favorites.first {
             favoriteList = existingFavorites
         } else {
