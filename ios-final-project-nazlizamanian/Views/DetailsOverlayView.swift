@@ -81,7 +81,6 @@ struct DetailsOverlayView: View {
             }
             .frame(maxWidth: .infinity)
             .background(Color.black.opacity(0.4))
-            .foregroundColor(.white)
             .cornerRadius(20)
             .padding(.top, 30)
             .shadow(radius: 10)
@@ -89,3 +88,4 @@ struct DetailsOverlayView: View {
         .frame(height: 400)
     }
 }
+

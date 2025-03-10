@@ -22,9 +22,10 @@
 		6C462CB72D7E2EB2001884B2 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C462CB62D7E2EB2001884B2 /* Ingredient.swift */; };
 		6C462CB92D7E302B001884B2 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C462CB82D7E302B001884B2 /* Instruction.swift */; };
 		6C5B5D872D7ED44800E95249 /* DetailsOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5B5D862D7ED44800E95249 /* DetailsOverlayView.swift */; };
+		6C5B5D892D7F612900E95249 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5B5D882D7F612900E95249 /* Day.swift */; };
 		6C9DB2712D733CC7002C7AB2 /* FavoriteRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */; };
 		6C9DB2732D733CFD002C7AB2 /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2722D733CFD002C7AB2 /* MealType.swift */; };
-		6C9DB2772D759692002C7AB2 /* DailyMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2762D759692002C7AB2 /* DailyMeals.swift */; };
+		6C9DB2772D759692002C7AB2 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2762D759692002C7AB2 /* Meal.swift */; };
 		6C9DB2792D7601C8002C7AB2 /* RecipePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2782D7601C8002C7AB2 /* RecipePickerView.swift */; };
 		6C9DB2B72D78C5D8002C7AB2 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2B62D78C5D8002C7AB2 /* Cuisine.swift */; };
 		6C9DB2B92D78C626002C7AB2 /* Meat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DB2B82D78C626002C7AB2 /* Meat.swift */; };
@@ -73,9 +74,10 @@
 		6C462CB62D7E2EB2001884B2 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		6C462CB82D7E302B001884B2 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		6C5B5D862D7ED44800E95249 /* DetailsOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsOverlayView.swift; sourceTree = "<group>"; };
+		6C5B5D882D7F612900E95249 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipes.swift; sourceTree = "<group>"; };
 		6C9DB2722D733CFD002C7AB2 /* MealType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealType.swift; sourceTree = "<group>"; };
-		6C9DB2762D759692002C7AB2 /* DailyMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMeals.swift; sourceTree = "<group>"; };
+		6C9DB2762D759692002C7AB2 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		6C9DB2782D7601C8002C7AB2 /* RecipePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePickerView.swift; sourceTree = "<group>"; };
 		6C9DB2B62D78C5D8002C7AB2 /* Cuisine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
 		6C9DB2B82D78C626002C7AB2 /* Meat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meat.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		6C1C51D22C22E97000890A50 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6C5B5D882D7F612900E95249 /* Day.swift */,
 				6C462CB82D7E302B001884B2 /* Instruction.swift */,
 				6C462CB62D7E2EB2001884B2 /* Ingredient.swift */,
 				6C9DB2B82D78C626002C7AB2 /* Meat.swift */,
@@ -198,7 +201,7 @@
 				6C43097A2C3019980020E103 /* Recipe.swift */,
 				6C9DB2702D733CC7002C7AB2 /* FavoriteRecipes.swift */,
 				6C9DB2722D733CFD002C7AB2 /* MealType.swift */,
-				6C9DB2762D759692002C7AB2 /* DailyMeals.swift */,
+				6C9DB2762D759692002C7AB2 /* Meal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -278,7 +281,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					6C1C515D2C22D65800890A50 = {
 						CreatedOnToolsVersion = 15.4;
@@ -345,7 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C9DB2B72D78C5D8002C7AB2 /* Cuisine.swift in Sources */,
-				6C9DB2772D759692002C7AB2 /* DailyMeals.swift in Sources */,
+				6C9DB2772D759692002C7AB2 /* Meal.swift in Sources */,
 				6C1C51DB2C22E9CF00890A50 /* LikedView.swift in Sources */,
 				6C462CB92D7E302B001884B2 /* Instruction.swift in Sources */,
 				6CB11C142D5BA56F009CD2F8 /* DayView.swift in Sources */,
@@ -353,6 +356,7 @@
 				6C0E65802D40F4FF007D38D3 /* CalendarView.swift in Sources */,
 				6C9DB2732D733CFD002C7AB2 /* MealType.swift in Sources */,
 				6CF47CEC2D4E29EC006E7AF9 /* DetailsView.swift in Sources */,
+				6C5B5D892D7F612900E95249 /* Day.swift in Sources */,
 				6C1C51D42C22E98000890A50 /* MealsModel.swift in Sources */,
 				6C9DB2B92D78C626002C7AB2 /* Meat.swift in Sources */,
 				6CF47CF02D4E4054006E7AF9 /* CalendarHelper.swift in Sources */,
@@ -583,7 +587,6 @@
 		6C1C51862C22D66100890A50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -603,7 +606,6 @@
 		6C1C51872C22D66100890A50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -623,7 +625,6 @@
 		6C1C51892C22D66100890A50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K82B6K44PG;
@@ -641,7 +642,6 @@
 		6C1C518A2C22D66100890A50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K82B6K44PG;

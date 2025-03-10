@@ -95,6 +95,7 @@ struct DayView: View {
                                     .fontWeight(.bold)
                                     .font(.title2)
                             }
+                                
                         )
                     Spacer()
                         .frame(maxWidth: 10)
@@ -112,6 +113,7 @@ struct DayView: View {
                                     .fontWeight(.bold)
                                     .font(.title2)
                             }
+                                
                         )
                 }//HStack
                 .padding(.horizontal, 30)

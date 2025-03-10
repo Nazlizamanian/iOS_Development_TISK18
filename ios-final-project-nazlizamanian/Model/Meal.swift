@@ -24,14 +24,4 @@ final class Meal {
     }
 }
 
-@Model
-final class Day {
-    @Attribute(.unique) var id: UUID = UUID()
-    var date: Date
-    var meals: [Meal]
 
-    init(date: Date, meals: [Meal] = []) {
-        self.date = date
-        self.meals = meals
-    }
-}

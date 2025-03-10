@@ -16,13 +16,11 @@ import Observation
 
  7. Sum array using reduce: https://www.hackingwithswift.com/example-code/language/how-to-sum-an-array-of-numbers-using-reduce*/
 
-/*ViewModel handles the presentation logic, interacts with our model to fetch and update data*/
-
 @Observable
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     
-    func fetch(completion: @escaping () -> Void) { //DeepSeek modifified escaping
+    func fetch(completion: @escaping () -> Void) { //DeepSeek modifified escaping 2a-2b.
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -38,17 +36,6 @@ class MealsModel: Identifiable {
                 DispatchQueue.main.async {
                     self?.courses = recipesResponse.recipes
                     completion() // Call the completion handler
-                }
-                
-                if let firstRecipe = self?.courses.first {
-                    print("Recipe Name: \(firstRecipe.name)")
-                    print("Instructions:")
-                    for instruction in firstRecipe.instructions {
-                        print("- \(instruction)")
-                    }
-                    print("Image URL: \(firstRecipe.image)")
-                } else {
-                    print("No recipes found")
                 }
                 
             } catch {

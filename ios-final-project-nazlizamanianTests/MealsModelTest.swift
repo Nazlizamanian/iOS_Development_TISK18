@@ -177,7 +177,7 @@ struct MealsModelTest {
         let calendarHelper = CalendarHelper()
         
         guard let febraryDate = DateFormatter().date(from: "2024-02-01") else { return }
-         //leap year for febraru was 2024
+        //leap year for febraru was 2024
         calendarHelper.currentDate = febraryDate
         let daysInFeb = calendarHelper.generateDaysForMonth()
          
