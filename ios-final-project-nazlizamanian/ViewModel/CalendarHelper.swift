@@ -36,7 +36,6 @@ class CalendarHelper  {
         guard let firstOfMonth = calendar.date(from: components) else {
             return []
         }
-        
         let weekday = calendar.component(.weekday, from: firstOfMonth)
         // Determine number of days in the month
         guard let range = calendar.range(of: .day, in: .month, for: firstOfMonth) else { return [] }

@@ -13,8 +13,6 @@ import SwiftUI
  */
 
 struct ContentView: View {
-    @State var viewModel = MealsModel() //stateobj init once and shared across or views
-    
     @State private var selectedIndex: Int = 0
 
     var body: some View {

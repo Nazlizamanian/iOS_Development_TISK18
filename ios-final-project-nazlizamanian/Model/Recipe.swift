@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-/*CHAT*/
+/*AI/CHATGPT 1-3*/
 @Model
 final class Recipe: Codable, Identifiable {
     var id: Int

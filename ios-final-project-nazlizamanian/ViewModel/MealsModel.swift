@@ -13,40 +13,36 @@ import Observation
 
 /*Sources used:
  5. Fetching data from api: https://anjalijoshi2426.medium.com/fetch-and-display-api-data-on-list-using-swiftui-13fff61e8826
-
+ 6. MainActor instead of DispatchQueue.: https://hasanalidev.medium.com/mainactor-swiftui-4d7b2545927c
  7. Sum array using reduce: https://www.hackingwithswift.com/example-code/language/how-to-sum-an-array-of-numbers-using-reduce*/
 
 @Observable
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     
-    func fetch(completion: @escaping () -> Void) { //DeepSeek modifified escaping 2a-2b.
-        guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let data = data, error == nil else {
-                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            do {
-                let recipesResponse = try JSONDecoder().decode(RecipesResponse.self, from: data)
-                self?.courses = recipesResponse.recipes
-
-                DispatchQueue.main.async {
-                    self?.courses = recipesResponse.recipes
-                    completion() // Call the completion handler
-                }
-                
-            } catch {
-                print("Error decoding JSON: \(error)")
-            }
+    func fetch() async {
+        guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else {
+            print("Invalid URL")
+            return
         }
         
-        task.resume() // Resume the task to initiate the request
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            // Decode the JSON response into your RecipesResponse type
+            let recipesResponse = try JSONDecoder().decode(RecipesResponse.self, from: data)
+            
+            //6
+            await MainActor.run {
+                self.courses = recipesResponse.recipes
+            }
+        } catch {
+            print("Error fetching or decoding data: \(error)")
+        }
     }
+
     
-    func addToFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
+    func alreadyInFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
         
         if !favoriteRecipes.favoriteRecipes.contains(where: { $0.id == recipe.id }) {
             
@@ -76,6 +72,7 @@ class MealsModel: Identifiable {
             print("Recipe is not in fav.")
         }
     }
+    
     func assignRecipe( _ recipe: Recipe, to mealType: MealType, on day: Day, context: ModelContext) { //CHATIS
         let meal = Meal(type: mealType, recipe: recipe, day: day)
         day.meals.append(meal)
@@ -125,7 +122,7 @@ class MealsModel: Identifiable {
     }
     
     func containsMeat(ingredients: [String]) -> Bool {
-        
+        //"Grilled chichekn slices" vs "Chicken, cut into pieces"
         for ingredient in ingredients {
             let words = ingredient.lowercased().components(separatedBy: " ")  // Split
             

@@ -66,7 +66,7 @@ struct CardView: View {
                                     .clipped()
                                     .aspectRatio(contentMode: .fill)
                                     .offset(x: card.offset.width, y: card.cardOffset.height)
-                                    .rotationEffect(.degrees(Double(card.offset.width / 20)))
+                                    .rotationEffect(.degrees(Double(card.offset.width / 30)))
                                     .gesture(
                                         DragGesture()
                                             .onChanged { gesture in
@@ -147,12 +147,11 @@ struct CardView: View {
             }
             .padding()
             .onAppear {
-                if !isDataLoaded {
-                    model.fetch {
-                        // Update shuffledRecipes after data is fetched
-                        shuffledRecipes = filteredRecipes.shuffled()
-                        isDataLoaded = true
-                    }
+                Task {
+                    await model.fetch()
+                    shuffledRecipes = filteredRecipes.shuffled()
+                    isDataLoaded = true 
+
                 }
             }
         }
@@ -163,6 +162,7 @@ struct CardView: View {
         
         if let existingFavorites = favorites.first {
             favoriteList = existingFavorites
+            
         } else {
             favoriteList = FavoriteRecipes()
             modelContext.insert(favoriteList)
@@ -173,7 +173,7 @@ struct CardView: View {
         do {
             try modelContext.save()
             
-            model.addToFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
+            model.alreadyInFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
             card.moveToNextCard()
         } catch {
             print("Error saving currentRecipe: \(error)")

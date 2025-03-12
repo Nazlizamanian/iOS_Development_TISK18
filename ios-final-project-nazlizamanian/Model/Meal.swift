@@ -15,7 +15,7 @@ final class Meal {
     var type: MealType
     var recipe: Recipe
     
-    var day: Day?
+    var day: Day
 
     init(type: MealType, recipe: Recipe, day: Day){
         self.type = type

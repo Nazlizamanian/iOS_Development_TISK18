@@ -22,7 +22,6 @@ class Card  {
     var cardOffset = CGSize.zero
     var showDetails: Bool = false
     
-    
     func moveToNextCard() {
         withAnimation {
             currentIndex += 1

@@ -24,7 +24,7 @@ struct DayView: View {
     
     @State private var showRecipePicker = false
     @State private var selectedMealType: MealType?
-    @State private var day: Day?
+    @State private var day: Day? //opti whasnt handelded any day yet
     
     var body: some View {
         ScrollView {
@@ -34,7 +34,7 @@ struct DayView: View {
                     .bold()
 
                 ForEach(MealType.allCases, id: \.self) { mealType in
-                    let mealsForType = day?.meals.filter { $0.type == mealType } ?? []
+                    let mealsForType = day?.meals.filter { $0.type == mealType } ?? [] // show empty [] if we have no meals
 
                     VStack(alignment: .leading) {
                         Button {
@@ -55,9 +55,7 @@ struct DayView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                 Spacer()
-                                
-                                Image(systemName: "plus")
-                                
+                               
                             }
                             .padding()
                         }
@@ -123,7 +121,7 @@ struct DayView: View {
         .onAppear {
             day = model.loadOrCreateDay(for: selectedDate, context: modelContext)
         }
-        .sheet(item: $selectedMealType){ mealType in //8,9 
+        .sheet(item: $selectedMealType){ mealType in //9, 10
             if let day = day, let favorites = favoriteRecipes.first {
                 RecipePickerView(
                     mealType: mealType,
