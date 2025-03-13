@@ -20,7 +20,7 @@ import Observation
 class MealsModel: Identifiable {
     var courses: [Recipe] = [] //stores the list of recipes from our api
     
-    func fetch() async {
+    func fetch() async { //5
         guard let url = URL(string: "https://dummyjson.com/recipes?limit=0") else {
             print("Invalid URL")
             return

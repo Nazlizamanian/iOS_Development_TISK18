@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-//refactor this code its similar hmmm
-
 struct DetailsView: View {
     let meal: Recipe
   

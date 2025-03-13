@@ -1,4 +1,16 @@
+//
+//  ShoppingList.swift
+//  ios-final-project-nazlizamanian
+//
+//  Created by Nazli  on 22/01/25.
+//
 import SwiftUI
+
+/*
+ Sources used:
+ 1.Calendar grid: https://www.youtube.com/watch?v=jBvkFKhnYLI&t=45s
+ 
+ */
 
 struct CalendarView: View {
     @State private var calendarVM = CalendarHelper()
@@ -43,7 +55,7 @@ struct CalendarView: View {
                     }
                 }
 
-                // Calendar grid
+                // Calendar grid 1
                 ScrollView {
                     let days = calendarVM.generateDaysForMonth()
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {

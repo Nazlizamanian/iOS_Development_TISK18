@@ -31,7 +31,7 @@ class CalendarHelper  {
         }
     }
     
-    func generateDaysForMonth() -> [Int] { //Chatis modified
+    func generateDaysForMonth() -> [Int] { //AI/CHATGPT - CalendarHelper
         let components = calendar.dateComponents([.year, .month], from: currentDate)
         guard let firstOfMonth = calendar.date(from: components) else {
             return []

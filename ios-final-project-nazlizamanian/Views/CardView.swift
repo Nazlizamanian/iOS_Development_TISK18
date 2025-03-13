@@ -147,11 +147,12 @@ struct CardView: View {
             }
             .padding()
             .onAppear {
-                Task {
-                    await model.fetch()
-                    shuffledRecipes = filteredRecipes.shuffled()
-                    isDataLoaded = true 
-
+                if !isDataLoaded {
+                    Task{
+                        await model.fetch()
+                        shuffledRecipes = filteredRecipes.shuffled()
+                        isDataLoaded = true
+                    }
                 }
             }
         }
