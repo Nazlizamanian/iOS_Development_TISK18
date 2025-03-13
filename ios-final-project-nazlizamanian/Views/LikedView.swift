@@ -34,7 +34,7 @@ struct LikedView: View {
     var body: some View {
         NavigationStack {
             List(filteredRecipes){ meal in
-                NavigationLink(destination: DetailsView(meal: meal)){
+                NavigationLink(destination: DetailsView(meal: meal, model: model)){
                     HStack{
                         URLImage(urlString: meal.image)
                             .frame(width: 140, height: 70)

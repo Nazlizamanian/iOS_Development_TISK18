@@ -29,7 +29,7 @@ class MealsModel: Identifiable {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            // Decode the JSON response into your RecipesResponse type
+            // Decode the JSON response
             let recipesResponse = try JSONDecoder().decode(RecipesResponse.self, from: data)
             
             //6
@@ -73,7 +73,7 @@ class MealsModel: Identifiable {
         }
     }
     
-    func assignRecipe( _ recipe: Recipe, to mealType: MealType, on day: Day, context: ModelContext) { //CHATIS
+    func assignRecipe( _ recipe: Recipe, to mealType: MealType, on day: Day, context: ModelContext) { //previosus one
         let meal = Meal(type: mealType, recipe: recipe, day: day)
         day.meals.append(meal)
         
@@ -137,5 +137,24 @@ class MealsModel: Identifiable {
         return false
     }
     
+    func containsAllergens(ingredients: [String]) -> [Allergies] {
+        var detectedAllergens = Set<Allergies>()
+        
+        for ingredient in ingredients {
+            let words = ingredient
+                .lowercased()
+                .components(separatedBy: " ")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            
+            for allergen in Allergies.allCases {
+                let allergenWord = keywords(for: allergen)
+                if words.contains(where: {allergenWord.contains($0)}){
+                    detectedAllergens.insert(allergen)
+                }
+            }
+        }
+        return Array(detectedAllergens)
+    }
+
 }
 

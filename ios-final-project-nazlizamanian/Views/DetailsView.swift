@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     let meal: Recipe
+    let model: MealsModel
   
     var body: some View {
         ScrollView {
@@ -124,7 +125,6 @@ struct DetailsView: View {
                     .cornerRadius(16)
                     .padding(.horizontal)
                 }
-                
                 Spacer()
             }
             .padding(.vertical)
