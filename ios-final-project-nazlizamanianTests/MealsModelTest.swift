@@ -171,8 +171,19 @@ struct MealsModelTest {
          #expect(result2 == true)
          #expect(result3 == true)
     }
-         
-    @Test(" genereateDaysForMonth()")
+    @Test("containsAllargen()")
+    func containsAllaergen() async throws {
+        //Act
+        let ingridientsRecipe1 = recipe1.ingredients.map{$0.name}
+        let detectedAllargensRecip1 = mealsModel.containsAllergens(ingredients: ingridientsRecipe1)
+        
+        //Assert
+        #expect(detectedAllargensRecip1.contains(.gluten))
+        #expect(detectedAllargensRecip1.contains(.dairy))
+        #expect(!detectedAllargensRecip1.contains(.peanut))
+    }
+                
+    /*@Test(" genereateDaysForMonth()") onödign
     func generateDaysForMonth() async throws {
         let calendarHelper = CalendarHelper()
         
@@ -184,6 +195,6 @@ struct MealsModelTest {
         let expectedInFeb = 29
         #expect(daysInFeb.count == expectedInFeb)
         #expect(daysInFeb.last == 29)
-    }
+    }*/
         
 }

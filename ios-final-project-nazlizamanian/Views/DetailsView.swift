@@ -33,6 +33,7 @@ struct DetailsView: View {
                         Text("(\(Int(meal.reviewCount)) Reviews)")
                             .foregroundColor(.gray)
                             .font(.subheadline)
+                        
                     }
                 }
                 .padding(.horizontal)
@@ -124,6 +125,12 @@ struct DetailsView: View {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(16)
                     .padding(.horizontal)
+                    
+                    ForEach(model.containsAllergens(ingredients: meal.ingredients.map{$0.name}), id: \.self){ allergen in
+                        Text(allergen.rawValue.capitalized)
+                        Text(allergen.emoji)
+                        
+                    }
                 }
                 Spacer()
             }

@@ -17,6 +17,7 @@ struct DetailsOverlayView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.horizontal)
+                    .foregroundColor(.white)
                     .lineLimit(nil)
 
                 HStack {
@@ -37,6 +38,7 @@ struct DetailsOverlayView: View {
                         Text("\(String(format: "%.0f", recipe.prepTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundColor(.white)
                     }
                     Spacer()
 
@@ -46,6 +48,7 @@ struct DetailsOverlayView: View {
                         Text("\(String(format: "%.0f", recipe.prepTimeMinutes))m")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundColor(.white)
                     }
                     Spacer()
                 }
@@ -60,8 +63,9 @@ struct DetailsOverlayView: View {
 
                     Text(recipe.ingredients.map { $0.name }.joined(separator: ", "))
                         .padding(.horizontal)
-                        .padding(.bottom, 8)
+                        .padding(.bottom)
                         .lineLimit(nil)
+                        .foregroundColor(.white)
                 }
 
                 if !recipe.instructions.isEmpty {
@@ -75,12 +79,13 @@ struct DetailsOverlayView: View {
                         Text(instruction)
                             .padding(.horizontal)
                             .padding(.bottom, 3)
+                            .foregroundColor(.white)
                             .lineLimit(nil) // Allow full display
                     }
                 }
             }
             .frame(maxWidth: .infinity)
-            .background(Color.black.opacity(0.4))
+            .background(Color.black.opacity(0.8))
             .cornerRadius(20)
             .padding(.top, 30)
             .shadow(radius: 10)

@@ -28,19 +28,20 @@ enum Allergies: String, CaseIterable {
         }
         
     }
-}
-
-func keywords(for allergen: Allergies) -> [String] {
-    switch allergen {
-    case .gluten:
-        return ["flour", "wheat", "dough", "pasta", "bread"]
-    case .dairy:
-        return ["milk", "cheese", "butter", "cream"]
-    case .fish:
-        return ["fish"]
-    case .soy:
-        return ["soy", "tofu", "soy sauce"]
-    case .peanut:
-        return ["peanut"]
+    
+    var keywords: [String] {
+        switch self {
+        case .gluten:
+            return ["flour", "wheat", "dough", "pasta", "bread"]
+        case .dairy:
+            return ["milk", "cheese", "butter", "cream"]
+        case .fish:
+            return ["fish"]
+        case .soy:
+            return ["soy", "tofu", "soy sauce"]
+        case .peanut:
+            return ["peanut"]
+        }
     }
 }
+

@@ -147,8 +147,9 @@ class MealsModel: Identifiable {
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             
             for allergen in Allergies.allCases {
-                let allergenWord = keywords(for: allergen)
+                let allergenWord = allergen.keywords
                 if words.contains(where: {allergenWord.contains($0)}){
+                    print("Allargy found \(allergen)")
                     detectedAllergens.insert(allergen)
                 }
             }
