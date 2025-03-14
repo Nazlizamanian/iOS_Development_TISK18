@@ -78,14 +78,16 @@ struct CardView: View {
                                             }
                                             .onEnded { _ in
                                                 withAnimation {
-                                                    if card.offset.width < -100 {
+                                                    if card.offset.width < -100 { //left
                                                         card.moveToNextCard()
-                                                    } else if card.offset.width > 100 {
-                                                        addToFavorites()
+                                                        
+                                                    } else if card.offset.width > 100 { //right
+                                                        model.addToFavorites(recipe: shuffledRecipes[card.currentIndex], favorites: favorites, modelContext: modelContext)
+                                                        card.moveToNextCard()
                                                     } else {
                                                         card.offset = .zero
                                                     }
-                                                    if card.cardOffset.height < -100 {
+                                                    if card.cardOffset.height < -100 { //details
                                                         card.showDetails = true
                                                         card.cardOffset.height = -350
                                                     } else {
@@ -121,7 +123,8 @@ struct CardView: View {
                                     
                                     Button {
                                         withAnimation {
-                                            addToFavorites()
+                                            model.addToFavorites(recipe: shuffledRecipes[card.currentIndex], favorites: favorites, modelContext: modelContext)
+                                            card.moveToNextCard()
                                         }
                                     } label: {
                                         Image(systemName: "heart.circle.fill")
@@ -158,27 +161,6 @@ struct CardView: View {
         }
     }
     
-    func addToFavorites() {
-        let favoriteList: FavoriteRecipes
-        
-        if let existingFavorites = favorites.first {
-            favoriteList = existingFavorites
-            
-        } else {
-            favoriteList = FavoriteRecipes()
-            modelContext.insert(favoriteList)
-        }
-        let currentRecipe = shuffledRecipes[card.currentIndex]
-        modelContext.insert(currentRecipe)
-        
-        do {
-            try modelContext.save()
-            
-            model.alreadyInFavorites(recipe: currentRecipe, favoriteRecipes: favoriteList, context: modelContext)
-            card.moveToNextCard()
-        } catch {
-            print("Error saving currentRecipe: \(error)")
-        }
-    }
+    
 }
 

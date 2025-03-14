@@ -41,6 +41,25 @@ class MealsModel: Identifiable {
         }
     }
     
+    func addToFavorites(recipe: Recipe, favorites: [FavoriteRecipes], modelContext: ModelContext) {
+            let favoriteList: FavoriteRecipes
+
+            if let existingFavorites = favorites.first {
+                favoriteList = existingFavorites
+            } else {
+                favoriteList = FavoriteRecipes()
+                modelContext.insert(favoriteList)
+            }
+
+            modelContext.insert(recipe)
+
+            do {
+                try modelContext.save()
+                alreadyInFavorites(recipe: recipe, favoriteRecipes: favoriteList, context: modelContext)
+            } catch {
+                print("Error saving currentRecipe: \(error)")
+            }
+        }
     
     func alreadyInFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
         
@@ -85,7 +104,7 @@ class MealsModel: Identifiable {
         }
     }
     
-    func loadOrCreateDay(for date: Date, context: ModelContext) -> Day { //CHatis
+    func loadOrCreateDay(for date: Date, context: ModelContext) -> Day { //AI/CHATGPT
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
         
