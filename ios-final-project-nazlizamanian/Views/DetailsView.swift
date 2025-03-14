@@ -33,7 +33,10 @@ struct DetailsView: View {
                         Text("(\(Int(meal.reviewCount)) Reviews)")
                             .foregroundColor(.gray)
                             .font(.subheadline)
-                        
+                        Spacer()
+                        Text(String(format: "%.1f", Double(meal.rating)))
+                            .fontWeight(.bold)
+
                     }
                 }
                 .padding(.horizontal)
@@ -93,46 +96,74 @@ struct DetailsView: View {
                 .cornerRadius(16)
                 .padding(.horizontal)
                 
-                if !meal.ingredients.isEmpty {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Ingredients")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(meal.ingredients.map { $0.name }.joined(separator: ", "))
-                       
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(16)
-                    .padding(.horizontal)
-                }
-                
-                if !meal.instructions.isEmpty {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Instructions")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                HStack(spacing: 20) {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundColor(.mint)
+                        .font(.system(size: 45))
+                    
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("This recipe contains the following allergens")
+                            .font(.headline)
                         
-                        ForEach(meal.instructions.indices, id: \.self) { index in
-                            HStack(alignment: .top, spacing: 8) {
-                                Text("\(index + 1).")
-                                    .fontWeight(.bold)
-                                Text(meal.instructions[index].name)
+                        HStack {
+                            ForEach(model.containsAllergens(ingredients: meal.ingredients.map { $0.name }), id: \.self) { allergen in
+                                HStack(spacing: 2) {
+                                    Text(allergen.rawValue.capitalized)
+                                        .font(.caption)
+                                    Text(allergen.emoji)
+                                        .font(.system(size: 30))
+                                        
+                                }
+                                .padding(.trailing, 5)
                             }
                         }
                     }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(16)
-                    .padding(.horizontal)
-                    
-                    ForEach(model.containsAllergens(ingredients: meal.ingredients.map{$0.name}), id: \.self){ allergen in
-                        Text(allergen.rawValue.capitalized)
-                        Text(allergen.emoji)
-                        
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(16)
+                .padding(.horizontal)
+                
+                HStack{
+                    if !meal.ingredients.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Ingredients")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Text(meal.ingredients.map { $0.name }.joined(separator: ", "))
+                           
+                        }
                     }
                 }
-                Spacer()
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(16)
+                .padding(.horizontal)
+                
+                HStack{
+                    if !meal.instructions.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Instructions")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            
+                            ForEach(meal.instructions.indices, id: \.self) { index in
+                                HStack(alignment: .top, spacing: 8) {
+                                    Text("\(index + 1).")
+                                        .fontWeight(.bold)
+                                    Text(meal.instructions[index].name)
+                                }
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(16)
+                .padding(.horizontal)
             }
             .padding(.vertical)
         }

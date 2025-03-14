@@ -142,10 +142,9 @@ class MealsModel: Identifiable {
         
         for ingredient in ingredients {
             let words = ingredient
-                .lowercased()
-                .components(separatedBy: " ")
-                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            
+                .lowercased() //split by charachtersets and whitespaces "Butter, softned" = "butter" "sofnted"
+                .components(separatedBy: CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters))
+
             for allergen in Allergies.allCases {
                 let allergenWord = allergen.keywords
                 if words.contains(where: {allergenWord.contains($0)}){
