@@ -40,7 +40,7 @@ class MealsModel: Identifiable {
             print("Error fetching or decoding data: \(error)")
         }
     }
-
+    
     
     func alreadyInFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
         
@@ -88,7 +88,7 @@ class MealsModel: Identifiable {
     func loadOrCreateDay(for date: Date, context: ModelContext) -> Day { //CHatis
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
-
+        
         if let existingDay = try? context.fetch(
             FetchDescriptor<Day>(predicate: #Predicate { $0.date == startOfDay })
         ).first {
@@ -100,11 +100,11 @@ class MealsModel: Identifiable {
             return newDay
         }
     }
-
+    
     //filteres courses []
     func filterRecipes(byDifficulties difficulties: [String]) -> [Recipe] {
         return courses.filter { difficulties.contains($0.difficulty.lowercased()) }    }
-
+    
     func calculateCalories(for day: Day?) ->Int { //7
         guard let day = day else { return 0 }
         return day.meals.reduce(0) {$0 + $1.recipe.caloriesPerServing}
@@ -136,6 +136,7 @@ class MealsModel: Identifiable {
         
         return false
     }
+    
     
     func containsAllergens(ingredients: [String]) -> [Allergies] {
         var detectedAllergens = Set<Allergies>()

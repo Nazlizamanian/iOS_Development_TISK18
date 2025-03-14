@@ -87,7 +87,6 @@ struct DetailsView: View {
                             Text(cusine.rawValue)
                                 .font(.headline)
                         }
-                        
                     }
                 }//HStack
                 .frame(maxWidth: .infinity)
@@ -96,34 +95,37 @@ struct DetailsView: View {
                 .cornerRadius(16)
                 .padding(.horizontal)
                 
-                HStack(spacing: 20) {
-                    Image(systemName: "exclamationmark.circle")
-                        .foregroundColor(.mint)
-                        .font(.system(size: 45))
-                    
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("This recipe contains the following allergens")
-                            .font(.headline)
+                if !model.containsAllergens(ingredients: meal.ingredients.map { $0.name }).isEmpty {
+                    HStack(spacing: 20) {
+                        Image(systemName: "exclamationmark.circle")
+                            .foregroundColor(.mint)
+                            .font(.system(size: 45))
                         
-                        HStack {
-                            ForEach(model.containsAllergens(ingredients: meal.ingredients.map { $0.name }), id: \.self) { allergen in
-                                HStack(spacing: 2) {
-                                    Text(allergen.rawValue.capitalized)
-                                        .font(.caption)
-                                    Text(allergen.emoji)
-                                        .font(.system(size: 30))
-                                        
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("This recipe contains the following allergens")
+                                .font(.headline)
+                            HStack {
+                                ForEach(model.containsAllergens(ingredients: meal.ingredients.map { $0.name }), id: \.self) { allergen in
+                                    HStack(spacing: 10) {
+                                        VStack{
+                                            Text(allergen.emoji)
+                                                .font(.system(size: 30))
+                                            Text(allergen.rawValue.capitalized)
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
+                                        }
+                                    }
+                                    .padding(.trailing, 5)
                                 }
-                                .padding(.trailing, 5)
                             }
                         }
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(16)
+                    .padding(.horizontal)
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(16)
-                .padding(.horizontal)
                 
                 HStack{
                     if !meal.ingredients.isEmpty {
