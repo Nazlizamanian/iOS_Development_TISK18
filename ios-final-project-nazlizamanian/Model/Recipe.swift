@@ -13,7 +13,7 @@ import SwiftData
 final class Recipe: Codable, Identifiable {
     var id: Int
     var name: String
-    var ingredients: [Ingredient]
+    var ingredients: [Ingredient] //[] of Ingredeint objc
     var instructions: [Instruction]
     var image: String
     var difficulty: String

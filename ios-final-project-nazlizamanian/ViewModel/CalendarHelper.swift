@@ -33,6 +33,7 @@ class CalendarHelper  {
     
     func generateDaysForMonth() -> [Int] { //AI/CHATGPT - CalendarHelper
         let components = calendar.dateComponents([.year, .month], from: currentDate)
+        
         guard let firstOfMonth = calendar.date(from: components) else {
             return []
         }
@@ -56,7 +57,7 @@ class CalendarHelper  {
         return days
     }
     
-    func getDate(for day: Int) -> Date {
+    func getDate(for day: Int) -> Date {//ex for day: 13 gives us 2025, March 13
         var components = calendar.dateComponents([.year, .month, .day], from: currentDate)
         components.day = day
         return calendar.date(from: components) ?? Date()

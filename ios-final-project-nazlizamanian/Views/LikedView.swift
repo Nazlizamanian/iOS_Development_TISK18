@@ -16,7 +16,7 @@ import SwiftData
 
 struct LikedView: View {
     @State private var searchString: String = ""
-    @Query private var favorites: [FavoriteRecipes]
+    @Query private var favorites: [FavoriteRecipes] //to fetch data
     
 
     @Environment(\.modelContext) private var modelContext
@@ -33,21 +33,21 @@ struct LikedView: View {
     
     var body: some View {
         NavigationStack {
-            List(filteredRecipes){ meal in
-                NavigationLink(destination: DetailsView(meal: meal, model: model)){
+            List(filteredRecipes){ recipe in
+                NavigationLink(destination: DetailsView(recipe: recipe, model: model)){
                     HStack{
-                        URLImage(urlString: meal.image)
+                        URLImage(urlString: recipe.image)
                             .frame(width: 140, height: 70)
                             .scaledToFill()
                         
-                        Text(meal.name)
+                        Text(recipe.name)
                     }
                     .padding(3)
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: true){ //4
                     Button(role: .destructive){
                         guard let favoriteList = favorites.first else { return }
-                        model.removeFromFavorites(recipe: meal, favoriteRecipes: favoriteList, context: modelContext)
+                        model.removeFromFavorites(recipe: recipe, favoriteRecipes: favoriteList, context: modelContext)
                     } label: {
                         Label("Remove", systemImage: "trash")
                     }

@@ -20,7 +20,7 @@ struct DayView: View {
     @Environment(MealsModel.self) var model 
     @Environment(\.modelContext) var modelContext
     
-    @Query private var favoriteRecipes: [FavoriteRecipes]
+    @Query private var favoriteRecipes: [FavoriteRecipes] 
     
     @State private var showRecipePicker = false
     @State private var selectedMealType: MealType?

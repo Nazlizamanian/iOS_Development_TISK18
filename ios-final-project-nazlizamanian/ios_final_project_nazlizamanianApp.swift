@@ -16,7 +16,7 @@ struct ios_final_project_nazlizamanianApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(model)
+                .environment(model) //inject global acess
                 .modelContainer(for: [FavoriteRecipes.self, Day.self, Meal.self, Recipe.self])
         }
     }

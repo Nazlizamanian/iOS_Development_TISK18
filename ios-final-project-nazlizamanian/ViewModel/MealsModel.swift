@@ -42,27 +42,28 @@ class MealsModel: Identifiable {
     }
     
     func addToFavorites(recipe: Recipe, favorites: [FavoriteRecipes], modelContext: ModelContext) {
-            let favoriteList: FavoriteRecipes
-
-            if let existingFavorites = favorites.first {
-                favoriteList = existingFavorites
-            } else {
-                favoriteList = FavoriteRecipes()
-                modelContext.insert(favoriteList)
-            }
-
-            modelContext.insert(recipe)
-
-            do {
-                try modelContext.save()
-                alreadyInFavorites(recipe: recipe, favoriteRecipes: favoriteList, context: modelContext)
-            } catch {
-                print("Error saving currentRecipe: \(error)")
-            }
+        let favoriteRecipes: FavoriteRecipes //kmr hold the list of favoritesRecipes
+        
+        if let existingFavorites = favorites.first { //if we already have a favoritesRecipes [] assign it .first will return nil if [] is empty
+            favoriteRecipes = existingFavorites
         }
+        else { //aCreates a new favoritesRecipes() obj
+            favoriteRecipes = FavoriteRecipes()
+            modelContext.insert(favoriteRecipes)//insert the new favoriteRecipes Obj
+        }
+        
+        modelContext.insert(recipe) //insert then the recipe
+
+        do {
+            try modelContext.save() //try to save but check first
+            alreadyInFavorites(recipe: recipe, favoriteRecipes: favoriteRecipes, context: modelContext)
+        } catch {
+            print("Error saving currentRecipe: \(error)")
+        }
+    }
     
     func alreadyInFavorites(recipe: Recipe, favoriteRecipes: FavoriteRecipes, context: ModelContext) {
-        
+        //check if favoriteRecipes [] already contains a recipe with that id somewhere compare each recipe $0
         if !favoriteRecipes.favoriteRecipes.contains(where: { $0.id == recipe.id }) {
             
             favoriteRecipes.favoriteRecipes.append(recipe)
@@ -84,6 +85,7 @@ class MealsModel: Identifiable {
             
             do{
                 try context.save()
+                
             }catch{
                 print("Failed to remove recipe to favorites: \(error)")
             }
@@ -158,17 +160,18 @@ class MealsModel: Identifiable {
     
     
     func containsAllergens(ingredients: [String]) -> [Allergies] {
-        var detectedAllergens = Set<Allergies>()
+        var detectedAllergens = Set<Allergies>() //no duplicates
         
         for ingredient in ingredients {
             let words = ingredient
                 .lowercased() //split by charachtersets and whitespaces "Butter, softned" = "butter" "sofnted"
                 .components(separatedBy: CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters))
 
-            for allergen in Allergies.allCases {
+            for allergen in Allergies.allCases { //iterate tohurh dairy, gluten, etc
                 let allergenWord = allergen.keywords
+                
                 if words.contains(where: {allergenWord.contains($0)}){
-                    print("Allargy found \(allergen)")
+                    print("Allargy found \(allergen): \(ingredient)")
                     detectedAllergens.insert(allergen)
                 }
             }

@@ -5,7 +5,7 @@
 //  Created by Nazli  on 05/03/25.
 //
 
-enum Cuisine: String, CaseIterable, Identifiable {
+enum Cuisine: String, Identifiable {
     case american = "American"
     case brazilian = "Brazilian"
     case cuban = "Cuban"

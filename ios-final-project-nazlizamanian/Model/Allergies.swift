@@ -34,7 +34,7 @@ enum Allergies: String, CaseIterable {
         case .gluten:
             return ["flour", "wheat", "dough", "pasta", "bread"]
         case .dairy:
-            return ["milk", "cheese", "butter", "cream"]
+            return ["milk", "cheese", "butter", "cream", "mozzarella"]
         case .fish:
             return ["fish"]
         case .soy:

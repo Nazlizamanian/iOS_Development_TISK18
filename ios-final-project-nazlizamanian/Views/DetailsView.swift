@@ -8,33 +8,33 @@
 import SwiftUI
 
 struct DetailsView: View {
-    let meal: Recipe
+    let recipe: Recipe
     let model: MealsModel
   
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 
-                URLImage(urlString: meal.image)
+                URLImage(urlString: recipe.image)
                     .frame(height: 350)
                     .frame(maxWidth: .infinity)
                     .clipped()
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(meal.name)
+                    Text(recipe.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
                     HStack(spacing: 4) {
                         ForEach(1...5, id: \.self) { index in
-                            Image(systemName: index <= Int(meal.rating) ? "star.fill" : "star")
-                                .foregroundColor(index <= Int(meal.rating) ? .yellow : .gray)
+                            Image(systemName: index <= Int(recipe.rating) ? "star.fill" : "star")
+                                .foregroundColor(index <= Int(recipe.rating) ? .yellow : .gray)
                         }
-                        Text("(\(Int(meal.reviewCount)) Reviews)")
+                        Text("(\(Int(recipe.reviewCount)) Reviews)")
                             .foregroundColor(.gray)
                             .font(.subheadline)
                         Spacer()
-                        Text(String(format: "%.1f", Double(meal.rating)))
+                        Text(String(format: "%.1f", Double(recipe.rating)))
                             .fontWeight(.bold)
 
                     }
@@ -50,7 +50,7 @@ struct DetailsView: View {
                             .font(.caption)
                             .foregroundColor(.gray)
 
-                        Text("\(Int(meal.prepTimeMinutes))m")
+                        Text("\(Int(recipe.prepTimeMinutes))m")
                             .font(.headline)
                     }
                     
@@ -61,7 +61,7 @@ struct DetailsView: View {
                         Text("Cook Time")
                             .font(.caption)
                             .foregroundColor(.gray)
-                        Text("\(Int(meal.cookTimeMinutes))m")
+                        Text("\(Int(recipe.cookTimeMinutes))m")
                             .font(.headline)
                     }
                     
@@ -72,12 +72,12 @@ struct DetailsView: View {
                         Text("Calories")
                             .font(.caption)
                             .foregroundColor(.gray)
-                        Text("\(meal.caloriesPerServing) kcal")
+                        Text("\(recipe.caloriesPerServing) kcal")
                             .font(.headline)
                     }
                     
                     VStack(spacing: 1){
-                        if let cusine = Cuisine(rawValue: meal.cuisine){
+                        if let cusine = Cuisine(rawValue: recipe.cuisine){
                             Text(cusine.flag)
                                 .font(.system(size: 35))
                             Text("Cusine")
@@ -95,7 +95,8 @@ struct DetailsView: View {
                 .cornerRadius(16)
                 .padding(.horizontal)
                 
-                if !model.containsAllergens(ingredients: meal.ingredients.map { $0.name }).isEmpty {
+                //cause each recipe has an [] of ingredient object and we want to check each ingriedneitn obj .map transforms into [] of name strings
+                if !model.containsAllergens(ingredients: recipe.ingredients.map { $0.name }).isEmpty {
                     HStack(spacing: 20) {
                         Image(systemName: "exclamationmark.circle")
                             .foregroundColor(.mint)
@@ -105,7 +106,7 @@ struct DetailsView: View {
                             Text("This recipe contains the following allergens")
                                 .font(.headline)
                             HStack {
-                                ForEach(model.containsAllergens(ingredients: meal.ingredients.map { $0.name }), id: \.self) { allergen in
+                                ForEach(model.containsAllergens(ingredients: recipe.ingredients.map { $0.name }), id: \.self) { allergen in
                                     HStack(spacing: 10) {
                                         VStack{
                                             Text(allergen.emoji)
@@ -128,12 +129,12 @@ struct DetailsView: View {
                 }
                 
                 HStack{
-                    if !meal.ingredients.isEmpty {
+                    if !recipe.ingredients.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Ingredients")
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            Text(meal.ingredients.map { $0.name }.joined(separator: ", "))
+                            Text(recipe.ingredients.map { $0.name }.joined(separator: ", "))
                            
                         }
                     }
@@ -145,17 +146,17 @@ struct DetailsView: View {
                 .padding(.horizontal)
                 
                 HStack{
-                    if !meal.instructions.isEmpty {
+                    if !recipe.instructions.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Instructions")
                                 .font(.title2)
                                 .fontWeight(.bold)
                             
-                            ForEach(meal.instructions.indices, id: \.self) { index in
+                            ForEach(recipe.instructions.indices, id: \.self) { index in
                                 HStack(alignment: .top, spacing: 8) {
                                     Text("\(index + 1).")
                                         .fontWeight(.bold)
-                                    Text(meal.instructions[index].name)
+                                    Text(recipe.instructions[index].name)
                                 }
                             }
                         }

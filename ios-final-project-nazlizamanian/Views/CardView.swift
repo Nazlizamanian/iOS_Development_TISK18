@@ -154,7 +154,7 @@ struct CardView: View {
                     Task{
                         await model.fetch()
                         shuffledRecipes = filteredRecipes.shuffled()
-                        isDataLoaded = true
+                        isDataLoaded = true //otherwise trigger re render ex if selectedDifficulity changes
                     }
                 }
             }
